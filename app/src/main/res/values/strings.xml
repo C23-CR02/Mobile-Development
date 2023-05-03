@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Cloud Raya</string>
+    <string name="landing_header_1">Selamat datang di CloudRaya!</string>
+    <string name="landing_header_2">CloudRaya memberikan pengalaman yang berbeda</string>
+    <string name="landing_header_3">Layanan CloudRaya yang terbaik</string>
+    <string name="landing_header_4">Memberdayakan Bisnis Anda di Cloud dengan CloudRaya</string>
+    <string name="landing_content_1">Kami adalah partner IT yang handal dan terpercaya untuk membantu Anda dalam kebutuhan komputasi cloud.</string>
+    <string name="landing_content_2">Kami meningkatkan performa Cloud Raya dari berbagai aspek, mulai dari support, fitur dan pelayanan, hingga teknologi virtualisasi. Pengetahuan, pengalaman, dan semangat perubahan membedakan kami dari lainnya.</string>
+    <string name="landing_content_3">CloudRaya menawarkan layanan yang aman, mudah diakses, fleksibel, dan efisien, untuk membantu Anda meraih kesuksesan bisnis. Kami menjamin keamanan dan ketersediaan data, mendukung aksesibilitas 24/7, serta memberikan opsi pembayaran dan kustomisasi yang sesuai kebutuhan Anda. Selamat bergabung dengan CloudRaya!</string>
+    <string name="mulai">Mulai</string>
+    <string name="selanjutnya">Selanjutnya</string>
+    <string name="daftar">Daftar</string>
+    <string name="masuk">Masuk</string>
+    <string name="banner">Banner</string>
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+    <string name="image">Image</string>
+    <string name="ip_address">IP Address</string>
+    <string name="status">Status</string>
+    <string name="vm_list">VM List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
