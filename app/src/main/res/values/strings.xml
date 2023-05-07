@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Cloud Raya</string>
+    <string name="landing_header_1">Welcome to CloudRaya!</string>
+    <string name="landing_header_2">Secure</string>
+    <string name="landing_header_3">Accessible</string>
+    <string name="landing_header_4">Flexible</string>
+    <string name="landing_header_5">Efficient</string>
+    <string name="landing_content_1">We are a reliable and trustworthy IT partner to assist you with your cloud computing needs.</string>
+    <string name="landing_content_2">Security is Cloud Raya’s upmost value, justifying our cause to be a reliable, trustworthy IT partner. With excellent uptime and ISO 27001 certification, our services are the most exemplary customer-centric services.</string>
+    <string name="landing_content_3">With full 24/7 accessibility, Cloud Raya is always available in terms of virtualization technology backed with SLA-guaranteed support. Cloud Raya infrastructure is well-supported by the always-on data protection and availability.</string>
+    <string name="landing_content_4">Cloud Raya delivers the most flexible cloud technology and infrastructure for every need.Cloud Raya’s flexibility includes scalability, budgeting, adjustment needs, and diverse customization.</string>
+    <string name="landing_content_5">Efficiency is of the fundamental values in Cloud Raya’s leading customer-centric services.Faster VM deployment, flexible billing plan, and user-friendly cloud panel permit more efficiency in terms of effort, time, and cost.</string>
+    <string name="mulai">Start</string>
+    <string name="selanjutnya">Continue</string>
+    <string name="daftar">Sign Up</string>
+    <string name="masuk">Sign In</string>
+    <string name="banner">Banner</string>
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+    <string name="image">Image</string>
+    <string name="ip_address">IP Address</string>
+    <string name="status">Status</string>
+    <string name="vm_list">VM List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

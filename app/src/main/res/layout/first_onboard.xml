@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    app:layoutDescription="@xml/first_onboard_scene">
+
+    <ImageView
+        android:id="@+id/iv_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/banner"
+        android:src="@drawable/logo_cloudraya"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header"
+        style="@style/Theme.CloudRaya.HeaderLanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/landing_header_1"
+        app:layout_constraintBottom_toTopOf="@id/tv_content"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/Theme.CloudRaya.TextCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landing_content_1"
+        app:layout_constraintBottom_toTopOf="@+id/btn_start"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_start"
+        style="@style/Theme.CloudRaya.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="135dp"
+        android:text="@string/mulai"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+    <ImageView
+        android:id="@+id/iv_banner2"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/banner"
+        android:src="@drawable/secure"
+        app:layout_constraintBottom_toTopOf="@+id/tv_header2"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header2"
+        style="@style/Theme.CloudRaya.HeaderLanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/landing_header_2"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner2" />
+
+    <TextView
+        android:id="@+id/tv_content2"
+        style="@style/Theme.CloudRaya.TextCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landing_content_2"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart2"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue2"
+        style="@style/Theme.CloudRaya.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/selanjutnya"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_banner3"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/banner"
+        android:src="@drawable/accessibility"
+        app:layout_constraintBottom_toTopOf="@+id/tv_header3"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header3"
+        style="@style/Theme.CloudRaya.HeaderLanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/landing_header_3"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner3" />
+
+    <TextView
+        android:id="@+id/tv_content3"
+        style="@style/Theme.CloudRaya.TextCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landing_content_3"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header3" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue3"
+        style="@style/Theme.CloudRaya.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/selanjutnya"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_banner4"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/banner"
+        android:src="@drawable/flexibility"
+        app:layout_constraintBottom_toTopOf="@+id/tv_header4"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header4"
+        style="@style/Theme.CloudRaya.HeaderLanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/landing_header_4"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner4" />
+
+    <TextView
+        android:id="@+id/tv_content4"
+        style="@style/Theme.CloudRaya.TextCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landing_content_4"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart4"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header4"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue4"
+        style="@style/Theme.CloudRaya.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/selanjutnya"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_banner5"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/banner"
+        android:src="@drawable/efficiency"
+        app:layout_constraintBottom_toTopOf="@+id/tv_header5"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header5"
+        style="@style/Theme.CloudRaya.HeaderLanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/landing_header_5"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner5" />
+
+    <TextView
+        android:id="@+id/tv_content5"
+        style="@style/Theme.CloudRaya.TextCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landing_content_5"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart5"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header5"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue5"
+        style="@style/Theme.CloudRaya.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/selanjutnya"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
