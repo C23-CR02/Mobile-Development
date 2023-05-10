@@ -23,4 +23,6 @@
     <string name="vm_list">VM List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_secret">App Secret</string>
+    <string name="app_key">App Key</string>
 </resources>

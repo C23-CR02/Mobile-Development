@@ -54,4 +54,15 @@
         <item name="cornerRadius">15dp</item>
         <item name="backgroundTint">@color/secondary</item>
     </style>
+    <style name = "Theme.CloudRaya.Card">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/editText</item>
+    </style>
+    <style name="Theme.CloudRaya.InputAppKey">
+
+    </style>
+    <style name="Theme.CloudRaya.InputAppSecret">
+
+    </style>
 </resources>
