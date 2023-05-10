@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintBottom_toTopOf="@id/tv_content"
             motion:layout_constraintTop_toBottomOf="@id/iv_banner"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="16dp"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp" />
@@ -256,76 +256,6 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/tv_content4"
-            android:layout_marginTop="135dp" />
-    </ConstraintSet>
-    <ConstraintSet
-        android:id="@+id/onboard4"
-        motion:deriveConstraintsFrom="@+id/onboard3" >
-        <Constraint
-            android:id="@+id/iv_banner4"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            motion:layout_constraintBottom_toTopOf="@+id/tv_header4"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintEnd_toStartOf="parent" />
-        <Constraint
-            android:id="@+id/tv_header4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@id/iv_banner4"
-            android:layout_marginTop="30dp"
-            motion:layout_constraintEnd_toStartOf="parent" />
-        <Constraint
-            android:id="@+id/tv_content4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@+id/btnStart4"
-            motion:layout_constraintVertical_bias="0.25"
-            motion:layout_constraintTop_toBottomOf="@id/tv_header4"
-            motion:layout_constraintEnd_toStartOf="parent" />
-        <Constraint
-            android:id="@+id/btn_continue4"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/tv_content4"
-            android:layout_marginTop="135dp" />
-        <Constraint
-            android:id="@+id/iv_banner5"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            motion:layout_constraintBottom_toTopOf="@+id/tv_header5"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent" />
-        <Constraint
-            android:id="@+id/tv_header5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@id/iv_banner5"
-            android:layout_marginTop="30dp"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintBottom_toTopOf="@+id/tv_content5"
-            android:layout_marginBottom="8dp" />
-        <Constraint
-            android:id="@+id/tv_content5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@+id/btnStart5"
-            motion:layout_constraintTop_toBottomOf="@id/tv_header5"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
-        <Constraint
-            android:id="@+id/btn_continue5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/tv_content5"
             android:layout_marginTop="135dp" />
     </ConstraintSet>
     <Transition

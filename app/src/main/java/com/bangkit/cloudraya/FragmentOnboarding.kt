@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.databinding.FirstOnboardBinding
 
 class FragmentOnboarding : Fragment() {
@@ -17,6 +18,7 @@ class FragmentOnboarding : Fragment() {
         savedInstanceState: Bundle?
     ): View  {
         binding = FirstOnboardBinding.inflate(inflater, container ,false)
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
         return binding.root
     }
 
@@ -26,7 +28,6 @@ class FragmentOnboarding : Fragment() {
     }
 
     private fun transition(){
-        (activity as AppCompatActivity?)?.supportActionBar?.hide()
         binding.btnStart.setOnClickListener {
             binding.motionLayout.setTransition(R.id.toOnboard1)
             binding.motionLayout.transitionToEnd()
@@ -40,13 +41,10 @@ class FragmentOnboarding : Fragment() {
             binding.motionLayout.transitionToEnd()
         }
         binding.btnContinue4.setOnClickListener {
-            binding.motionLayout.setTransition(R.id.toOnboard4)
-            binding.motionLayout.transitionToEnd()
+            val toListSite = FragmentOnboardingDirections.actionFragmentOnboardingToFragmentSiteList()
+            findNavController().navigate(toListSite)
         }
-//        binding.btnContinue5.setOnClickListener {
-//            binding.motionLayout.setTransition(R.id.to)
-//            binding.motionLayout.transitionToEnd()
-//        }
+
     }
 
 }

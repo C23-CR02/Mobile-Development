@@ -8,5 +8,16 @@
         android:id="@+id/fragmentOnboarding"
         android:name="com.bangkit.cloudraya.FragmentOnboarding"
         android:label="first_onboard"
-        tools:layout="@layout/first_onboard" />
+        tools:layout="@layout/first_onboard" >
+        <action
+            android:id="@+id/action_fragmentOnboarding_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSiteList"
+        android:name="com.bangkit.cloudraya.FragmentSiteList"
+        android:label="fragment_site_list"
+        tools:layout="@layout/fragment_site_list" />
 </navigation>

@@ -2,19 +2,20 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp"
-    android:id="@+id/motion_layout"
-    tools:context=".FragmentOnboarding"
-    app:layoutDescription="@xml/first_onboard_scene">
+    app:layoutDescription="@xml/first_onboard_scene"
+    tools:context=".FragmentOnboarding">
 
+    <!--    Start -->
     <ImageView
         android:id="@+id/iv_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/banner"
-        android:src="@drawable/logo_cloudraya"
+        android:src="@drawable/wow_logo1"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,34 +30,25 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_banner" />
 
-    <TextView
-        android:id="@+id/tv_content"
-        style="@style/Theme.CloudRaya.TextCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/landing_content_1"
-        app:layout_constraintBottom_toTopOf="@+id/btn_start"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_header" />
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_start"
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_content"
         android:layout_marginTop="135dp"
-        android:text="@string/mulai"
+        android:text="@string/get_started"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
+    <!--    Onboard 1-->
     <ImageView
         android:id="@+id/iv_banner2"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:contentDescription="@string/banner"
-        android:src="@drawable/secure"
+        android:src="@drawable/onboard3"
         app:layout_constraintBottom_toTopOf="@+id/tv_header2"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,18 +78,19 @@
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_content2"
         android:layout_marginTop="135dp"
         android:text="@string/selanjutnya"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent"/>
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_content2" />
 
+    <!--    Onboard 2-->
     <ImageView
         android:id="@+id/iv_banner3"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:contentDescription="@string/banner"
-        android:src="@drawable/accessibility"
+        android:src="@drawable/onboard2"
         app:layout_constraintBottom_toTopOf="@+id/tv_header3"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -127,18 +120,19 @@
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_content3"
         android:layout_marginTop="135dp"
         android:text="@string/selanjutnya"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_content3" />
 
+    <!--    Onboard 3-->
     <ImageView
         android:id="@+id/iv_banner4"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:contentDescription="@string/banner"
-        android:src="@drawable/flexibility"
+        android:src="@drawable/onboard3"
         app:layout_constraintBottom_toTopOf="@+id/tv_header4"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -169,52 +163,11 @@
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_content4"
         android:layout_marginTop="135dp"
         android:text="@string/selanjutnya"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_banner5"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:contentDescription="@string/banner"
-        android:src="@drawable/efficiency"
-        app:layout_constraintBottom_toTopOf="@+id/tv_header5"
         app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_content4" />
 
-    <TextView
-        android:id="@+id/tv_header5"
-        style="@style/Theme.CloudRaya.HeaderLanding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/landing_header_5"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_banner5" />
-
-    <TextView
-        android:id="@+id/tv_content5"
-        style="@style/Theme.CloudRaya.TextCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/landing_content_5"
-        app:layout_constraintBottom_toTopOf="@+id/btnStart5"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_header5"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_continue5"
-        style="@style/Theme.CloudRaya.PrimaryButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/selanjutnya"
-        app:layout_constraintTop_toBottomOf="@id/tv_content5"
-        android:layout_marginTop="135dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
