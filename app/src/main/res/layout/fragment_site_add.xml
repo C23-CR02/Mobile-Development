@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="30dp"
-    tools:context=".ui.SiteEdit.FragmentSiteEdit">
+    tools:context=".ui.SiteAdd.FragmentSiteAdd">
 
     <TextView
         android:id="@+id/tv_siteList"
@@ -48,6 +48,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Theme.CloudRaya.InputSiteName"
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -77,11 +78,15 @@
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Theme.CloudRaya.Card"
+
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Theme.CloudRaya.InputSiteUrl"
+                android:inputType="textPassword"
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -117,6 +122,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Theme.CloudRaya.InputAppKey"
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false" />
@@ -127,9 +133,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edt_app_secret"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btn_save"
+        app:hintEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_app_key">
@@ -151,39 +158,24 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Theme.CloudRaya.InputAppSecret"
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="56dp" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save"
+        android:id="@+id/btnStart"
         style="@style/Theme.CloudRaya.PrimaryButton"
-        android:backgroundTint="#0FA958"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_delete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_app_secret" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_delete"
-        style="@style/Theme.CloudRaya.PrimaryButton"
-        android:backgroundTint="#F40B12"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:text="@string/delete"
+        android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_save"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_app_secret" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

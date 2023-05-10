@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya
+package com.bangkit.cloudraya.ui.OnBoarding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bangkit.cloudraya.FragmentOnboardingDirections
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FirstOnboardBinding
 
 class FragmentOnboarding : Fragment() {
@@ -41,7 +43,8 @@ class FragmentOnboarding : Fragment() {
             binding.motionLayout.transitionToEnd()
         }
         binding.btnContinue4.setOnClickListener {
-            val toListSite = FragmentOnboardingDirections.actionFragmentOnboardingToFragmentSiteList()
+            val toListSite =
+                FragmentOnboardingDirections.actionFragmentOnboardingToFragmentSiteList()
             findNavController().navigate(toListSite)
         }
 
