@@ -17,8 +17,8 @@
     <style name="Theme.CloudRaya.HeaderLanding">
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:fontFamily">@font/inter_semibold</item>
-        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textColor">#F57D45</item>
     </style>
     <style name="Theme.CloudRaya.TextCenter">
         <item name="android:textAlignment">center</item>
@@ -32,7 +32,7 @@
         <item name="android:textColor">?colorOnBackground</item>
     </style>
     <style name="Theme.CloudRaya.PageTitle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
         <item name="android:textColor">?colorOnBackground</item>
     </style>
@@ -53,5 +53,38 @@
         <item name="android:padding">10dp</item>
         <item name="cornerRadius">15dp</item>
         <item name="backgroundTint">@color/secondary</item>
+    </style>
+    <style name="Theme.CloudRaya.ActionButton">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:padding">10dp</item>
+        <item name="cornerRadius">15dp</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+    <style name = "Theme.CloudRaya.Card">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/editText</item>
+    </style>
+    <style name="Theme.CloudRaya.InputSiteName">
+        <item name="android:hint">Enter Your Site Name Here</item>
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+    <style name="Theme.CloudRaya.InputSiteUrl">
+        <item name="android:hint">Enter Your Site URL Here</item>
+
+    </style>
+    <style name="Theme.CloudRaya.InputAppKey">
+        <item name="android:hint">Enter Your App Key Here</item>
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+    <style name="Theme.CloudRaya.InputAppSecret">
+        <item name="android:hint">Enter Your App Secret Here</item>
+        <item name="android:gravity">center_vertical</item>
+
     </style>
 </resources>
