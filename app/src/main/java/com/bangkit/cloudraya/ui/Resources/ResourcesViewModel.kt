@@ -6,7 +6,5 @@ import com.bangkit.cloudraya.repository.CloudRepository
 
 
 class ResourcesViewModel(private val cloudRepository: CloudRepository): ViewModel() {
-    fun print(msg : String){
-        Log.d("ta",msg)
-    }
+    fun getVMList(token: String) = cloudRepository.getVMList(token)
 }
