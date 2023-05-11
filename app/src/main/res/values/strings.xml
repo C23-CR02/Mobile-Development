@@ -7,10 +7,10 @@
     <string name="landing_content_1">Kami adalah partner IT yang handal dan terpercaya untuk membantu Anda dalam kebutuhan komputasi cloud.</string>
     <string name="landing_content_2">Kami meningkatkan performa Cloud Raya dari berbagai aspek, mulai dari support, fitur dan pelayanan, hingga teknologi virtualisasi. Pengetahuan, pengalaman, dan semangat perubahan membedakan kami dari lainnya.</string>
     <string name="landing_content_3">CloudRaya menawarkan layanan yang aman, mudah diakses, fleksibel, dan efisien, untuk membantu Anda meraih kesuksesan bisnis. Kami menjamin keamanan dan ketersediaan data, mendukung aksesibilitas 24/7, serta memberikan opsi pembayaran dan kustomisasi yang sesuai kebutuhan Anda. Selamat bergabung dengan CloudRaya!</string>
-    <string name="mulai">Mulai</string>
-    <string name="selanjutnya">Selanjutnya</string>
-    <string name="daftar">Daftar</string>
-    <string name="masuk">Masuk</string>
+    <string name="start">Start</string>
+    <string name="continue_">Continue</string>
+    <string name="register">Register</string>
+    <string name="login">Sign In</string>
     <string name="banner">Banner</string>
     <string name="name">Name</string>
     <string name="location">Location</string>
@@ -20,4 +20,8 @@
     <string name="vm_list">VM List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vm_detail">VM Detail</string>
+    <string name="launch_date">Launch Date</string>
+    <string name="stop">Stop</string>
+    <string name="restart">Restart</string>
 </resources>

@@ -31,7 +31,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/daftar"
+        android:text="@string/register"
         style="@style/Theme.CloudRaya.SecondaryButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnLogin"
@@ -42,7 +42,7 @@
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/masuk"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnRegister"
         app:layout_constraintStart_toStartOf="parent" />
