@@ -1,16 +1,18 @@
 <resources>
     <string name="app_name">Cloud Raya</string>
-    <string name="landing_header_1">Selamat datang di CloudRaya!</string>
-    <string name="landing_header_2">CloudRaya memberikan pengalaman yang berbeda</string>
-    <string name="landing_header_3">Layanan CloudRaya yang terbaik</string>
-    <string name="landing_header_4">Memberdayakan Bisnis Anda di Cloud dengan CloudRaya</string>
-    <string name="landing_content_1">Kami adalah partner IT yang handal dan terpercaya untuk membantu Anda dalam kebutuhan komputasi cloud.</string>
-    <string name="landing_content_2">Kami meningkatkan performa Cloud Raya dari berbagai aspek, mulai dari support, fitur dan pelayanan, hingga teknologi virtualisasi. Pengetahuan, pengalaman, dan semangat perubahan membedakan kami dari lainnya.</string>
-    <string name="landing_content_3">CloudRaya menawarkan layanan yang aman, mudah diakses, fleksibel, dan efisien, untuk membantu Anda meraih kesuksesan bisnis. Kami menjamin keamanan dan ketersediaan data, mendukung aksesibilitas 24/7, serta memberikan opsi pembayaran dan kustomisasi yang sesuai kebutuhan Anda. Selamat bergabung dengan CloudRaya!</string>
-    <string name="start">Start</string>
-    <string name="continue_">Continue</string>
-    <string name="register">Register</string>
-    <string name="login">Sign In</string>
+    <string name="landing_header_1">Turn Your Ideas into a Reality with Your Trusted Cloud Partner</string>
+    <string name="landing_header_2">Delivering what you actually need</string>
+    <string name="landing_header_3">Experienced since 2001</string>
+    <string name="landing_header_4">Certified and trusted IT service provider</string>
+    <string name="landing_content_1">We are a reliable and trustworthy IT partner to assist you with your cloud computing needs.</string>
+    <string name="landing_content_2">No business wants to burn their cash and resources on services they don’t need. Wowrack only delivers what you actually need. Simple, cost-effective.</string>
+    <string name="landing_content_3">For more than two decades, Wowrack has been trusted to cater IT solutions for brands of all sizes—from startups to Fortune 100 companies—with their unique needs.</string>
+    <string name="landing_content_4">Besides the 24/7 always-on service that will ‘wow’ you, Wowrack backs it up with ISO 27001 and SOC II Type 2 certifications, ensuring our security.</string>
+    <string name="landing_content_5">Efficiency is of the fundamental values in Cloud Raya’s leading customer-centric services.Faster VM deployment, flexible billing plan, and user-friendly cloud panel permit more efficiency in terms of effort, time, and cost.</string>
+    <string name="mulai">Start</string>
+    <string name="selanjutnya">Continue</string>
+    <string name="daftar">Sign Up</string>
+    <string name="masuk">Sign In</string>
     <string name="banner">Banner</string>
     <string name="name">Name</string>
     <string name="location">Location</string>
@@ -20,8 +22,15 @@
     <string name="vm_list">VM List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="vm_detail">VM Detail</string>
-    <string name="launch_date">Launch Date</string>
-    <string name="stop">Stop</string>
-    <string name="restart">Restart</string>
+    <string name="app_secret">App Secret</string>
+    <string name="app_key">App Key</string>
+    <string name="site_list">Site List</string>
+    <string name="site_url">Site URL</string>
+    <string name="site_name">Site Name</string>
+    <string name="submit">Submit</string>
+    <string name="site">Site</string>
+    <string name="register_new_site">Register New Site</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="get_started">Get Started</string>
 </resources>

@@ -4,10 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/fragmentOnboarding">
-
     <fragment
         android:id="@+id/fragmentOnboarding"
-        android:name="com.bangkit.cloudraya.FragmentOnboarding"
-        android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" />
+        android:name="com.bangkit.cloudraya.ui.OnBoarding.FragmentOnboarding"
+        android:label="first_onboard"
+        tools:layout="@layout/first_onboard" >
+        <action
+            android:id="@+id/action_fragmentOnboarding_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSiteList"
+        android:name="com.bangkit.cloudraya.ui.SiteList.FragmentSiteList"
+        android:label="fragment_site_list"
+        tools:layout="@layout/fragment_site_list" >
+        <action
+            android:id="@+id/action_fragmentSiteList_to_fragmentSiteAdd2"
+            app:destination="@id/fragmentSiteAdd" />
+        <action
+            android:id="@+id/action_fragmentSiteList_to_fragmentSiteEdit"
+            app:destination="@id/fragmentSiteEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSiteAdd"
+        android:name="com.bangkit.cloudraya.ui.SiteAdd.FragmentSiteAdd"
+        android:label="fragment_site_add"
+        tools:layout="@layout/fragment_site_add" />
+    <fragment
+        android:id="@+id/fragmentSiteEdit"
+        android:name="com.bangkit.cloudraya.ui.SiteEdit.FragmentSiteEdit"
+        android:label="fragment_site_edit"
+        tools:layout="@layout/fragment_site_edit" />
 </navigation>
