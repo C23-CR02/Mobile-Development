@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     app:layoutDescription="@xml/first_onboard_scene"
-    tools:context=".ui.OnBoarding.FragmentOnboarding">
+    tools:context=".ui.onboarding.FragmentOnboarding">
 
     <!--    Start -->
     <ImageView

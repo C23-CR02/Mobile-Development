@@ -69,4 +69,16 @@ dependencies {
     //Koin
     implementation "io.insert-koin:koin-core:3.2.0"
     implementation 'io.insert-koin:koin-android:3.2.0'
+    // Data Store
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+
+    // Encrypted
+//    implementation 'com.ironz.binaryprefs:binaryprefs:1.0.4'
+//    implementation 'com.ironz.binaryprefs:binaryprefs-preference:1.0.4'
+
+    // Material Design Toast
+    implementation 'com.google.android.material:material:1.5.0'
+
+
 }

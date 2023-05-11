@@ -71,20 +71,5 @@
     <style name="Theme.CloudRaya.InputSiteName">
         <item name="android:hint">Enter Your Site Name Here</item>
         <item name="android:gravity">center_vertical</item>
-
-    </style>
-    <style name="Theme.CloudRaya.InputSiteUrl">
-        <item name="android:hint">Enter Your Site URL Here</item>
-
-    </style>
-    <style name="Theme.CloudRaya.InputAppKey">
-        <item name="android:hint">Enter Your App Key Here</item>
-        <item name="android:gravity">center_vertical</item>
-
-    </style>
-    <style name="Theme.CloudRaya.InputAppSecret">
-        <item name="android:hint">Enter Your App Secret Here</item>
-        <item name="android:gravity">center_vertical</item>
-
     </style>
 </resources>

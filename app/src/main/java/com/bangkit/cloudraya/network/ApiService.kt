@@ -12,18 +12,18 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST("user/auth")
+    @POST("/v1/api/gateway/user/auth")
     suspend fun getToken(
         @Header("Content-Type") contentType : String,
         @Body body : JsonObject
     ): Response<TokenResponse>
 
-    @GET("gateway/user/virtualmachines")
+    @GET("/v1/api/gateway/gateway/user/virtualmachines")
     suspend fun getVMList(
         @Header("Authorization") token : String
     ):Response<VMListResponse>
 
-    @POST("gateway/user/virtualmachines/action")
+    @POST("/v1/api/gateway/gateway/user/virtualmachines/action")
     suspend fun vmAction(
         @Header("Content-Type") contentType : String,
         @Header("Authorization") token : String,

@@ -2,16 +2,16 @@ package com.example.storyapp.di
 
 
 import com.bangkit.cloudraya.repository.CloudRepository
-import com.bangkit.cloudraya.ui.DetailVM.DetailVMViewModel
-import com.bangkit.cloudraya.ui.Resources.ResourcesViewModel
-import com.bangkit.cloudraya.ui.SiteAdd.SiteAddViewModel
-import com.bangkit.cloudraya.ui.SiteEdit.SiteEditViewModel
-import com.bangkit.cloudraya.ui.SiteList.SiteListViewModel
+import com.bangkit.cloudraya.ui.detailVM.DetailVMViewModel
+import com.bangkit.cloudraya.ui.resources.ResourcesViewModel
+import com.bangkit.cloudraya.ui.siteAdd.SiteAddViewModel
+import com.bangkit.cloudraya.ui.siteEdit.SiteEditViewModel
+import com.bangkit.cloudraya.ui.sitelist.SiteListViewModel
 import org.koin.dsl.module
 
 
 val repositoryModule = module {
-    single { CloudRepository(get()) }
+    single { CloudRepository(get(),get()) }
 }
 
 val viewModule = module {

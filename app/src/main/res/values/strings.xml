@@ -38,4 +38,14 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="restart">Restart</string>
+
+<!--    UI-->
+    <string name = "site_error">The site name must not contain symbols.</string>
+
+<!--    Hint-->
+    <string name = "hint_siteName">Enter Your Site Name Here</string>
+    <string name = "hint_siteUrl">Enter Your Site URL Here</string>
+    <string name = "hint_appKey">Enter Your App Key Here</string>
+    <string name = "hint_appSecret">Enter Your App Secret Here</string>
+
 </resources>
