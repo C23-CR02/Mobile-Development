@@ -17,6 +17,7 @@ class FragmentResources : Fragment() {
     private lateinit var binding : FragmentResourcesBinding
     private val viewModel: ResourcesViewModel by viewModel()
     private lateinit var vmAdapter: VMAdapter
+    private val token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmNsb3VkcmF5YS5jb21cL3YxXC9hcGlcL2dhdGV3YXlcL3VzZXJcL2F1dGgiLCJpYXQiOjE2ODM4MTg0MDIsImV4cCI6MTY4MzgyNTYwMiwibmJmIjoxNjgzODE4NDAyLCJqdGkiOiJKWjRKbnY4aWg3OGZWTkVpIiwic3ViIjo3NywicHJ2IjoiYTU1NDE1NDk1MDQ1ODI1YzVlZTQ3NWMzMTZhYWVjOWRjMjYzZmE5MiJ9.rE9FrDCv8zY4VngVs2JLbyrpdBXbGavNTyj-BPl7JJI"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +30,11 @@ class FragmentResources : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showRecycleView()
 
-        viewModel.getVMList("").observe(viewLifecycleOwner){ result ->
+        binding.btnHome.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        viewModel.getVMList(token).observe(viewLifecycleOwner){ result ->
             when(result){
                 is Event.Success -> {
                     vmAdapter.submitData(result.data.data!!)

@@ -1,5 +1,6 @@
 package com.bangkit.cloudraya.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.model.local.Event
@@ -7,6 +8,7 @@ import com.bangkit.cloudraya.model.remote.VMActionResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
 import com.bangkit.cloudraya.model.remote.VMListResponse
 import com.bangkit.cloudraya.network.ApiService
+import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import org.json.JSONObject
 
@@ -19,11 +21,13 @@ class CloudRepository(private val apiService: ApiService) {
                 val response = apiService.getVMList(token)
                 if (response.isSuccessful){
                     val data = response.body()
+                    Log.d("Success", data.toString())
                     data?.let {
                         emit(Event.Success(it))
                     }
                 }else{
                     val error = response.errorBody()?.toString()
+                    Log.d("Error", response.body()?.message!!)
                     if (error != null){
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
@@ -31,6 +35,7 @@ class CloudRepository(private val apiService: ApiService) {
                     }
                 }
             }catch (e: Exception){
+                Log.d("Exception", e.toString())
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -42,11 +47,13 @@ class CloudRepository(private val apiService: ApiService) {
                 val response = apiService.getVMDetail(token, id)
                 if (response.isSuccessful){
                     val data = response.body()
+                    Log.d("Success", data.toString())
                     data?.let {
                         emit(Event.Success(it))
                     }
                 }else{
                     val error = response.errorBody()?.toString()
+                    Log.d("Error", response.body()?.message!!)
                     if (error != null){
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
@@ -54,6 +61,7 @@ class CloudRepository(private val apiService: ApiService) {
                     }
                 }
             }catch (e: Exception){
+                Log.d("Exception", e.toString())
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -62,11 +70,11 @@ class CloudRepository(private val apiService: ApiService) {
         liveData(Dispatchers.IO){
             emit(Event.Loading)
             try {
-                val requestBody = mapOf(
-                    "vm_id" to vmId,
-                    "request" to request,
-                    "release_ip" to false
-                )
+                val requestBody = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                    addProperty("request", request)
+                    addProperty("release_ip", false)
+                }
                 val response = apiService.vmAction("application/json", token, requestBody)
                 if (response.isSuccessful){
                     val data = response.body()

@@ -32,7 +32,7 @@
         <item name="android:textColor">?colorOnBackground</item>
     </style>
     <style name="Theme.CloudRaya.PageTitle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
         <item name="android:textColor">?colorOnBackground</item>
     </style>
