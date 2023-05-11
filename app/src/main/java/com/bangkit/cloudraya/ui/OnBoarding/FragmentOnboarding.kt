@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.bangkit.cloudraya.FragmentOnboardingDirections
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FirstOnboardBinding
 

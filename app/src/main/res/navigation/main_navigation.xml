@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_fragmentSiteList_to_fragmentSiteEdit"
             app:destination="@id/fragmentSiteEdit" />
+        <action
+            android:id="@+id/action_fragmentSiteList_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteAdd"
@@ -37,4 +40,34 @@
         android:name="com.bangkit.cloudraya.ui.SiteEdit.FragmentSiteEdit"
         android:label="fragment_site_edit"
         tools:layout="@layout/fragment_site_edit" />
+    <fragment
+        android:id="@+id/fragmentResources"
+        android:name="com.bangkit.cloudraya.ui.Resources.FragmentResources"
+        android:label="FragmentResources"
+        tools:layout="@layout/fragment_resources">
+        <action
+            android:id="@+id/action_fragmentResources_to_fragmentDetailVM"
+            app:destination="@id/fragmentDetailVM" />
+        <action
+            android:id="@+id/action_fragmentResources_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDetailVM"
+        android:name="com.bangkit.cloudraya.ui.DetailVM.FragmentDetailVM"
+        android:label="FragmentDetailVM"
+        tools:layout="@layout/fragment_detail_vm">
+        <argument
+            android:name="vmData"
+            app:argType="com.bangkit.cloudraya.model.remote.VMListData" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.bangkit.cloudraya.ui.Home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_fragmentResources"
+            app:destination="@id/fragmentResources" />
+    </fragment>
 </navigation>

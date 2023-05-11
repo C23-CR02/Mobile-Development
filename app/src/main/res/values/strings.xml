@@ -33,4 +33,12 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="get_started">Get Started</string>
+    <string name="vm_detail">VM Detail</string>
+    <string name="launch_date">Launch Date</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="restart">Restart</string>
+    <string name="home">Home</string>
+    <string name="resources">Resources</string>
+    <string name="back">Back</string>
 </resources>

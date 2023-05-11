@@ -3,6 +3,7 @@ package com.example.storyapp.di
 
 import com.bangkit.cloudraya.repository.CloudRepository
 import com.bangkit.cloudraya.ui.DetailVM.DetailVMViewModel
+import com.bangkit.cloudraya.ui.Home.HomeViewModel
 import com.bangkit.cloudraya.ui.Resources.ResourcesViewModel
 import com.bangkit.cloudraya.ui.SiteAdd.SiteAddViewModel
 import com.bangkit.cloudraya.ui.SiteEdit.SiteEditViewModel
@@ -20,4 +21,5 @@ val viewModule = module {
     single { SiteAddViewModel(get()) }
     single { SiteEditViewModel(get()) }
     single { SiteListViewModel(get()) }
+    single { HomeViewModel(get()) }
 }

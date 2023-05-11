@@ -3,12 +3,10 @@ package com.bangkit.cloudraya.network
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.model.remote.VMListResponse
 import com.bangkit.cloudraya.model.remote.VMActionResponse
+import com.bangkit.cloudraya.model.remote.VMDetailResponse
 import com.google.gson.JsonObject
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -18,14 +16,21 @@ interface ApiService {
         @Body body : JsonObject
     ): Response<TokenResponse>
 
-    @GET("gateway/user/virtualmachines")
+    @GET("user/virtualmachines")
     suspend fun getVMList(
         @Header("Authorization") token : String
     ):Response<VMListResponse>
 
-    @POST("gateway/user/virtualmachines/action")
+    @GET("user/virtualmachines/{id}")
+    suspend fun getVMDetail(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<VMDetailResponse>
+
+    @POST("user/virtualmachines/action")
     suspend fun vmAction(
         @Header("Content-Type") contentType : String,
         @Header("Authorization") token : String,
+        @Body requestBody: JsonObject
     ) : Response<VMActionResponse>
 }

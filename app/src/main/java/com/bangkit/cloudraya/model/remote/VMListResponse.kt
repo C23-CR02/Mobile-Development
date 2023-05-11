@@ -1,6 +1,8 @@
 package com.bangkit.cloudraya.model.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class VMListResponse(
 
@@ -8,12 +10,13 @@ data class VMListResponse(
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: VMListData? = null,
+	val data: List<VMListData>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
 )
 
+@Parcelize
 data class VMListData(
 
 	@field:SerializedName("schedule_type")
@@ -51,4 +54,4 @@ data class VMListData(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
+): Parcelable
