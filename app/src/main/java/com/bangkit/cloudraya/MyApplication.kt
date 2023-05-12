@@ -1,7 +1,7 @@
 package com.bangkit.cloudraya
 
 import android.app.Application
-import com.example.storyapp.di.networkModule
+import com.bangkit.cloudraya.di.*
 import com.example.storyapp.di.repositoryModule
 import com.example.storyapp.di.viewModule
 import org.koin.android.ext.koin.androidContext
@@ -13,7 +13,7 @@ class MyApplication : Application() {
         GlobalContext.startKoin {
             androidContext(this@MyApplication)
             modules(
-                networkModule, viewModule, repositoryModule
+                networkModule, viewModule, repositoryModule, localModule
             )
         }
     }

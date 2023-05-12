@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="30dp"
     tools:context=".ui.SiteAdd.FragmentSiteAdd">
+
+
 
     <TextView
         android:id="@+id/tv_siteList"
@@ -15,159 +17,147 @@
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edt_site_name"
+        app:layout_constraintBottom_toTopOf="@+id/siteName_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edt_site_name"
+
+    <TextView
+        android:id="@+id/tv_site_name"
+        style="@style/Theme.CloudRaya.InputSiteName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/edt_site_url"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="@string/site_name"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/siteName_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_siteList" />
+
+
+    <com.bangkit.cloudraya.customview.MyEditText
+        android:id="@+id/siteName_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_person_icon"
+        android:drawablePadding="12dp"
+        android:hint="@string/hint_siteName"
+        android:padding="10dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/siteUrl_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_siteList">
+        app:layout_constraintTop_toBottomOf="@+id/tv_siteList" />
 
 
-        <TextView
-            android:id="@+id/tv_site_name"
-            style="@style/Theme.CloudRaya.InputSiteName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="@string/site_name" />
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Theme.CloudRaya.Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/Theme.CloudRaya.InputSiteName"
-                android:paddingVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edt_site_url"
+    <TextView
+        android:id="@+id/tv_site_url"
+        style="@style/Theme.CloudRaya.InputSiteName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/edt_app_key"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="@string/site_url"
+
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/siteUrl_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_site_name">
+        app:layout_constraintTop_toBottomOf="@id/siteName_layout" />
 
 
-        <TextView
-            android:id="@+id/tv_site_url"
-            style="@style/Theme.CloudRaya.InputAppKey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="@string/site_url" />
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Theme.CloudRaya.Card"
-
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/Theme.CloudRaya.InputSiteUrl"
-                android:inputType="textPassword"
-                android:paddingVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edt_app_key"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/edt_app_secret"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_site_url">
-
-
-        <TextView
-            android:id="@+id/tv_app_key"
-            style="@style/Theme.CloudRaya.InputAppKey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="@string/app_key" />
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Theme.CloudRaya.Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/Theme.CloudRaya.InputAppKey"
-                android:paddingVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edt_app_secret"
+    <com.bangkit.cloudraya.customview.MyEditText
+        android:id="@+id/siteUrl_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_url_icon"
+        android:drawablePadding="12dp"
+        android:hint="@string/hint_siteUrl"
+        android:padding="10dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/appKey_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_app_key">
+        app:layout_constraintTop_toBottomOf="@+id/siteName_layout" />
 
-        <TextView
-            android:id="@+id/tv_app_secret"
-            style="@style/Theme.CloudRaya.InputAppSecret"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="@string/app_secret" />
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Theme.CloudRaya.Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_app_key"
+        style="@style/Theme.CloudRaya.InputSiteName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="@string/app_key"
 
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/Theme.CloudRaya.InputAppSecret"
-                android:paddingVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/appKey_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/siteUrl_layout" />
 
-        </com.google.android.material.card.MaterialCardView>
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.bangkit.cloudraya.customview.MyEditText
+        android:id="@+id/appKey_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_key_icon"
+        android:drawablePadding="12dp"
+        android:hint="@string/app_key"
+        android:includeFontPadding="false"
+        android:padding="10dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/appSecret_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/siteUrl_layout" />
+
+
+    <TextView
+        android:id="@+id/tv_app_secret"
+        style="@style/Theme.CloudRaya.InputSiteName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/app_secret"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/appSecret_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appKey_layout" />
+
+    <com.bangkit.cloudraya.customview.MyEditText
+        android:id="@+id/appSecret_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/custom_lock_icon"
+        android:drawablePadding="12dp"
+        android:hint="@string/app_secret"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textSize="18sp"
+
+        app:isPassword="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/appKey_layout" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnStart"
+        android:id="@+id/btn_submit"
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -176,6 +166,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_app_secret" />
+        app:layout_constraintTop_toBottomOf="@+id/appSecret_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

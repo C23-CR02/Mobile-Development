@@ -21,7 +21,7 @@
         android:label="fragment_site_list"
         tools:layout="@layout/fragment_site_list" >
         <action
-            android:id="@+id/action_fragmentSiteList_to_fragmentSiteAdd2"
+            android:id="@+id/action_fragmentSiteList_to_fragmentSiteAdd"
             app:destination="@id/fragmentSiteAdd" />
         <action
             android:id="@+id/action_fragmentSiteList_to_fragmentSiteEdit"
@@ -34,7 +34,13 @@
         android:id="@+id/fragmentSiteAdd"
         android:name="com.bangkit.cloudraya.ui.SiteAdd.FragmentSiteAdd"
         android:label="fragment_site_add"
-        tools:layout="@layout/fragment_site_add" />
+        tools:layout="@layout/fragment_site_add" >
+        <action
+            android:id="@+id/action_fragmentSiteAdd_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentSiteEdit"
         android:name="com.bangkit.cloudraya.ui.SiteEdit.FragmentSiteEdit"

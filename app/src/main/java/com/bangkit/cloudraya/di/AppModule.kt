@@ -1,21 +1,24 @@
-package com.example.storyapp.di
+package com.bangkit.cloudraya.di
 
+import androidx.room.Room
+import com.bangkit.cloudraya.database.CloudDatabase
 import com.bangkit.cloudraya.network.ApiService
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-//val localModule = module {
-//    factory { get<StoryDatabase>().storyDao() }
-//    single {
-//        Room.databaseBuilder(
-//            androidContext().applicationContext,
-//            StoryDatabase::class.java, "App.db"
-//        ).build()
-//    }
-//}
+val localModule = module {
+    factory { get<CloudDatabase>().sitesDao() }
+    single {
+        Room.databaseBuilder(
+            androidContext().applicationContext,
+            CloudDatabase::class.java, "App.db"
+        ).build()
+    }
+}
 
 val networkModule = module {
     single {
