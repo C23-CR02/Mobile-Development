@@ -32,7 +32,6 @@ class FragmentSiteAdd : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSubmit.setOnClickListener {
             if (isFilled()) {
-                Log.d("testing","Button ")
                 addSite()
             } else {
                 binding.apply {
@@ -85,7 +84,7 @@ class FragmentSiteAdd : Fragment() {
             when (data) {
                 is Event.Success -> {
                     Log.d("Testing", "Check Response Data : $data.toString()")
-                    token = data.data.data?.bearerToken.toString()
+                    token += data.data.data?.bearerToken.toString()
                     val site = Sites(
                         siteName,
                         siteUrl,

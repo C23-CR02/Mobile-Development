@@ -41,7 +41,7 @@ class FragmentSiteList : Fragment() {
             val layoutManager = LinearLayoutManager(requireContext())
             adapter.setOnItemClickCallback(object : SiteListAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: Sites) {
-                    showSelectedSite()
+                    showSelectedSite(data.token)
                 }
 
             })
@@ -50,8 +50,8 @@ class FragmentSiteList : Fragment() {
         }
     }
 
-    private fun showSelectedSite() {
-        val toResource = FragmentSiteListDirections.actionFragmentSiteListToHomeFragment()
+    private fun showSelectedSite(token : String) {
+        val toResource = FragmentSiteListDirections.actionFragmentSiteListToHomeFragment(token)
         findNavController().navigate(toResource)
     }
 
@@ -60,8 +60,5 @@ class FragmentSiteList : Fragment() {
         findNavController().navigate(toSiteEdit)
     }
 
-    private fun toHome() {
-        val toHome = FragmentSiteListDirections.actionFragmentSiteListToHomeFragment()
-        findNavController().navigate(toHome)
-    }
+
 }
