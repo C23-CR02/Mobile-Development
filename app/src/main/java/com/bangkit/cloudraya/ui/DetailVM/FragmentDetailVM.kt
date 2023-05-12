@@ -20,7 +20,7 @@ class FragmentDetailVM : Fragment() {
     private lateinit var binding: FragmentDetailVmBinding
     private val viewModel: DetailVMViewModel by viewModel()
     private lateinit var vmData: VMListData
-    private var token = "Bearer "
+    private var token = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,9 +50,7 @@ class FragmentDetailVM : Fragment() {
     private fun observeData(vmData: VMListData) {
         Log.d("Request Detail", vmData.localId.toString())
         lifecycleScope.launch {
-
-            token += viewModel.getToken()[0].token
-            Log.d("Testing", token)
+            token = viewModel.getToken()[0].token
             viewModel.getVMDetail(token, vmData.localId!!).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Event.Success -> {
@@ -74,8 +72,7 @@ class FragmentDetailVM : Fragment() {
 
     private fun startVM() {
         lifecycleScope.launch {
-            token += viewModel.getToken()[0].token
-            Log.d("Testing", token)
+            token = viewModel.getToken()[0].token
             viewModel.vmAction(token, vmData.localId!!, "start")
                 .observe(viewLifecycleOwner) { result ->
                     when (result) {
@@ -103,8 +100,7 @@ class FragmentDetailVM : Fragment() {
 
     private fun stopVM() {
         lifecycleScope.launch {
-            token += viewModel.getToken()[0].token
-            Log.d("Testing", token)
+            token = viewModel.getToken()[0].token
             viewModel.vmAction(token, vmData.localId!!, "stop")
                 .observe(viewLifecycleOwner) { result ->
                     when (result) {
@@ -133,7 +129,7 @@ class FragmentDetailVM : Fragment() {
 
     private fun restartVM() {
         lifecycleScope.launch {
-            token += viewModel.getToken()[0].token
+            token = viewModel.getToken()[0].token
             Log.d("Testing", token)
             viewModel.vmAction(token, vmData.localId!!, "reboot")
                 .observe(viewLifecycleOwner) { result ->
