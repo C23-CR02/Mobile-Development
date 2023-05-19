@@ -67,7 +67,7 @@ class FragmentResources : Fragment() {
     private fun showRecycleView() {
         vmAdapter = VMAdapter() { vmData ->
             val toDetailVM =
-                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData)
+                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData, site)
             findNavController().navigate(toDetailVM)
         }
         binding.rvVM.apply {

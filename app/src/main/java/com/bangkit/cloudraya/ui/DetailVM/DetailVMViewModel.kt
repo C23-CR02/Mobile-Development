@@ -13,4 +13,8 @@ class DetailVMViewModel(private val cloudRepository: CloudRepository): ViewModel
         withContext(Dispatchers.IO){
             cloudRepository.getSites()
         }
+
+    fun getListEncrypted(key : String) : List<Any>{
+        return cloudRepository.getList(key)
+    }
 }
