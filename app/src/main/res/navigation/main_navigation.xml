@@ -69,6 +69,9 @@
         <argument
             android:name="vmData"
             app:argType="com.bangkit.cloudraya.model.remote.VMListData" />
+        <argument
+            android:name="site_name"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
