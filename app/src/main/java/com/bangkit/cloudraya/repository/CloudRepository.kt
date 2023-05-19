@@ -1,5 +1,6 @@
 package com.bangkit.cloudraya.repository
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -11,67 +12,73 @@ import com.bangkit.cloudraya.model.remote.VMActionResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
 import com.bangkit.cloudraya.model.remote.VMListResponse
 import com.bangkit.cloudraya.network.ApiService
+import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-class CloudRepository(private val apiService: ApiService,private val cloudDatabase: CloudDatabase) {
+class CloudRepository(
+    private val apiService: ApiService,
+    private val cloudDatabase: CloudDatabase,
+    private val sharedPreferences: SharedPreferences,
 
+) {
     fun getVMList(token: String): LiveData<Event<VMListResponse>> =
-        liveData(Dispatchers.IO){
+        liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
                 val response = apiService.getVMList(token)
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val data = response.body()
                     Log.d("Success", data.toString())
                     data?.let {
                         emit(Event.Success(it))
                     }
-                }else{
+                } else {
                     val error = response.errorBody()?.toString()
                     Log.d("Error", response.body()?.message!!)
-                    if (error != null){
+                    if (error != null) {
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
                         emit(Event.Error(null, message))
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d("Exception", e.toString())
                 emit(Event.Error(null, e.toString()))
             }
         }
 
     fun getVMDetail(token: String, id: Int): LiveData<Event<VMDetailResponse>> =
-        liveData(Dispatchers.IO){
+        liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
                 val response = apiService.getVMDetail(token, id)
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val data = response.body()
                     Log.d("Success", data.toString())
                     data?.let {
                         emit(Event.Success(it))
                     }
-                }else{
+                } else {
                     val error = response.errorBody()?.toString()
                     Log.d("Error", response.body()?.message!!)
-                    if (error != null){
+                    if (error != null) {
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
                         emit(Event.Error(null, message))
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d("Exception", e.toString())
                 emit(Event.Error(null, e.toString()))
             }
         }
 
     fun vmAction(token: String, vmId: Int, request: String): LiveData<Event<VMActionResponse>> =
-        liveData(Dispatchers.IO){
+        liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
                 val requestBody = JsonObject().apply {
@@ -80,23 +87,24 @@ class CloudRepository(private val apiService: ApiService,private val cloudDataba
                     addProperty("release_ip", false)
                 }
                 val response = apiService.vmAction("application/json", token, requestBody)
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {
                         emit(Event.Success(it))
                     }
-                }else{
+                } else {
                     val error = response.errorBody()?.toString()
-                    if (error != null){
+                    if (error != null) {
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
                         emit(Event.Error(null, message))
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(Event.Error(null, e.toString()))
             }
         }
+
     fun getToken(request: JsonObject): LiveData<Event<TokenResponse>> =
         liveData(Dispatchers.IO) {
             emit(Event.Loading)
@@ -121,15 +129,44 @@ class CloudRepository(private val apiService: ApiService,private val cloudDataba
         }
 
 
-    suspend fun insertSites(site : Sites){
-        withContext(Dispatchers.IO){
+    suspend fun insertSites(site: Sites) {
+        withContext(Dispatchers.IO) {
             cloudDatabase.sitesDao().insertSites(site)
         }
     }
 
-    suspend fun getSites() : List<Sites> {
-        return withContext(Dispatchers.IO){
+    suspend fun getSites(): List<Sites> {
+        return withContext(Dispatchers.IO) {
             cloudDatabase.sitesDao().getAllSites()
+        }
+    }
+
+    // Fungsi untuk SharedPreferencesEncrypted
+    fun saveEncryptedValues(appKey: String, appSecret: String,token : String) {
+        sharedPreferences.edit()
+            .putString("app_key", appKey)
+            .putString("app_secret", appSecret)
+            .putString("token" , token)
+            .apply()
+    }
+    fun getDecrypted(value: String): String {
+        return sharedPreferences.getString(value, null).toString()
+    }
+
+    fun saveList(key: String, list: List<Any>) {
+        val gson = Gson()
+        val json = gson.toJson(list)
+        sharedPreferences.edit().putString(key, json).apply()
+    }
+
+    fun getList(key: String) : List<Any> {
+        val gson = Gson()
+        val json = sharedPreferences.getString(key, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<Any>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            emptyList()
         }
     }
 }

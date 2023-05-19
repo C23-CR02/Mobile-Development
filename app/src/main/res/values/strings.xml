@@ -50,5 +50,9 @@
     <string name = "hint_siteUrl">Enter Your Site URL Here</string>
     <string name = "hint_appKey">Enter Your App Key Here</string>
     <string name = "hint_appSecret">Enter Your App Secret Here</string>
+    <string name="exit_confirmation">Want To Exit ?</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="exit_confirmation_message">Are you sure want to exit ?</string>
 
 </resources>

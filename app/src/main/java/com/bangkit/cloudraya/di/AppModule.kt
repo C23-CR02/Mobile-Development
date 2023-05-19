@@ -1,6 +1,9 @@
 package com.bangkit.cloudraya.di
 
+import android.content.Context
 import androidx.room.Room
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.bangkit.cloudraya.database.CloudDatabase
 import com.bangkit.cloudraya.network.ApiService
 import okhttp3.OkHttpClient
@@ -39,4 +42,22 @@ val networkModule = module {
         retrofit.create(ApiService::class.java)
     }
 }
+
+val encryptionModule = module {
+    single {
+        val context: Context = androidContext()
+        val masterKeyAlias = MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        EncryptedSharedPreferences.create(
+            context,
+            "encrypted_prefs",
+            masterKeyAlias,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+    }
+}
+
 

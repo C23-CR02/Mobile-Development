@@ -1,4 +1,4 @@
-package com.example.storyapp.di
+package com.bangkit.cloudraya.di
 
 
 import com.bangkit.cloudraya.repository.CloudRepository
@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 
 val repositoryModule = module {
-    single { CloudRepository(get(),get()) }
+    single { CloudRepository(get(),get(),get()) }
 }
 
 val viewModule = module {

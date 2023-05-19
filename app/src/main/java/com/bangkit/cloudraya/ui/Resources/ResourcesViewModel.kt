@@ -18,5 +18,8 @@ class ResourcesViewModel(private val cloudRepository: CloudRepository): ViewMode
     }
     fun getToken(request : JsonObject) : LiveData<Event<TokenResponse>> =
         cloudRepository.getToken(request)
+    fun getListEncrypted(key : String) : List<Any>{
+        return cloudRepository.getList(key)
+    }
 
 }

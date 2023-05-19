@@ -21,7 +21,7 @@ class SiteListAdapter(private var sites: List<Sites>) :
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = sites?.size ?: 0
+    override fun getItemCount(): Int = sites.size
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

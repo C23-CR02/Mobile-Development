@@ -1,5 +1,6 @@
 package com.bangkit.cloudraya.ui.SiteAdd
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.database.Sites
@@ -10,13 +11,25 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class SiteAddViewModel(private val cloudRepository: CloudRepository): ViewModel() {
-    fun getToken(request : JsonObject) : LiveData<Event<TokenResponse>> =
+class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel() {
+    fun getToken(request: JsonObject): LiveData<Event<TokenResponse>> =
         cloudRepository.getToken(request)
 
-    suspend fun insertSites(site: Sites){
-        withContext(Dispatchers.IO){
+    suspend fun insertSites(site: Sites) {
+        withContext(Dispatchers.IO) {
             cloudRepository.insertSites(site)
         }
     }
+
+    fun saveEncrypted(appKey: String, appSecret: String, token: String) {
+        cloudRepository.saveEncryptedValues(appKey, appSecret, token)
+    }
+    fun saveListEncrypted(key : String, list : List<String>){
+        cloudRepository.saveList(key, list)
+    }
+
+    fun getListEncrypted(key : String){
+        cloudRepository.getList(key)
+    }
+
 }

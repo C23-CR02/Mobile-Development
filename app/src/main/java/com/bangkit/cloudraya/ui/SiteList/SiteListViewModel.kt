@@ -12,4 +12,11 @@ class SiteListViewModel(private val cloudRepository: CloudRepository):ViewModel(
             cloudRepository.getSites()
         }
     }
+    fun getDecrypted(value:String): String{
+        return cloudRepository.getDecrypted(value)
+    }
+
+    fun getListEncrypted(key:String) : List<Any>{
+        return cloudRepository.getList(key)
+    }
 }

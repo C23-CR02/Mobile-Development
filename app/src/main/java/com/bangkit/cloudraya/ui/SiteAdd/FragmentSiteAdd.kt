@@ -77,13 +77,9 @@ class FragmentSiteAdd : Fragment() {
             addProperty("app_key", appKey)
             addProperty("secret_key", appSecret)
         }
-        Log.d("testing", "site url $siteUrl")
-        Log.d("Testing ", "response : $request")
         viewModel.getToken(request).observe(viewLifecycleOwner) { data ->
-            Log.d("Testing", "Check Response Data : $data.toString()")
             when (data) {
                 is Event.Success -> {
-                    Log.d("Testing", "Check Response Data : $data.toString()")
                     token += data.data.data?.bearerToken.toString()
                     val site = Sites(
                         siteName,
@@ -96,6 +92,10 @@ class FragmentSiteAdd : Fragment() {
                         viewModel.insertSites(site)
                         toList()
                     }
+                    viewModel.saveEncrypted(appKey, appSecret, token)
+                    val list = listOf(appKey,appSecret,token)
+                    viewModel.saveListEncrypted(siteName,list)
+                    viewModel.getListEncrypted(siteName)
                     Toast.makeText(
                         requireContext(),data.data.message,
                         Toast.LENGTH_SHORT
@@ -108,7 +108,6 @@ class FragmentSiteAdd : Fragment() {
                     Log.d("Event ", data.toString())
                 }
             }
-
         }
     }
 }

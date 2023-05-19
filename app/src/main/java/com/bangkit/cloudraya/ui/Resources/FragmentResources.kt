@@ -20,7 +20,7 @@ class FragmentResources : Fragment() {
     private lateinit var binding: FragmentResourcesBinding
     private val viewModel: ResourcesViewModel by viewModel()
     private lateinit var vmAdapter: VMAdapter
-    private lateinit var token: String
+    private lateinit var site: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,8 +32,11 @@ class FragmentResources : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showRecycleView()
-        token = arguments?.getString("token") ?: ""
-        Log.d("Testing","token : $token")
+        site = arguments?.getString("data") ?: ""
+        Log.d("Testing","site : $site")
+        val data = viewModel.getListEncrypted(site)
+        val token = data[2].toString()
+        Log.d("Testing","token : $site")
 
         binding.btnHome.setOnClickListener {
             findNavController().popBackStack()

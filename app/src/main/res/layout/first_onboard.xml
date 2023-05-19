@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/landing_header_1"
-        app:layout_constraintBottom_toTopOf="@id/tv_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_start"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_banner" />
 

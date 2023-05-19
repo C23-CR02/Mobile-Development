@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModel()
-    private lateinit var token: String
+    private lateinit var site: String
 
 
     override fun onCreateView(
@@ -26,9 +26,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        token = arguments?.getString("token") ?: ""
+        site = arguments?.getString("data") ?: ""
         binding.btnResources.setOnClickListener {
-            val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(token)
+            val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(site)
             findNavController().navigate(toResources)
         }
     }
