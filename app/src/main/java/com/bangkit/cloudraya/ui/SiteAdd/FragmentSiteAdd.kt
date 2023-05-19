@@ -2,6 +2,7 @@ package com.bangkit.cloudraya.ui.SiteAdd
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.google.gson.JsonObject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -90,16 +93,16 @@ class FragmentSiteAdd : Fragment() {
                     )
                     lifecycleScope.launch{
                         viewModel.insertSites(site)
+                        viewModel.saveEncrypted(appKey, appSecret, token)
+                        val list = listOf(appKey,appSecret,token)
+                        viewModel.saveListEncrypted(siteName,list)
+                        viewModel.getListEncrypted(siteName)
+                        callToast()
+                        delay(Toast.LENGTH_SHORT.toLong())
                         toList()
                     }
-                    viewModel.saveEncrypted(appKey, appSecret, token)
-                    val list = listOf(appKey,appSecret,token)
-                    viewModel.saveListEncrypted(siteName,list)
-                    viewModel.getListEncrypted(siteName)
-                    Toast.makeText(
-                        requireContext(),data.data.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+
                 }
                 is Event.Error -> {
                     Log.d("Calling error : ", data.error.toString())
@@ -109,5 +112,14 @@ class FragmentSiteAdd : Fragment() {
                 }
             }
         }
+    }
+    private fun callToast(){
+        val inflater: LayoutInflater = requireActivity().layoutInflater
+        val layout: View = inflater.inflate(R.layout.success_toast, requireActivity().findViewById(R.id.toast_successful))
+        val toast = Toast(requireContext())
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
     }
 }
