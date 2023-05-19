@@ -36,7 +36,7 @@ class FragmentResources : Fragment() {
         Log.d("Testing","site : $site")
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
-        Log.d("Testing","token : $site")
+        Log.d("Testing","token : $token")
 
         binding.btnHome.setOnClickListener {
             findNavController().popBackStack()
