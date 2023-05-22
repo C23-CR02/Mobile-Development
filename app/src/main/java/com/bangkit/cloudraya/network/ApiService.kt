@@ -10,24 +10,24 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @POST("user/auth")
+    @POST("/v1/api/gateway/user/auth")
     suspend fun getToken(
         @Header("Content-Type") contentType : String,
         @Body body : JsonObject
     ): Response<TokenResponse>
 
-    @GET("user/virtualmachines")
+    @GET("/v1/api/gateway/user/virtualmachines")
     suspend fun getVMList(
         @Header("Authorization") token : String
     ):Response<VMListResponse>
 
-    @GET("user/virtualmachines/{id}")
+    @GET("/v1/api/gateway/user/virtualmachines/{id}")
     suspend fun getVMDetail(
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Response<VMDetailResponse>
 
-    @POST("user/virtualmachines/action")
+    @POST("/v1/api/gateway/user/virtualmachines/action")
     suspend fun vmAction(
         @Header("Content-Type") contentType : String,
         @Header("Authorization") token : String,

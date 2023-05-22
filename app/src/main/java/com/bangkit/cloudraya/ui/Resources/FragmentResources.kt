@@ -1,7 +1,6 @@
 package com.bangkit.cloudraya.ui.Resources
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +32,8 @@ class FragmentResources : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showRecycleView()
         site = arguments?.getString("data") ?: ""
-        Log.d("Testing","site : $site")
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
-        Log.d("Testing","token : $token")
 
         binding.btnHome.setOnClickListener {
             findNavController().popBackStack()
@@ -67,7 +64,7 @@ class FragmentResources : Fragment() {
     private fun showRecycleView() {
         vmAdapter = VMAdapter() { vmData ->
             val toDetailVM =
-                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData, site)
+                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData,site)
             findNavController().navigate(toDetailVM)
         }
         binding.rvVM.apply {

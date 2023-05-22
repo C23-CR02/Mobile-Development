@@ -2,7 +2,6 @@ package com.bangkit.cloudraya.ui.SiteList
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,7 @@ class FragmentSiteList : Fragment() {
             val layoutManager = LinearLayoutManager(requireContext())
             adapter.setOnItemClickCallback(object : SiteListAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: Sites) {
-                    showSelectedSite(data.site_name)
+                    showSelectedSite(data)
                 }
 
             })
@@ -75,8 +74,9 @@ class FragmentSiteList : Fragment() {
             .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
-    private fun showSelectedSite(data : String) {
-        val toResource = FragmentSiteListDirections.actionFragmentSiteListToHomeFragment(data)
+    private fun showSelectedSite(data : Sites) {
+        viewModel.setBaseUrl(data.site_url)
+        val toResource = FragmentSiteListDirections.actionFragmentSiteListToHomeFragment(data.site_name)
         findNavController().navigate(toResource)
     }
 

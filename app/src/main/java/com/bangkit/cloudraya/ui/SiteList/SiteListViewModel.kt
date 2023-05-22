@@ -19,4 +19,8 @@ class SiteListViewModel(private val cloudRepository: CloudRepository):ViewModel(
     fun getListEncrypted(key:String) : List<Any>{
         return cloudRepository.getList(key)
     }
+
+    fun setBaseUrl(url : String){
+        cloudRepository.setBaseUrl(url)
+    }
 }

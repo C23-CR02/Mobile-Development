@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 
 val repositoryModule = module {
-    single { CloudRepository(get(),get(),get()) }
+    single { CloudRepository(get(),get(),get(),get()) }
 }
 
 val viewModule = module {

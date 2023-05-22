@@ -12,6 +12,7 @@ import com.bangkit.cloudraya.model.remote.VMActionResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
 import com.bangkit.cloudraya.model.remote.VMListResponse
 import com.bangkit.cloudraya.network.ApiService
+import com.bangkit.cloudraya.utils.BaseUrlInterceptor
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
@@ -23,8 +24,15 @@ class CloudRepository(
     private val apiService: ApiService,
     private val cloudDatabase: CloudDatabase,
     private val sharedPreferences: SharedPreferences,
+    private val baseUrlInterceptor: BaseUrlInterceptor
 
 ) {
+    fun setBaseUrl(url : String){
+        Log.d("Cloud Repository",url)
+        baseUrlInterceptor.setBaseUrl(url)
+        Log.d("Cloud Repository","Sukses ?")
+    }
+
     fun getVMList(token: String): LiveData<Event<VMListResponse>> =
         liveData(Dispatchers.IO) {
             emit(Event.Loading)

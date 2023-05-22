@@ -67,7 +67,10 @@
         android:label="FragmentDetailVM"
         tools:layout="@layout/fragment_detail_vm">
         <argument
-            android:name="data"
+            android:name="dataVM"
+            app:argType="com.bangkit.cloudraya.model.remote.VMListData" />
+        <argument
+            android:name="site"
             app:argType="string" />
     </fragment>
     <fragment

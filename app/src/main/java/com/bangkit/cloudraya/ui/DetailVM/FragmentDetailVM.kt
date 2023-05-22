@@ -2,18 +2,16 @@ package com.bangkit.cloudraya.ui.DetailVM
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentDetailVM : Fragment() {
@@ -32,10 +30,11 @@ class FragmentDetailVM : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        vmData = FragmentDetailVMArgs.fromBundle(arguments as Bundle).vmData
-        site = FragmentDetailVMArgs.fromBundle(arguments as Bundle).siteName
-        val data = viewModel.getListEncrypted(token)
+        vmData = FragmentDetailVMArgs.fromBundle(arguments as Bundle).dataVM
+        site = arguments?.getString("site") ?: ""
+        val data = viewModel.getListEncrypted(site)
         token = data[2].toString()
+
         observeData(vmData)
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -71,7 +70,6 @@ class FragmentDetailVM : Fragment() {
 //            token = viewModel.getToken()[0].token
 //        }
     }
-
 
 
     private fun startVM() {

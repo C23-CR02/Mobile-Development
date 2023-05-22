@@ -32,4 +32,8 @@ class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel
         cloudRepository.getList(key)
     }
 
+    fun setBaseUrl(url : String){
+        cloudRepository.setBaseUrl(url)
+    }
+
 }

@@ -80,7 +80,7 @@ class FragmentSiteAdd : Fragment() {
             addProperty("app_key", appKey)
             addProperty("secret_key", appSecret)
         }
-        Log.d("Token", request.toString())
+        viewModel.setBaseUrl(siteUrl)
         viewModel.getToken(request).observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Event.Success -> {
