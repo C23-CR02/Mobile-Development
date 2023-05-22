@@ -20,14 +20,14 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentSiteAdd : Fragment() {
-    private lateinit var binding : FragmentSiteAddBinding
-    private var token : String = "Bearer "
-    private val viewModel : SiteAddViewModel by viewModel()
+    private lateinit var binding: FragmentSiteAddBinding
+    private var token: String = "Bearer "
+    private val viewModel: SiteAddViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSiteAddBinding.inflate(inflater, container,false)
+        binding = FragmentSiteAddBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,10 +56,11 @@ class FragmentSiteAdd : Fragment() {
 
     }
 
-    private fun toList(){
+    private fun toList() {
         val toList = FragmentSiteAddDirections.actionFragmentSiteAddToFragmentSiteList()
         findNavController().navigate(toList)
     }
+
     private fun isFilled(): Boolean {
         binding.apply {
             val siteName = siteNameLayout.text
@@ -92,18 +93,16 @@ class FragmentSiteAdd : Fragment() {
                         appSecret,
                         token
                     )
-                    lifecycleScope.launch{
+                    lifecycleScope.launch {
                         viewModel.insertSites(site)
                         viewModel.saveEncrypted(appKey, appSecret, token)
-                        val list = listOf(appKey,appSecret,token)
-                        viewModel.saveListEncrypted(siteName,list)
+                        val list = listOf(appKey, appSecret, token)
+                        viewModel.saveListEncrypted(siteName, list)
                         viewModel.getListEncrypted(siteName)
                         callToast()
                         delay(Toast.LENGTH_SHORT.toLong())
                         toList()
                     }
-
-
                 }
                 is Event.Error -> {
                     Log.d("Calling error : ", data.error.toString())
@@ -114,9 +113,13 @@ class FragmentSiteAdd : Fragment() {
             }
         }
     }
-    private fun callToast(){
+
+    private fun callToast() {
         val inflater: LayoutInflater = requireActivity().layoutInflater
-        val layout: View = inflater.inflate(R.layout.success_toast, requireActivity().findViewById(R.id.toast_successful))
+        val layout: View = inflater.inflate(
+            R.layout.success_toast,
+            requireActivity().findViewById(R.id.toast_successful)
+        )
         val toast = Toast(requireContext())
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.duration = Toast.LENGTH_SHORT

@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.databinding.FragmentHomeBinding
+import com.bangkit.cloudraya.model.local.Event
+import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var site: String
-
+    private var token: String = "Bearer "
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +34,36 @@ class HomeFragment : Fragment() {
         binding.btnResources.setOnClickListener {
             val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(site)
             findNavController().navigate(toResources)
+        }
+        getToken()
+    }
+
+    private fun getToken() {
+        val data = viewModel.getListEncrypted(site)
+        val appKey = data[0].toString()
+        val appSecret = data[1].toString()
+        val request = JsonObject().apply {
+            addProperty("app_key", appKey)
+            addProperty("secret_key", appSecret)
+        }
+        viewModel.getToken(request).observe(viewLifecycleOwner) { item ->
+            when (item) {
+                is Event.Success -> {
+                    token += item.data.data?.bearerToken.toString()
+                    lifecycleScope.launch {
+                        val list = listOf(appKey, appSecret, token)
+                        viewModel.saveListEncrypted(site, list)
+                    }
+
+
+                }
+                is Event.Error -> {
+                    Log.d("Calling error : ", item.error.toString())
+                }
+                else -> {
+                    Log.d("Event ", item.toString())
+                }
+            }
         }
     }
 }
