@@ -13,9 +13,6 @@ import kotlinx.coroutines.withContext
 class ResourcesViewModel(private val cloudRepository: CloudRepository): ViewModel() {
     fun getVMList(token: String) = cloudRepository.getVMList(token)
 
-    suspend fun getSites() = withContext(Dispatchers.IO){
-        cloudRepository.getSites()
-    }
     fun getToken(request : JsonObject) : LiveData<Event<TokenResponse>> =
         cloudRepository.getToken(request)
     fun getListEncrypted(key : String) : List<Any>{
