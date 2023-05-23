@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1044426049361",
+    "project_id": "mobile-notification-90a3a",
+    "storage_bucket": "mobile-notification-90a3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044426049361:android:47805069576fcf74a63570",
+        "android_client_info": {
+          "package_name": "com.bangkit.cloudraya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044426049361-36uc786i5mfdhqst1dbt42i2v2ic0ds9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNmEPB6ARGZncv_ik8Iamln_Kc046fL-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044426049361-36uc786i5mfdhqst1dbt42i2v2ic0ds9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
