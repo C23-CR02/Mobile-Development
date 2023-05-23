@@ -1,6 +1,7 @@
 package com.bangkit.cloudraya.ui.Resources
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class FragmentResources : Fragment() {
         site = arguments?.getString("data") ?: ""
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
+        Log.d("Token", token)
 
         binding.btnHome.setOnClickListener {
             findNavController().popBackStack()

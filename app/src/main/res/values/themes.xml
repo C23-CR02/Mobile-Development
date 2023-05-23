@@ -61,7 +61,7 @@
         <item name="android:textColor">?colorOnBackground</item>
         <item name="android:padding">10dp</item>
         <item name="cornerRadius">15dp</item>
-        <item name="backgroundTint">@color/white</item>
+        <item name="backgroundTint">@color/color_action_button</item>
     </style>
     <style name = "Theme.CloudRaya.Card">
         <item name="cardCornerRadius">16dp</item>

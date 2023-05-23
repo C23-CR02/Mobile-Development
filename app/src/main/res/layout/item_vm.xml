@@ -69,7 +69,7 @@
             card_view:layout_constraintTop_toBottomOf="@id/tvIPAddress"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:drawableStartCompat="@drawable/ic_circle"
+            card_view:drawableStartCompat="@drawable/ic_active"
             android:drawablePadding="5dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
