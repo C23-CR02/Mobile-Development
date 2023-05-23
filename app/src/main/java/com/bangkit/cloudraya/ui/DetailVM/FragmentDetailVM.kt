@@ -5,13 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentDetailVM : Fragment() {
@@ -52,7 +56,8 @@ class FragmentDetailVM : Fragment() {
 
     private fun observeData(vmData: VMListData) {
         Log.d("Request Detail", vmData.localId.toString())
-        viewModel.getVMDetail(token, vmData.localId!!).observe(viewLifecycleOwner) { result ->
+        viewModel.getVMDetail(token, vmData.localId!!)
+        viewModel.vmDetail.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {
                     updateUI(result.data.data!!)
@@ -66,9 +71,6 @@ class FragmentDetailVM : Fragment() {
                 }
             }
         }
-//        lifecycleScope.launch {
-//            token = viewModel.getToken()[0].token
-//        }
     }
 
 
@@ -82,6 +84,10 @@ class FragmentDetailVM : Fragment() {
                             "${result.data.data} - ${result.data.message}",
                             Snackbar.LENGTH_LONG
                         ).show()
+                        runBlocking {
+                            delay(Toast.LENGTH_LONG.toLong())
+                        }
+                        observeData(vmData)
                     }
                     is Event.Error -> {
                         Snackbar.make(
@@ -95,9 +101,6 @@ class FragmentDetailVM : Fragment() {
                     }
                 }
             }
-//        lifecycleScope.launch {
-//            token = viewModel.getToken()[0].token
-//        }
     }
 
     private fun stopVM() {
@@ -110,6 +113,10 @@ class FragmentDetailVM : Fragment() {
                             "${result.data.data} - ${result.data.message}",
                             Snackbar.LENGTH_LONG
                         ).show()
+                        runBlocking {
+                            delay(Toast.LENGTH_LONG.toLong())
+                        }
+                        observeData(vmData)
                     }
                     is Event.Error -> {
                         Snackbar.make(
@@ -124,9 +131,6 @@ class FragmentDetailVM : Fragment() {
                     }
                 }
             }
-//        lifecycleScope.launch {
-//            token = viewModel.getToken()[0].token
-//        }
     }
 
     private fun restartVM() {
@@ -139,6 +143,10 @@ class FragmentDetailVM : Fragment() {
                             "${result.data.data} - ${result.data.message}",
                             Snackbar.LENGTH_LONG
                         ).show()
+                        runBlocking {
+                            delay(Toast.LENGTH_LONG.toLong())
+                        }
+                        observeData(vmData)
                     }
                     is Event.Error -> {
                         Snackbar.make(
@@ -153,10 +161,6 @@ class FragmentDetailVM : Fragment() {
                     }
                 }
             }
-//        lifecycleScope.launch {
-//            token = viewModel.getToken()[0].token
-//            Log.d("Testing", token)
-//        }
     }
 
     private fun updateUI(data: VMData) {
@@ -167,6 +171,21 @@ class FragmentDetailVM : Fragment() {
             tvIPAddress.text = data.publicIp
             tvLaunchDate.text = data.launchDate
             tvStatus.text = data.state
+        }
+        if (data.state!!.contains("stop", ignoreCase = true)){
+            binding.apply {
+                btnStop.isEnabled = false
+                btnStart.isEnabled = true
+                btnRestart.isEnabled = false
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_inactive, 0, 0, 0)
+            }
+        }else{
+            binding.apply {
+                btnStop.isEnabled = true
+                btnStart.isEnabled = false
+                btnRestart.isEnabled = true
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_active, 0, 0, 0)
+            }
         }
 
     }
