@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
@@ -99,12 +100,23 @@ class FragmentSiteAdd : Fragment() {
                         val list = listOf(appKey, appSecret, token)
                         viewModel.saveListEncrypted(siteName, list)
                         viewModel.getListEncrypted(siteName)
-                        callToast()
-                        delay(Toast.LENGTH_SHORT.toLong())
-                        toList()
+                        val dialog = SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
+                        dialog.apply {
+                            titleText = "Successful!"
+                            contentText = getString(R.string.toast_successful)
+                            setConfirmClickListener {
+                                it.dismiss()
+                                toList()
+                            }
+                            .show()
+                        }
                     }
                 }
                 is Event.Error -> {
+                    SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText(data.error)
+                        .show()
                     Log.d("Calling error : ", data.error.toString())
                 }
                 else -> {

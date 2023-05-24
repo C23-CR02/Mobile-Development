@@ -51,6 +51,13 @@ class FragmentSiteList : Fragment() {
             })
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = layoutManager
+            if (site.isEmpty()){
+                binding.recyclerView.visibility = View.GONE
+                binding.ivEmpty.visibility = View.VISIBLE
+            }else{
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.ivEmpty.visibility = View.GONE
+            }
         }
     }
 

@@ -51,6 +51,13 @@ class FragmentResources : Fragment() {
             when (result) {
                 is Event.Success -> {
                     vmAdapter.submitData(result.data.data!!)
+                    if (result.data.data.isEmpty()){
+                        binding.rvVM.visibility = View.GONE
+                        binding.ivEmpty.visibility = View.VISIBLE
+                    }else{
+                        binding.rvVM.visibility = View.VISIBLE
+                        binding.ivEmpty.visibility = View.GONE
+                    }
                 }
                 is Event.Error -> {
                     Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)

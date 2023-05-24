@@ -28,6 +28,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_vm"/>
+    <ImageView
+        android:id="@+id/ivEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@id/btnHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:visibility="gone"
+        android:scaleType="fitCenter"
+        android:src="@drawable/empty"
+        android:contentDescription="@string/banner" />
 
     <ImageView
         android:id="@+id/btnHome"

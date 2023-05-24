@@ -81,7 +81,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-
-
+    //SweetAlert
+    implementation 'com.github.f0ris.sweetalert:library:1.6.2'
 
 }
