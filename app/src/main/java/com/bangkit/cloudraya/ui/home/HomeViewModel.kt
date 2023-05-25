@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.Home
+package com.bangkit.cloudraya.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

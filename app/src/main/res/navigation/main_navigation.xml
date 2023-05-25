@@ -6,7 +6,7 @@
     app:startDestination="@id/fragmentOnboarding">
     <fragment
         android:id="@+id/fragmentOnboarding"
-        android:name="com.bangkit.cloudraya.ui.OnBoarding.FragmentOnboarding"
+        android:name="com.bangkit.cloudraya.ui.onboarding.FragmentOnboarding"
         android:label="first_onboard"
         tools:layout="@layout/first_onboard" >
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteList"
-        android:name="com.bangkit.cloudraya.ui.SiteList.FragmentSiteList"
+        android:name="com.bangkit.cloudraya.ui.siteList.FragmentSiteList"
         android:label="fragment_site_list"
         tools:layout="@layout/fragment_site_list" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteAdd"
-        android:name="com.bangkit.cloudraya.ui.SiteAdd.FragmentSiteAdd"
+        android:name="com.bangkit.cloudraya.ui.siteAdd.FragmentSiteAdd"
         android:label="fragment_site_add"
         tools:layout="@layout/fragment_site_add" >
         <action
@@ -43,12 +43,12 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteEdit"
-        android:name="com.bangkit.cloudraya.ui.SiteEdit.FragmentSiteEdit"
+        android:name="com.bangkit.cloudraya.ui.siteEdit.FragmentSiteEdit"
         android:label="fragment_site_edit"
         tools:layout="@layout/fragment_site_edit" />
     <fragment
         android:id="@+id/fragmentResources"
-        android:name="com.bangkit.cloudraya.ui.Resources.FragmentResources"
+        android:name="com.bangkit.cloudraya.ui.resources.FragmentResources"
         android:label="FragmentResources"
         tools:layout="@layout/fragment_resources">
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentDetailVM"
-        android:name="com.bangkit.cloudraya.ui.DetailVM.FragmentDetailVM"
+        android:name="com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM"
         android:label="FragmentDetailVM"
         tools:layout="@layout/fragment_detail_vm">
         <argument
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.bangkit.cloudraya.ui.Home.HomeFragment"
+        android:name="com.bangkit.cloudraya.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action

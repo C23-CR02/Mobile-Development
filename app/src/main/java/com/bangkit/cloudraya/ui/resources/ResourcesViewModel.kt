@@ -1,7 +1,8 @@
-package com.bangkit.cloudraya.ui.Resources
+package com.bangkit.cloudraya.ui.resources
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.repository.CloudRepository

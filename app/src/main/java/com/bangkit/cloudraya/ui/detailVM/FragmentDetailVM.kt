@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.DetailVM
+package com.bangkit.cloudraya.ui.detailVM
 
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +38,8 @@ class FragmentDetailVM : Fragment() {
         site = arguments?.getString("site") ?: ""
         val data = viewModel.getListEncrypted(site)
         token = data[2].toString()
+
+        Log.d("Testing",site)
 
         observeData(vmData)
         binding.btnBack.setOnClickListener {

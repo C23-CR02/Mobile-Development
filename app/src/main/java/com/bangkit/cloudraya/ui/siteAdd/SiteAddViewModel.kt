@@ -1,6 +1,5 @@
-package com.bangkit.cloudraya.ui.SiteAdd
+package com.bangkit.cloudraya.ui.siteAdd
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.database.Sites

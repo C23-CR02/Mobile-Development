@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.Home
+package com.bangkit.cloudraya.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -35,6 +35,8 @@ class HomeFragment : Fragment() {
             val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(site)
             findNavController().navigate(toResources)
         }
+        Log.d("Testing",site)
+
         getToken()
     }
 

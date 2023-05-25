@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="30dp"
-    tools:context=".ui.SiteEdit.FragmentSiteEdit">
+    tools:context=".ui.siteEdit.FragmentSiteEdit">
 
     <TextView
         android:id="@+id/tv_siteList"

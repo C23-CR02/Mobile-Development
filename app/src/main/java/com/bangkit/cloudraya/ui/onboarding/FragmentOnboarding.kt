@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.OnBoarding
+package com.bangkit.cloudraya.ui.onboarding
 
 import android.os.Bundle
 import android.view.LayoutInflater

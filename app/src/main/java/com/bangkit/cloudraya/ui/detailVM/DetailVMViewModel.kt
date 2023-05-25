@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.DetailVM
+package com.bangkit.cloudraya.ui.detailVM
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

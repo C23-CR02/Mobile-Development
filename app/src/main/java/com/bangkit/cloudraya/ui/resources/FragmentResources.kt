@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.Resources
+package com.bangkit.cloudraya.ui.resources
 
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentResourcesBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.ui.adapter.VMAdapter
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentResources : Fragment() {
@@ -36,7 +39,7 @@ class FragmentResources : Fragment() {
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
         Log.d("Token", token)
-
+        Log.d("Testing",site)
         binding.btnHome.setOnClickListener {
             findNavController().popBackStack()
         }

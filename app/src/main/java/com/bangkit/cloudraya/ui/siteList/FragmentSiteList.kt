@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.SiteList
+package com.bangkit.cloudraya.ui.siteList
 
 import android.app.AlertDialog
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.SiteList
+package com.bangkit.cloudraya.ui.siteList
 
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.database.Sites
@@ -12,14 +12,6 @@ class SiteListViewModel(private val cloudRepository: CloudRepository):ViewModel(
             cloudRepository.getSites()
         }
     }
-    fun getDecrypted(value:String): String{
-        return cloudRepository.getDecrypted(value)
-    }
-
-    fun getListEncrypted(key:String) : List<Any>{
-        return cloudRepository.getList(key)
-    }
-
     fun setBaseUrl(url : String){
         cloudRepository.setBaseUrl(url)
     }

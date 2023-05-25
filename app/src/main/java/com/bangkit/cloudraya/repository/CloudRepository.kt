@@ -38,6 +38,10 @@ class CloudRepository(
             emit(Event.Loading)
             try {
                 val response = apiService.getVMList(token)
+                Log.d("Repository","Token : $token")
+
+                Log.d("Repository","response : $response.toString()")
+                Log.d("Repository " , response.body().toString())
                 if (response.isSuccessful) {
                     val data = response.body()
                     Log.d("Success", data.toString())
@@ -157,9 +161,7 @@ class CloudRepository(
             .putString("token" , token)
             .apply()
     }
-    fun getDecrypted(value: String): String {
-        return sharedPreferences.getString(value, null).toString()
-    }
+
 
     fun saveList(key: String, list: List<Any>) {
         val gson = Gson()

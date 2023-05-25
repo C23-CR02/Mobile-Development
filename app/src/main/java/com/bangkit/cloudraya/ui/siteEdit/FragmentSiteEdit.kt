@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.SiteEdit
+package com.bangkit.cloudraya.ui.siteEdit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.SiteEdit
+package com.bangkit.cloudraya.ui.siteEdit
 
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.repository.CloudRepository

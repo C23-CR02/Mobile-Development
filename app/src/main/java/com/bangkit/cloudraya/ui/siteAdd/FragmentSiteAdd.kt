@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya.ui.SiteAdd
+package com.bangkit.cloudraya.ui.siteAdd
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,6 @@ import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.google.gson.JsonObject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
