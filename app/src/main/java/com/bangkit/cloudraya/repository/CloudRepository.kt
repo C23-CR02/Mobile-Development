@@ -179,4 +179,15 @@ class CloudRepository(
             emptyList()
         }
     }
+
+    fun saveOnboarding(onBoarding : Boolean){
+        sharedPreferences.edit()
+            .putBoolean("onboarding_complete", onBoarding)
+            .apply()
+    }
+
+    fun getOnboarding() : Boolean{
+        return sharedPreferences.getBoolean("onboarding_complete", false)
+    }
+
 }

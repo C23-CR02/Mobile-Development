@@ -43,17 +43,26 @@
     <string name="back">Back</string>
 
     <!--    UI-->
-    <string name = "site_error">The site name must not contain symbols.</string>
+    <string name="site_error">The site name must not contain symbols.</string>
 
     <!--    Hint-->
-    <string name = "hint_siteName">Enter Your Site Name Here</string>
-    <string name = "hint_siteUrl">Enter Your Site URL Here</string>
-    <string name = "hint_appKey">Enter Your App Key Here</string>
-    <string name = "hint_appSecret">Enter Your App Secret Here</string>
+    <string name="hint_siteName">Enter Your Site Name Here</string>
+    <string name="hint_siteUrl">Enter Your Site URL Here</string>
+    <string name="hint_appKey">Enter Your App Key Here</string>
+    <string name="hint_appSecret">Enter Your App Secret Here</string>
     <string name="exit_confirmation">Want To Exit ?</string>
     <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
     <string name="exit_confirmation_message">Are you sure want to exit ?</string>
     <string name="toast_successful">Add Sites Successful</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

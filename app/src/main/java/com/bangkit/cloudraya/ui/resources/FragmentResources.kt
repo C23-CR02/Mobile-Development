@@ -9,14 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentResourcesBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.ui.adapter.VMAdapter
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentResources : Fragment() {

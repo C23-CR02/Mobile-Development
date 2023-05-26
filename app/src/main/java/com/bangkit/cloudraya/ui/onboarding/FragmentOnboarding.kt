@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FirstOnboardBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class FragmentOnboarding : Fragment() {
     private lateinit var  binding : FirstOnboardBinding
-
+    private val viewModel : OnBoardingViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,7 @@ class FragmentOnboarding : Fragment() {
             binding.motionLayout.transitionToEnd()
         }
         binding.btnContinue4.setOnClickListener {
+            viewModel.setOnBoarding(true)
             val toListSite =
                 FragmentOnboardingDirections.actionFragmentOnboardingToFragmentSiteList()
             findNavController().navigate(toListSite)
