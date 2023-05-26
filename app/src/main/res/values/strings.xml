@@ -41,6 +41,8 @@
     <string name="home">Home</string>
     <string name="resources">Resources</string>
     <string name="back">Back</string>
+    <string name="action_confirmation">Action Confirmation</string>
+    <string name="back_to_home">Back To Home</string>
 
     <!--    UI-->
     <string name="site_error">The site name must not contain symbols.</string>

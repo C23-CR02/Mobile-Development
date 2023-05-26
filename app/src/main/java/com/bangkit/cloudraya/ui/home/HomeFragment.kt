@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.databinding.FragmentHomeBinding
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.ui.home.HomeViewModel
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
