@@ -15,6 +15,7 @@ import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.ui.siteAdd.SiteAddViewModel
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
