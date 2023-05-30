@@ -1,22 +1,13 @@
 package com.bangkit.cloudraya
 
-import android.app.NotificationManager
-import android.content.Context
-import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.CancellationSignal
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.databinding.ActivityConfirmationBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.delay
 import java.util.concurrent.Executor
 
 class ConfirmationActivity : AppCompatActivity() {

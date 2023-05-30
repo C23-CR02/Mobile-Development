@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.cloudraya.databinding.FragmentResourcesBinding
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.ui.resources.ResourcesViewModel
 import com.bangkit.cloudraya.ui.adapter.VMAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -39,7 +38,8 @@ class FragmentResources : Fragment() {
         Log.d("Token", token)
         Log.d("Testing",site)
         binding.btnHome.setOnClickListener {
-            findNavController().popBackStack()
+            val toHome = FragmentResourcesDirections.actionFragmentResourcesToHomeFragment(site)
+            findNavController().navigate(toHome)
         }
 
         lifecycleScope.launch {
