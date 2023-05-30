@@ -7,13 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.resources.FragmentResources">
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vm_list"
-        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="95dp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
         style="@style/Theme.CloudRaya.PageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/vm_list"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rvVM"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,11 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintBottom_toTopOf="@id/btnHome"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_vm"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:listitem="@layout/item_vm" />
     <ImageView
         android:id="@+id/ivEmpty"
         android:layout_width="wrap_content"
@@ -46,22 +55,53 @@
         android:id="@+id/btnHome"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnResources"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/home"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_home"
-        app:tint="@color/grey"
-        android:contentDescription="@string/home" />
+        app:layout_constraintBottom_toTopOf="@id/tvHome"
+        app:layout_constraintEnd_toStartOf="@+id/btnResources"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2"
+        app:tint="@color/grey" />
+
+    <TextView
+        android:id="@+id/tvHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/home"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnHome"
+        app:layout_constraintStart_toStartOf="@+id/btnHome"
+        app:layout_constraintTop_toBottomOf="@+id/btnHome" />
+
+    <TextView
+        android:id="@+id/tvResources"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/resources"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnResources"
+        app:layout_constraintStart_toStartOf="@+id/btnResources"
+        app:layout_constraintTop_toBottomOf="@+id/btnResources" />
+
     <ImageView
         android:id="@+id/btnResources"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnHome"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/resources"
         android:src="@drawable/ic_resources"
-        android:contentDescription="@string/resources" />
+        app:layout_constraintBottom_toTopOf="@id/tvResources"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnHome"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
