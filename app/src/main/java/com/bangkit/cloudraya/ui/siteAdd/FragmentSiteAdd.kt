@@ -15,7 +15,8 @@ import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.ui.siteAdd.SiteAddViewModel
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,6 +25,7 @@ class FragmentSiteAdd : Fragment() {
     private lateinit var binding: FragmentSiteAddBinding
     private var token: String = "Bearer "
     private val viewModel: SiteAddViewModel by viewModel()
+    private lateinit var databaseReference: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -94,12 +96,14 @@ class FragmentSiteAdd : Fragment() {
                         appSecret,
                         token
                     )
+                    val fcmToken = viewModel.getFCMToken() ?: ""
                     lifecycleScope.launch {
                         viewModel.insertSites(site)
                         viewModel.saveEncrypted(appKey, appSecret, token)
                         val list = listOf(appKey, appSecret, token)
                         viewModel.saveListEncrypted(siteName, list)
                         viewModel.getListEncrypted(siteName)
+                        sendFCMToken(appKey, appSecret, fcmToken)
                         val dialog = SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
                         dialog.apply {
                             titleText = "Successful!"
@@ -124,6 +128,25 @@ class FragmentSiteAdd : Fragment() {
                 }
             }
         }
+    }
+
+    private fun sendFCMToken(appKey: String, appSecret: String, fcmToken: String){
+        databaseReference = FirebaseDatabase.getInstance("https://mobile-notification-90a3a-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users").child(appKey)
+        val hashMap:HashMap<String, String?> = HashMap()
+        hashMap["app_key"] = appKey
+        hashMap["app_secret"] = appSecret
+        hashMap["fcm_token"] = fcmToken
+        databaseReference.setValue(hashMap)
+            .addOnFailureListener {
+                Log.d("RTDB Failure", "${it.message}  ${it.cause}")
+            }
+            .addOnSuccessListener {
+                Log.d("RTDB Success", hashMap.toString())
+            }
+            .addOnCanceledListener {
+                Log.d("RTDB Cancelled", "true")
+            }
+        Log.d("FCM Hash", hashMap.toString())
     }
 
     private fun callToast() {

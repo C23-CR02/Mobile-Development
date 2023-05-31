@@ -124,8 +124,10 @@ class CloudRepository(
                 val response = apiService.getToken("application/json", request)
                 if (response.isSuccessful) {
                     val data = response.body()
-                    data?.let {
-                        emit(Event.Success(it))
+                    if (data?.data != null){
+                        emit(Event.Success(data))
+                    }else{
+                        emit(Event.Error(null, data?.message ?: "Data anda salah"))
                     }
                 } else {
                     val error = response.errorBody()?.toString()
@@ -188,6 +190,10 @@ class CloudRepository(
 
     fun getOnboarding() : Boolean{
         return sharedPreferences.getBoolean("onboarding_complete", false)
+    }
+
+    fun getFCMToken(): String?{
+        return sharedPreferences.getString("fcm_token", "")
     }
 
 }

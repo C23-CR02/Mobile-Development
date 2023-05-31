@@ -35,4 +35,6 @@ class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel
         cloudRepository.setBaseUrl(url)
     }
 
+    fun getFCMToken() = cloudRepository.getFCMToken()
+
 }
