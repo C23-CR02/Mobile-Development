@@ -97,9 +97,6 @@ class FragmentSiteAdd : Fragment() {
                     val site = Sites(
                         siteName,
                         siteUrl,
-                        appKey,
-                        appSecret,
-                        token
                     )
                     val fcmToken = viewModel.getFCMToken() ?: ""
                     lifecycleScope.launch {

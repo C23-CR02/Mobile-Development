@@ -13,4 +13,6 @@ interface sitesDao {
     @Query("DELETE FROM sites")
     suspend fun deleteAll()
 
+    @Delete
+    suspend fun deleteSite(site : Sites)
 }

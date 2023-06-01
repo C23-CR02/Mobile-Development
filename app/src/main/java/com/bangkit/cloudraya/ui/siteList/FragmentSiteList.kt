@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteListBinding
-import com.bangkit.cloudraya.ui.siteList.SiteListViewModel
 import com.bangkit.cloudraya.ui.adapter.SiteListAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentSiteList : Fragment() {
     private lateinit var binding: FragmentSiteListBinding
-    private val viewModel : SiteListViewModel by viewModel()
+    private val viewModel: SiteListViewModel by viewModel()
+    private lateinit var adapter: SiteListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,23 +39,48 @@ class FragmentSiteList : Fragment() {
     }
 
 
+    private fun showConfirmationDialog(site: Sites) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Konfirmasi Penghapusan")
+        builder.setMessage("Apakah Anda yakin ingin menghapus data?")
+
+        builder.setPositiveButton("Ya") { dialog, which ->
+            lifecycleScope.launch {
+                viewModel.removeSite(site)
+                adapter.updateData(viewModel.getSites())
+                dialog.dismiss()
+            }
+        }
+
+        builder.setNegativeButton("Batal") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
     private fun toDetailVM() {
         lifecycleScope.launch {
             val site = viewModel.getSites()
-            val adapter = SiteListAdapter(site)
+            adapter = SiteListAdapter(site)
             val layoutManager = LinearLayoutManager(requireContext())
             adapter.setOnItemClickCallback(object : SiteListAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: Sites) {
                     showSelectedSite(data)
                 }
-
+            })
+            adapter.setOnItemLongClickCallback(object : SiteListAdapter.OnItemClickLongCallback {
+                override fun onItemLongClicked(data: Sites) {
+                    showConfirmationDialog(data)
+                }
             })
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = layoutManager
-            if (site.isEmpty()){
+            if (site.isEmpty()) {
                 binding.recyclerView.visibility = View.GONE
                 binding.ivEmpty.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.ivEmpty.visibility = View.GONE
             }
@@ -72,6 +97,7 @@ class FragmentSiteList : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
+
     private fun showExitConfirmationDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.exit_confirmation))
@@ -82,9 +108,11 @@ class FragmentSiteList : Fragment() {
             .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
-    private fun showSelectedSite(data : Sites) {
+
+    private fun showSelectedSite(data: Sites) {
         viewModel.setBaseUrl(data.site_url)
-        val toResource = FragmentSiteListDirections.actionFragmentSiteListToHomeFragment(data.site_name)
+        val toResource =
+            FragmentSiteListDirections.actionFragmentSiteListToHomeFragment(data.site_name)
         findNavController().navigate(toResource)
     }
 
@@ -92,6 +120,4 @@ class FragmentSiteList : Fragment() {
         val toSiteEdit = FragmentSiteListDirections.actionFragmentSiteListToFragmentSiteAdd()
         findNavController().navigate(toSiteEdit)
     }
-
-
 }

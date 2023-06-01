@@ -20,7 +20,8 @@ val localModule = module {
         Room.databaseBuilder(
             androidContext().applicationContext,
             CloudDatabase::class.java, "App.db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 }
 

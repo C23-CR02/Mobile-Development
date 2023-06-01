@@ -1,11 +1,14 @@
 package com.bangkit.cloudraya.repository
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.database.CloudDatabase
 import com.bangkit.cloudraya.database.Sites
+import com.bangkit.cloudraya.database.sitesDao
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.model.remote.VMActionResponse
@@ -17,6 +20,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
@@ -196,4 +201,8 @@ class CloudRepository(
         return sharedPreferences.getString("fcm_token", "")
     }
 
+    // SiteList
+    suspend fun deleteItemWithConfirmation(item: Sites) {
+        cloudDatabase.sitesDao().deleteSite(item)
+    }
 }
