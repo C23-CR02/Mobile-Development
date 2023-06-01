@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.net.MalformedURLException
+import java.net.URL
 
 class FragmentSiteAdd : Fragment() {
     private lateinit var binding: FragmentSiteAddBinding
@@ -37,7 +39,7 @@ class FragmentSiteAdd : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSubmit.setOnClickListener {
-            if (isFilled()) {
+            if (isFilled() && isURLValid()) {
                 addSite()
             } else {
                 binding.apply {
@@ -46,6 +48,9 @@ class FragmentSiteAdd : Fragment() {
                     }
                     siteUrlLayout.text.takeIf { it.isNullOrEmpty() }?.run {
                         siteUrlLayout.error = "Insert your site url"
+                    }
+                    siteUrlLayout.text.takeIf { !isURLValid() }?.run {
+                        siteUrlLayout.error = "Insert valid site url"
                     }
                     appKeyLayout.text.takeIf { it.isNullOrEmpty() }?.run {
                         appKeyLayout.error = "Insert your app key"
@@ -147,6 +152,16 @@ class FragmentSiteAdd : Fragment() {
                 Log.d("RTDB Cancelled", "true")
             }
         Log.d("FCM Hash", hashMap.toString())
+    }
+
+    private fun isURLValid():Boolean{
+        val baseUrl = binding.siteUrlLayout.text.toString().trim()
+        return try {
+            val url = URL(baseUrl)
+            url.protocol == "http" || url.protocol == "https"
+        } catch (e: MalformedURLException) {
+            false
+        }
     }
 
     private fun callToast() {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
@@ -24,6 +25,7 @@ class FragmentDetailVM : Fragment() {
     private lateinit var vmData: VMListData
     private lateinit var site: String
     private var token = ""
+    private lateinit var pDialog: SweetAlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +83,7 @@ class FragmentDetailVM : Fragment() {
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Event.Success -> {
+                        pDialog.dismiss()
                         Snackbar.make(
                             binding.root,
                             "${result.data.data} - ${result.data.message}",
@@ -92,6 +95,7 @@ class FragmentDetailVM : Fragment() {
                         observeData(vmData)
                     }
                     is Event.Error -> {
+                        pDialog.dismiss()
                         Snackbar.make(
                             binding.root,
                             result.error ?: "Error",
@@ -99,7 +103,10 @@ class FragmentDetailVM : Fragment() {
                         ).show()
                     }
                     is Event.Loading -> {
-
+                        pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
+                        pDialog.titleText = "Loading"
+                        pDialog.setCancelable(false)
+                        pDialog.show()
                     }
                 }
             }
