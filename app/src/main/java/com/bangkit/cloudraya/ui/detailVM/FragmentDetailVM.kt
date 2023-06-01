@@ -84,11 +84,10 @@ class FragmentDetailVM : Fragment() {
                 when (result) {
                     is Event.Success -> {
                         pDialog.dismiss()
-                        Snackbar.make(
-                            binding.root,
-                            "${result.data.data} - ${result.data.message}",
-                            Snackbar.LENGTH_LONG
-                        ).show()
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Successful!")
+                            .setContentText(result.data.message)
+                            .show()
                         runBlocking {
                             delay(Toast.LENGTH_LONG.toLong())
                         }
@@ -96,11 +95,10 @@ class FragmentDetailVM : Fragment() {
                     }
                     is Event.Error -> {
                         pDialog.dismiss()
-                        Snackbar.make(
-                            binding.root,
-                            result.error ?: "Error",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText(result.error)
+                            .show()
                     }
                     is Event.Loading -> {
                         pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
@@ -117,26 +115,28 @@ class FragmentDetailVM : Fragment() {
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Event.Success -> {
-                        Snackbar.make(
-                            binding.root,
-                            "${result.data.data} - ${result.data.message}",
-                            Snackbar.LENGTH_LONG
-                        ).show()
+                        pDialog.dismiss()
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Successful!")
+                            .setContentText(result.data.message)
+                            .show()
                         runBlocking {
                             delay(Toast.LENGTH_LONG.toLong())
                         }
                         observeData(vmData)
                     }
                     is Event.Error -> {
-                        Snackbar.make(
-                            binding.root,
-                            result.error ?: "Error",
-                            Snackbar.LENGTH_SHORT
-                        )
+                        pDialog.dismiss()
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText(result.error)
                             .show()
                     }
                     is Event.Loading -> {
-
+                        pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
+                        pDialog.titleText = "Loading"
+                        pDialog.setCancelable(false)
+                        pDialog.show()
                     }
                 }
             }
@@ -147,17 +147,18 @@ class FragmentDetailVM : Fragment() {
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Event.Success -> {
-                        Snackbar.make(
-                            binding.root,
-                            "${result.data.data} - ${result.data.message}",
-                            Snackbar.LENGTH_LONG
-                        ).show()
+                        pDialog.dismiss()
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Successful!")
+                            .setContentText(result.data.message)
+                            .show()
                         runBlocking {
                             delay(Toast.LENGTH_LONG.toLong())
                         }
                         observeData(vmData)
                     }
                     is Event.Error -> {
+                        pDialog.dismiss()
                         Snackbar.make(
                             binding.root,
                             result.error ?: "Error",
@@ -166,7 +167,10 @@ class FragmentDetailVM : Fragment() {
                             .show()
                     }
                     is Event.Loading -> {
-
+                        pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
+                        pDialog.titleText = "Loading"
+                        pDialog.setCancelable(false)
+                        pDialog.show()
                     }
                 }
             }

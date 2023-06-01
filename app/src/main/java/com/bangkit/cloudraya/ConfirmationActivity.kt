@@ -1,5 +1,6 @@
 package com.bangkit.cloudraya
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ class ConfirmationActivity : AppCompatActivity() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private  var msgBody: String = "Action Confirmation"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +56,7 @@ class ConfirmationActivity : AppCompatActivity() {
         })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Action Confirmation")
+            .setTitle(msgBody)
             .setDescription("Scan to accept the action!")
             .setNegativeButtonText("Deny")
             .build()

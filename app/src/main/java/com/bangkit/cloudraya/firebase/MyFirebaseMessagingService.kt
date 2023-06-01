@@ -23,11 +23,19 @@ class MyFirebaseMessagingService: FirebaseMessagingService()  {
         Log.d(TAG, "From: ${remoteMessage.from}")
         Log.d(TAG, "Message data payload: " + remoteMessage.data)
         Log.d(TAG, "Message Notification Body: ${remoteMessage.notification?.body}")
-        sendNotification(remoteMessage.notification?.title, remoteMessage.notification?.body)
+        sendNotification(remoteMessage)
     }
 
-    private fun sendNotification(title: String?, messageBody: String?) {
-        val contentIntent = Intent(applicationContext, ConfirmationActivity::class.java)
+    private fun sendNotification(remoteMessage: RemoteMessage) {
+        val title = remoteMessage.notification?.title
+        val msgBody = remoteMessage.notification?.body
+        val clickAction = remoteMessage.notification?.clickAction
+        Log.d("Message", "Target: $clickAction, $title, $msgBody")
+        val contentIntent = Intent(applicationContext, ConfirmationActivity::class.java).apply {
+            putExtra("title", title)
+            putExtra("body", msgBody)
+            putExtra("click_action", clickAction)
+        }
         val contentPendingIntent = PendingIntent.getActivity(
             applicationContext,
             NOTIFICATION_ID,
@@ -37,9 +45,9 @@ class MyFirebaseMessagingService: FirebaseMessagingService()  {
         val notificationBuilder = NotificationCompat.Builder(applicationContext,
             NOTIFICATION_CHANNEL_ID
         )
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.wow_logo1)
             .setContentTitle(title)
-            .setContentText(messageBody)
+            .setContentText(msgBody)
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
