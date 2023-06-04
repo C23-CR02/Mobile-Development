@@ -12,8 +12,9 @@ import com.bangkit.cloudraya.ConfirmationActivity
 import com.bangkit.cloudraya.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import java.util.Objects
 
-class MyFirebaseMessagingService: FirebaseMessagingService()  {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
     }
@@ -22,19 +23,27 @@ class MyFirebaseMessagingService: FirebaseMessagingService()  {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")
         Log.d(TAG, "Message data payload: " + remoteMessage.data)
-        Log.d(TAG, "Message Notification Body: ${remoteMessage.notification?.body}")
         sendNotification(remoteMessage)
     }
 
     private fun sendNotification(remoteMessage: RemoteMessage) {
-        val title = remoteMessage.notification?.title
-        val msgBody = remoteMessage.notification?.body
-        val clickAction = remoteMessage.notification?.clickAction
-        Log.d("Message", "Target: $clickAction, $title, $msgBody")
+        val title = remoteMessage.data["title"]
+        val msgBody = remoteMessage.data["body"]
+        val token = remoteMessage.data["bearer"]
+        val vmId = remoteMessage.data["vm_id"]
+        val request = remoteMessage.data["request"]
+        val siteUrl = remoteMessage.data["site_url"]
+
+
+
+        Log.d("Testing", "Target:  $token, $siteUrl")
         val contentIntent = Intent(applicationContext, ConfirmationActivity::class.java).apply {
             putExtra("title", title)
             putExtra("body", msgBody)
-            putExtra("click_action", clickAction)
+            putExtra("token", token)
+            putExtra("request",request)
+            putExtra("vmId",vmId)
+            putExtra("site_url",siteUrl)
         }
         val contentPendingIntent = PendingIntent.getActivity(
             applicationContext,
@@ -42,7 +51,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService()  {
             contentIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
-        val notificationBuilder = NotificationCompat.Builder(applicationContext,
+        val notificationBuilder = NotificationCompat.Builder(
+            applicationContext,
             NOTIFICATION_CHANNEL_ID
         )
             .setSmallIcon(R.drawable.wow_logo1)
@@ -50,9 +60,14 @@ class MyFirebaseMessagingService: FirebaseMessagingService()  {
             .setContentText(msgBody)
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                NOTIFICATION_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID)
             notificationManager.createNotificationChannel(channel)
         }

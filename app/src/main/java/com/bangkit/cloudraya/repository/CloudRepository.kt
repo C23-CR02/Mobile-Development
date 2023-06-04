@@ -1,14 +1,11 @@
 package com.bangkit.cloudraya.repository
 
-import android.app.AlertDialog
-import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.database.CloudDatabase
 import com.bangkit.cloudraya.database.Sites
-import com.bangkit.cloudraya.database.sitesDao
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.model.remote.VMActionResponse
@@ -20,8 +17,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
@@ -32,10 +27,10 @@ class CloudRepository(
     private val baseUrlInterceptor: BaseUrlInterceptor
 
 ) {
-    fun setBaseUrl(url : String){
-        Log.d("Cloud Repository",url)
+    fun setBaseUrl(url: String) {
+        Log.d("Cloud Repository", url)
         baseUrlInterceptor.setBaseUrl(url)
-        Log.d("Cloud Repository","Sukses ?")
+        Log.d("Cloud Repository", "Sukses ?")
     }
 
     fun getVMList(token: String): LiveData<Event<VMListResponse>> =
@@ -43,10 +38,10 @@ class CloudRepository(
             emit(Event.Loading)
             try {
                 val response = apiService.getVMList(token)
-                Log.d("Repository","Token : $token")
+                Log.d("Repository", "Token : $token")
 
-                Log.d("Repository","response : $response.toString()")
-                Log.d("Repository " , response.body().toString())
+                Log.d("Repository", "response : $response.toString()")
+                Log.d("Repository ", response.body().toString())
                 if (response.isSuccessful) {
                     val data = response.body()
                     Log.d("Success", data.toString())
@@ -129,9 +124,9 @@ class CloudRepository(
                 val response = apiService.getToken("application/json", request)
                 if (response.isSuccessful) {
                     val data = response.body()
-                    if (data?.data != null){
+                    if (data?.data != null) {
                         emit(Event.Success(data))
-                    }else{
+                    } else {
                         emit(Event.Error(null, data?.message ?: "Data anda salah"))
                     }
                 } else {
@@ -161,11 +156,11 @@ class CloudRepository(
     }
 
     // Fungsi untuk SharedPreferencesEncrypted
-    fun saveEncryptedValues(appKey: String, appSecret: String,token : String) {
+    fun saveEncryptedValues(appKey: String, appSecret: String, token: String) {
         sharedPreferences.edit()
             .putString("app_key", appKey)
             .putString("app_secret", appSecret)
-            .putString("token" , token)
+            .putString("token", token)
             .apply()
     }
 
@@ -176,7 +171,7 @@ class CloudRepository(
         sharedPreferences.edit().putString(key, json).apply()
     }
 
-    fun getList(key: String) : List<Any> {
+    fun getList(key: String): List<Any> {
         val gson = Gson()
         val json = sharedPreferences.getString(key, null)
         return if (json != null) {
@@ -187,17 +182,17 @@ class CloudRepository(
         }
     }
 
-    fun saveOnboarding(onBoarding : Boolean){
+    fun saveOnboarding(onBoarding: Boolean) {
         sharedPreferences.edit()
             .putBoolean("onboarding_complete", onBoarding)
             .apply()
     }
 
-    fun getOnboarding() : Boolean{
+    fun getOnboarding(): Boolean {
         return sharedPreferences.getBoolean("onboarding_complete", false)
     }
 
-    fun getFCMToken(): String?{
+    fun getFCMToken(): String? {
         return sharedPreferences.getString("fcm_token", "")
     }
 

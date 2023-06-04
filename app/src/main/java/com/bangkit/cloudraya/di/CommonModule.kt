@@ -1,6 +1,7 @@
 package com.bangkit.cloudraya.di
 
 
+import com.bangkit.cloudraya.ConfirmationActivityViewModel
 import com.bangkit.cloudraya.repository.CloudRepository
 import com.bangkit.cloudraya.ui.splashScreen.SplashScreenViewModel
 import com.bangkit.cloudraya.ui.detailVM.DetailVMViewModel
@@ -26,4 +27,5 @@ val viewModule = module {
     single { HomeViewModel(get()) }
     single { OnBoardingViewModel(get())}
     single { SplashScreenViewModel(get()) }
+    single { ConfirmationActivityViewModel(get())}
 }

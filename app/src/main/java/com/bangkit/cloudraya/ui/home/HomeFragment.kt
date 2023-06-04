@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,9 +36,10 @@ class HomeFragment : Fragment() {
             val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(site)
             findNavController().navigate(toResources)
         }
-        Log.d("Testing",site)
+        Log.d("Testing", site)
 
         getToken()
+        backPressed()
     }
 
     private fun getToken() {
@@ -67,5 +69,18 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun backPressed() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                toSiteList()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+    private fun toSiteList() {
+        val toSiteList = HomeFragmentDirections.actionHomeFragmentToFragmentSiteList()
+        findNavController().navigate(toSiteList)
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -36,7 +37,7 @@ class FragmentResources : Fragment() {
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
         Log.d("Token", token)
-        Log.d("Testing",site)
+        Log.d("Testing", site)
         binding.btnHome.setOnClickListener {
             val toHome = FragmentResourcesDirections.actionFragmentResourcesToHomeFragment(site)
             findNavController().navigate(toHome)
@@ -45,6 +46,7 @@ class FragmentResources : Fragment() {
         lifecycleScope.launch {
             getVmlist(token)
         }
+        backPressed()
     }
 
     private fun getVmlist(token: String) {
@@ -52,10 +54,10 @@ class FragmentResources : Fragment() {
             when (result) {
                 is Event.Success -> {
                     vmAdapter.submitData(result.data.data!!)
-                    if (result.data.data.isEmpty()){
+                    if (result.data.data.isEmpty()) {
                         binding.rvVM.visibility = View.GONE
                         binding.ivEmpty.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         binding.rvVM.visibility = View.VISIBLE
                         binding.ivEmpty.visibility = View.GONE
                     }
@@ -74,7 +76,7 @@ class FragmentResources : Fragment() {
     private fun showRecycleView() {
         vmAdapter = VMAdapter() { vmData ->
             val toDetailVM =
-                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData,site)
+                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData, site)
             findNavController().navigate(toDetailVM)
         }
         binding.rvVM.apply {
@@ -83,4 +85,17 @@ class FragmentResources : Fragment() {
         }
     }
 
+    private fun backPressed() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                toSiteList()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun toSiteList() {
+        val toSiteList = FragmentResourcesDirections.actionFragmentResourcesToFragmentSiteList()
+        findNavController().navigate(toSiteList)
+    }
 }
