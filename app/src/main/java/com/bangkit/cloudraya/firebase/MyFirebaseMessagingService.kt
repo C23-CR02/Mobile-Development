@@ -10,9 +10,10 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.bangkit.cloudraya.ConfirmationActivity
 import com.bangkit.cloudraya.R
+import com.bangkit.cloudraya.model.local.DataHolder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import java.util.Objects
+import org.koin.android.ext.android.inject
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
@@ -34,17 +35,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val request = remoteMessage.data["request"]
         val siteUrl = remoteMessage.data["site_url"]
 
-
-
         Log.d("Testing", "Target:  $token, $siteUrl")
-        val contentIntent = Intent(applicationContext, ConfirmationActivity::class.java).apply {
-            putExtra("title", title)
-            putExtra("body", msgBody)
-            putExtra("token", token)
-            putExtra("request",request)
-            putExtra("vmId",vmId)
-            putExtra("site_url",siteUrl)
-        }
+        val dataHolder: DataHolder by inject()
+        dataHolder.title = title.toString()
+        dataHolder.msgBody = msgBody.toString()
+        dataHolder.token = token.toString()
+        dataHolder.request = request.toString()
+        dataHolder.vmId = vmId.toString()
+        dataHolder.siteUrl = siteUrl.toString()
+
+        val contentIntent = Intent(applicationContext, ConfirmationActivity::class.java)
+
         val contentPendingIntent = PendingIntent.getActivity(
             applicationContext,
             NOTIFICATION_ID,

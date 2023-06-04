@@ -18,7 +18,7 @@ class MyApplication : Application(), KoinComponent {
         GlobalContext.startKoin {
             androidContext(this@MyApplication)
             modules(
-                networkModule, viewModule, repositoryModule, localModule, encryptionModule
+                networkModule, viewModule, repositoryModule, localModule, encryptionModule, dataModule
             )
         }
         FirebaseMessaging.getInstance().token

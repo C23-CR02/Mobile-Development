@@ -10,6 +10,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.databinding.ActivityConfirmationBinding
+import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.model.local.Event
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
@@ -17,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import java.util.concurrent.Executor
@@ -32,6 +34,7 @@ class ConfirmationActivity : AppCompatActivity() {
     private var request: String = ""
     private var siteUrl: String = ""
     private var vmId: String = ""
+    private val dataHolder: DataHolder by inject()
     private lateinit var pDialog: SweetAlertDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +44,13 @@ class ConfirmationActivity : AppCompatActivity() {
     }
 
     private fun vmAction() {
-        val intent = intent
-        token += intent.getStringExtra("token").toString()
-        request += intent.getStringExtra("request").toString()
-        siteUrl += intent.getStringExtra("site_url").toString()
-        vmId += intent.getStringExtra("vmId")
-        val title = intent.getStringExtra("title")
-        val msgBody = intent.getStringExtra("body")
+        token += dataHolder.token
+        request += dataHolder.request
+        siteUrl += dataHolder.siteUrl
+        vmId += dataHolder.vmId
+        val title = dataHolder.title
+        val msgBody = dataHolder.msgBody
+
         Log.d("Testing", "Target:  $title, $msgBody, $token, $request, $siteUrl, $vmId")
         viewModel.setBaseUrl(siteUrl)
         viewModel.vmAction(token, vmId.toInt(), request)
@@ -58,6 +61,10 @@ class ConfirmationActivity : AppCompatActivity() {
                         SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Successful!")
                             .setContentText(result.data.message)
+                            .setConfirmClickListener {
+                                toMenu()
+                                it.dismissWithAnimation()
+                            }
                             .show()
                         runBlocking {
                             delay(Toast.LENGTH_LONG.toLong())
@@ -146,18 +153,14 @@ class ConfirmationActivity : AppCompatActivity() {
     }
 
     private fun sendResponseToFirebase() {
-        // Inisialisasi FirebaseApp jika belum dilakukan sebelumnya
         FirebaseApp.initializeApp(this)
 
-        // Ambil instance FirebaseMessaging untuk mengirim pesan ke server Firebase
         val firebaseMessaging = FirebaseMessaging.getInstance()
 
-        // Buat data yang akan dikirim ke server Firebase
         val data = hashMapOf(
             "response" to "fingerprint_success"
         )
 
-        // Kirim pesan dengan data ke server Firebase
         firebaseMessaging.send(
             RemoteMessage.Builder("1044426049361@gcm.googleapis.com")
                 .setMessageId(Random().nextInt(1000000).toString())
