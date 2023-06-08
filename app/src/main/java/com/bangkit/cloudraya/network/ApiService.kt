@@ -1,9 +1,6 @@
 package com.bangkit.cloudraya.network
 
-import com.bangkit.cloudraya.model.remote.TokenResponse
-import com.bangkit.cloudraya.model.remote.VMListResponse
-import com.bangkit.cloudraya.model.remote.VMActionResponse
-import com.bangkit.cloudraya.model.remote.VMDetailResponse
+import com.bangkit.cloudraya.model.remote.*
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.*
@@ -33,4 +30,7 @@ interface ApiService {
         @Header("Authorization") token : String,
         @Body requestBody: JsonObject
     ) : Response<VMActionResponse>
+
+    @GET("/convert")
+    suspend fun getDataGraph() : Response<DataGraphResponse>
 }

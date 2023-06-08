@@ -7,10 +7,7 @@ import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.database.CloudDatabase
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.model.remote.TokenResponse
-import com.bangkit.cloudraya.model.remote.VMActionResponse
-import com.bangkit.cloudraya.model.remote.VMDetailResponse
-import com.bangkit.cloudraya.model.remote.VMListResponse
+import com.bangkit.cloudraya.model.remote.*
 import com.bangkit.cloudraya.network.ApiService
 import com.bangkit.cloudraya.utils.BaseUrlInterceptor
 import com.google.gson.Gson
@@ -200,4 +197,27 @@ class CloudRepository(
     suspend fun deleteItemWithConfirmation(item: Sites) {
         cloudDatabase.sitesDao().deleteSite(item)
     }
+
+    fun getDataGraph(): LiveData<Event<DataGraphResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val response = apiService.getDataGraph()
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
 }
