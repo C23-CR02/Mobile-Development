@@ -6,6 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.detailVM.FragmentDetailVM">
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <ImageView
         android:id="@+id/btnBack"
         android:layout_width="40dp"
@@ -164,12 +175,4 @@
         app:icon="@drawable/ic_restart"
         app:iconTint="@null"/>
 
-    <ProgressBar
-        android:id="@+id/pbLoading"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
