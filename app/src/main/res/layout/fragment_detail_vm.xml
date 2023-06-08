@@ -97,7 +97,7 @@
                 android:layout_marginTop="16dp"
                 style="@style/Theme.CloudRaya.Text"
                 android:fontFamily="@font/inter_medium"
-                android:textColor="@color/primary"
+                android:textColor="@color/secondary"
                 card_view:layout_constraintTop_toBottomOf="@id/tvIPAddress"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
