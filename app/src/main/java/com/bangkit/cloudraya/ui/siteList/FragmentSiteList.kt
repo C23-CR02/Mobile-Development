@@ -112,7 +112,7 @@ class FragmentSiteList : Fragment() {
     private fun showSelectedSite(data: Sites) {
         viewModel.setBaseUrl(data.site_url)
         val toResource =
-            FragmentSiteListDirections.actionFragmentSiteListToHomeFragment(data.site_name)
+            FragmentSiteListDirections.actionFragmentSiteListToFragmentResources(data.site_name)
         findNavController().navigate(toResource)
     }
 

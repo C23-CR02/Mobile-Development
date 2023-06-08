@@ -14,6 +14,7 @@ import com.bangkit.cloudraya.databinding.FragmentResourcesBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.ui.adapter.VMAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,16 +37,12 @@ class FragmentResources : Fragment() {
         site = arguments?.getString("data") ?: ""
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
-        Log.d("Token", token)
-        Log.d("Testing", site)
-        binding.btnHome.setOnClickListener {
-            val toHome = FragmentResourcesDirections.actionFragmentResourcesToHomeFragment(site)
-            findNavController().navigate(toHome)
-        }
 
         lifecycleScope.launch {
             getVmlist(token)
         }
+
+        getToken()
         backPressed()
     }
 
@@ -53,6 +50,7 @@ class FragmentResources : Fragment() {
         viewModel.getVMList(token).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
                     vmAdapter.submitData(result.data.data!!)
                     if (result.data.data.isEmpty()) {
                         binding.rvVM.visibility = View.GONE
@@ -63,11 +61,12 @@ class FragmentResources : Fragment() {
                     }
                 }
                 is Event.Error -> {
+                    binding.pbLoading.visibility = View.GONE
                     Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
                         .show()
                 }
                 is Event.Loading -> {
-
+                    binding.pbLoading.visibility = View.VISIBLE
                 }
             }
         }
@@ -82,6 +81,35 @@ class FragmentResources : Fragment() {
         binding.rvVM.apply {
             adapter = vmAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun getToken() {
+        val data = viewModel.getListEncrypted(site)
+        val appKey = data[0].toString()
+        val appSecret = data[1].toString()
+        val request = JsonObject().apply {
+            addProperty("app_key", appKey)
+            addProperty("secret_key", appSecret)
+        }
+        viewModel.getToken(request).observe(viewLifecycleOwner) { item ->
+            when (item) {
+                is Event.Success -> {
+                    val token = "Bearer ${item.data.data?.bearerToken.toString()}"
+                    lifecycleScope.launch {
+                        val list = listOf(appKey, appSecret, token)
+                        viewModel.saveListEncrypted(site, list)
+                    }
+
+
+                }
+                is Event.Error -> {
+                    Log.d("Calling error : ", item.error.toString())
+                }
+                else -> {
+                    Log.d("Event ", item.toString())
+                }
+            }
         }
     }
 

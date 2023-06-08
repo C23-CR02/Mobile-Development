@@ -41,8 +41,6 @@ class FragmentDetailVM : Fragment() {
         val data = viewModel.getListEncrypted(site)
         token = data[2].toString()
 
-        Log.d("Testing",site)
-
         observeData(vmData)
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -59,19 +57,20 @@ class FragmentDetailVM : Fragment() {
     }
 
     private fun observeData(vmData: VMListData) {
-        Log.d("Request Detail", vmData.localId.toString())
         viewModel.getVMDetail(token, vmData.localId!!)
         viewModel.vmDetail.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
                     updateUI(result.data.data!!)
                 }
                 is Event.Error -> {
+                    binding.pbLoading.visibility = View.GONE
                     Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
                         .show()
                 }
                 is Event.Loading -> {
-
+                    binding.pbLoading.visibility = View.VISIBLE
                 }
             }
         }
