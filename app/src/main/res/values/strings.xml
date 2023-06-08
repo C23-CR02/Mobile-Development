@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cloud Raya</string>
+    <string name="app_name">Wowrack</string>
     <string name="landing_header_1">Turn Your Ideas into a Reality with Your Trusted Cloud Partner</string>
     <string name="landing_header_2">Delivering what you actually need</string>
     <string name="landing_header_3">Experienced since 2001</string>
@@ -55,16 +55,10 @@
     <string name="exit_confirmation">Want To Exit ?</string>
     <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
+    <string name="action_accepted">Action Accepted!</string>
+    <string name="action_denied">Action Denied!</string>
     <string name="exit_confirmation_message">Are you sure want to exit ?</string>
     <string name="toast_successful">Add Sites Successful</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

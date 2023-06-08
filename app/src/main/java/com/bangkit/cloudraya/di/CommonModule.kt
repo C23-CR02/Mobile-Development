@@ -12,7 +12,6 @@ import com.bangkit.cloudraya.ui.resources.ResourcesViewModel
 import com.bangkit.cloudraya.ui.siteAdd.SiteAddViewModel
 import com.bangkit.cloudraya.ui.siteEdit.SiteEditViewModel
 import com.bangkit.cloudraya.ui.siteList.SiteListViewModel
-import io.reactivex.schedulers.Schedulers.single
 import org.koin.dsl.module
 
 

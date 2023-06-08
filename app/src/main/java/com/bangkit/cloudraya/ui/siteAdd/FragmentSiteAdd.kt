@@ -2,11 +2,9 @@ package com.bangkit.cloudraya.ui.siteAdd
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -159,18 +157,5 @@ class FragmentSiteAdd : Fragment() {
         } catch (e: MalformedURLException) {
             false
         }
-    }
-
-    private fun callToast() {
-        val inflater: LayoutInflater = requireActivity().layoutInflater
-        val layout: View = inflater.inflate(
-            R.layout.success_toast,
-            requireActivity().findViewById(R.id.toast_successful)
-        )
-        val toast = Toast(requireContext())
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
     }
 }

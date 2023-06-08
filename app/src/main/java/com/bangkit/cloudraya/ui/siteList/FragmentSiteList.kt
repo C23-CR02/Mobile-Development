@@ -44,7 +44,7 @@ class FragmentSiteList : Fragment() {
         builder.setTitle("Konfirmasi Penghapusan")
         builder.setMessage("Apakah Anda yakin ingin menghapus data?")
 
-        builder.setPositiveButton("Ya") { dialog, which ->
+        builder.setPositiveButton("Ya") { dialog, _ ->
             lifecycleScope.launch {
                 viewModel.removeSite(site)
                 adapter.updateData(viewModel.getSites())
@@ -52,7 +52,7 @@ class FragmentSiteList : Fragment() {
             }
         }
 
-        builder.setNegativeButton("Batal") { dialog, which ->
+        builder.setNegativeButton("Batal") { dialog, _ ->
             dialog.dismiss()
         }
 

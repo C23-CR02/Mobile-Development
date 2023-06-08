@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.ItemSiteBinding
-import com.bangkit.cloudraya.repository.CloudRepository
 
 class SiteListAdapter(private var sites: List<Sites>) :
     RecyclerView.Adapter<SiteListAdapter.MyViewHolder>() {

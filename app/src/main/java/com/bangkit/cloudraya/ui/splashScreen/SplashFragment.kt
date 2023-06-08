@@ -1,7 +1,6 @@
 package com.bangkit.cloudraya.ui.splashScreen
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.databinding.FragmentSplashBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -28,13 +31,14 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val onBoarding = viewModel.getOnboarding()
 
-        Handler().postDelayed({
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(DURATION)
             if(onBoarding){
                 toList()
             } else {
                 toOnBoarding()
             }
-        }, 1000)
+        }
     }
 
     private fun toList(){
@@ -44,5 +48,9 @@ class SplashFragment : Fragment() {
     private fun toOnBoarding(){
         val toOnBoarding = SplashFragmentDirections.actionSplashFragmentToFragmentOnboarding()
         findNavController().navigate(toOnBoarding)
+    }
+
+    companion object{
+        const val DURATION = 1000L
     }
 }

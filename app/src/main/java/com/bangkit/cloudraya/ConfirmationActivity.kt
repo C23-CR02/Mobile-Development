@@ -49,7 +49,7 @@ class ConfirmationActivity : AppCompatActivity() {
         siteUrl += dataHolder.siteUrl
         vmId += dataHolder.vmId
         val title = dataHolder.title
-        val msgBody = dataHolder.msgBody
+        msgBody = dataHolder.msgBody
 
         Log.d("Testing", "Target:  $title, $msgBody, $token, $request, $siteUrl, $vmId")
         viewModel.setBaseUrl(siteUrl)
@@ -69,7 +69,6 @@ class ConfirmationActivity : AppCompatActivity() {
                         runBlocking {
                             delay(Toast.LENGTH_LONG.toLong())
                         }
-                        Log.d("Testing", "Success")
                     }
                     is Event.Error -> {
                         pDialog.dismiss()
@@ -96,27 +95,25 @@ class ConfirmationActivity : AppCompatActivity() {
                     super.onAuthenticationError(errorCode, errString)
                     val userCancelled = errorCode == BiometricPrompt.ERROR_USER_CANCELED
                     if (userCancelled) {
-                        Snackbar.make(binding.root, "Action denied!", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(binding.root, getString(R.string.action_denied), Snackbar.LENGTH_LONG).show()
                     } else {
-                        Snackbar.make(binding.root, "Action denied!", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(binding.root, getString(R.string.action_denied), Snackbar.LENGTH_LONG).show()
                     }
-                    Log.d("Auth", "OnError code = $errorCode")
+                    binding.tvMessage.text = getString(R.string.action_denied)
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     sendResponseToFirebase()
                     vmAction()
-                    Snackbar.make(binding.root, "Action accepted!", Snackbar.LENGTH_LONG).show()
-                    binding.tvMessage.text = "Action accepted!"
-                    Log.d("Auth", "OnSuccess")
+                    Snackbar.make(binding.root, getString(R.string.action_accepted), Snackbar.LENGTH_LONG).show()
+                    binding.tvMessage.text = getString(R.string.action_accepted)
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Snackbar.make(binding.root, "Authentication Failed!", Snackbar.LENGTH_LONG)
                         .show()
-                    Log.d("Auth", "OnFailed")
                 }
 
             })
@@ -136,18 +133,24 @@ class ConfirmationActivity : AppCompatActivity() {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 userAuth()
             }
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                binding.tvMessage.text = "No biometric features available on this device."
-            }
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                binding.tvMessage.text = "Biometric features are currently unavailable."
-            }
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                binding.tvMessage.text =
-                    "Your device doesn't have fingerprint saved,please check your security settings"
-            }
             else -> {
-                Log.d("Bio Check", "Not Support")
+                val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                dialog.titleText = msgBody
+                dialog.contentText = "Confirm to accept the action"
+                dialog.confirmText = "Accept"
+                dialog.cancelText = "Deny"
+                dialog.setConfirmClickListener {
+                    sendResponseToFirebase()
+                    vmAction()
+                    Snackbar.make(binding.root, getString(R.string.action_accepted), Snackbar.LENGTH_LONG).show()
+                    binding.tvMessage.text = getString(R.string.action_accepted)
+                }
+                dialog.setCancelClickListener {
+                    Snackbar.make(binding.root, getString(R.string.action_denied), Snackbar.LENGTH_LONG).show()
+                    binding.tvMessage.text = getString(R.string.action_denied)
+                    dialog.dismissWithAnimation()
+                }
+                dialog.show()
             }
         }
     }
