@@ -32,5 +32,5 @@ interface ApiService {
     ) : Response<VMActionResponse>
 
     @GET("/convert")
-    suspend fun getDataGraph() : Response<DataGraphResponse>
+    suspend fun getDataGraph() : Response<Any>
 }

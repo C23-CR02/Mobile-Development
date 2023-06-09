@@ -60,5 +60,6 @@
     <string name="exit_confirmation_message">Are you sure want to exit ?</string>
     <string name="toast_successful">Add Sites Successful</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="cost_projection">Cost Projection</string>
 
 </resources>

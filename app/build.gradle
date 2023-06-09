@@ -90,6 +90,7 @@ dependencies {
 
     //chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     implementation "androidx.biometric:biometric-ktx:1.2.0-alpha05"
 

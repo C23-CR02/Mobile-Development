@@ -68,6 +68,9 @@
             app:destination="@id/fragmentSiteList"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="siteUrl"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/fragmentDetailVM"
@@ -79,6 +82,12 @@
             app:argType="com.bangkit.cloudraya.model.remote.VMListData" />
         <argument
             android:name="site"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentDetailVM_to_fragmentResources"
+            app:destination="@id/fragmentResources" />
+        <argument
+            android:name="siteUrl"
             app:argType="string" />
     </fragment>
     <fragment

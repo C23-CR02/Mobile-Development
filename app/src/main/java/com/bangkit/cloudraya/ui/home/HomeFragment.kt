@@ -32,10 +32,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         site = arguments?.getString("data") ?: ""
-        binding.btnResources.setOnClickListener {
-            val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(site)
-            findNavController().navigate(toResources)
-        }
+//        binding.btnResources.setOnClickListener {
+//            val toResources = HomeFragmentDirections.actionHomeFragmentToFragmentResources(site,siteUrl)
+//            findNavController().navigate(toResources)
+//        }
         Log.d("Testing", site)
 
         getToken()

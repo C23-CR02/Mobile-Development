@@ -23,6 +23,8 @@ class FragmentResources : Fragment() {
     private val viewModel: ResourcesViewModel by viewModel()
     private lateinit var vmAdapter: VMAdapter
     private lateinit var site: String
+    private lateinit var siteUrl: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +37,9 @@ class FragmentResources : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showRecycleView()
         site = arguments?.getString("data") ?: ""
+        siteUrl = arguments?.getString("siteUrl") ?: ""
+        Log.d("Testing", "Site url : $siteUrl")
+
         val data = viewModel.getListEncrypted(site)
         val token = data[2].toString()
 
@@ -47,6 +52,7 @@ class FragmentResources : Fragment() {
     }
 
     private fun getVmlist(token: String) {
+        viewModel.setBaseUrl(siteUrl)
         viewModel.getVMList(token).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {
@@ -75,7 +81,7 @@ class FragmentResources : Fragment() {
     private fun showRecycleView() {
         vmAdapter = VMAdapter() { vmData ->
             val toDetailVM =
-                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData, site)
+                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData, site,siteUrl)
             findNavController().navigate(toDetailVM)
         }
         binding.rvVM.apply {

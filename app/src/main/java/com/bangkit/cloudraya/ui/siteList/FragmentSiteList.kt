@@ -2,6 +2,7 @@ package com.bangkit.cloudraya.ui.siteList
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,7 +113,7 @@ class FragmentSiteList : Fragment() {
     private fun showSelectedSite(data: Sites) {
         viewModel.setBaseUrl(data.site_url)
         val toResource =
-            FragmentSiteListDirections.actionFragmentSiteListToFragmentResources(data.site_name)
+            FragmentSiteListDirections.actionFragmentSiteListToFragmentResources(data.site_name,data.site_url)
         findNavController().navigate(toResource)
     }
 

@@ -1,5 +1,6 @@
 package com.bangkit.cloudraya.ui.resources
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.model.local.Event
@@ -20,4 +21,9 @@ class ResourcesViewModel(private val cloudRepository: CloudRepository) : ViewMod
 
     fun getToken(request: JsonObject): LiveData<Event<TokenResponse>> =
         cloudRepository.getToken(request)
+    fun setBaseUrl(url : String){
+        Log.d("Testing","Url : $url")
+        cloudRepository.setBaseUrl(url)
+    }
+
 }

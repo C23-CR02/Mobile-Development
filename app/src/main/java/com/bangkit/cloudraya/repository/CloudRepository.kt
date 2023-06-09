@@ -198,7 +198,7 @@ class CloudRepository(
         cloudDatabase.sitesDao().deleteSite(item)
     }
 
-    fun getDataGraph(): LiveData<Event<DataGraphResponse>> =
+    fun getDataGraph(): LiveData<Event<Any>> =
         liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
