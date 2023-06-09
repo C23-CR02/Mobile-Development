@@ -2,6 +2,7 @@ package com.bangkit.cloudraya.ui.detailVM
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -221,7 +222,6 @@ class FragmentDetailVM : Fragment() {
     }
 
     private fun getGraph() {
-        viewModel.setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
         viewModel.getDataGraph(vmData.localId.toString())
         viewModel.dataGraph.observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -362,7 +362,7 @@ class FragmentDetailVM : Fragment() {
         val lineChart = binding.anomalyDetection
         val entries = ArrayList<Entry>()
         val anomalyEntries = ArrayList<Entry>()
-
+        Log.d("Testing", "data list $dataList")
         for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.createdAt)
             val cpuUsed = i.cpuUsed.toFloat()

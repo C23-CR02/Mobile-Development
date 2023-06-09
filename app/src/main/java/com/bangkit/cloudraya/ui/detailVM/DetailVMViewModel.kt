@@ -1,9 +1,11 @@
 package com.bangkit.cloudraya.ui.detailVM
 
+import android.provider.ContactsContract.Data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.model.remote.AnomalyResponse
 import com.bangkit.cloudraya.model.remote.DataAnomalyResponse
 import com.bangkit.cloudraya.model.remote.DataGraphResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse

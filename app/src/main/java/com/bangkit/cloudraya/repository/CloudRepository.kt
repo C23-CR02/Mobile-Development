@@ -30,35 +30,34 @@ class CloudRepository(
         Log.d("Cloud Repository", "Sukses ?")
     }
 
-    fun getVMList(token: String): LiveData<Event<VMListResponse>> =
-        liveData(Dispatchers.IO) {
-            emit(Event.Loading)
-            try {
-                val response = apiService.getVMList(token)
-                Log.d("Repository", "Token : $token")
+    fun getVMList(token: String): LiveData<Event<VMListResponse>> = liveData(Dispatchers.IO) {
+        emit(Event.Loading)
+        try {
+            val response = apiService.getVMList(token)
+            Log.d("Repository", "Token : $token")
 
-                Log.d("Repository", "response : $response.toString()")
-                Log.d("Repository ", response.body().toString())
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    Log.d("Success", data.toString())
-                    data?.let {
-                        emit(Event.Success(it))
-                    }
-                } else {
-                    val error = response.errorBody()?.toString()
-                    Log.d("Error", response.body()?.message!!)
-                    if (error != null) {
-                        val jsonObject = JSONObject(error)
-                        val message = jsonObject.getString("message")
-                        emit(Event.Error(null, message))
-                    }
+            Log.d("Repository", "response : $response.toString()")
+            Log.d("Repository ", response.body().toString())
+            if (response.isSuccessful) {
+                val data = response.body()
+                Log.d("Success", data.toString())
+                data?.let {
+                    emit(Event.Success(it))
                 }
-            } catch (e: Exception) {
-                Log.d("Exception", e.toString())
-                emit(Event.Error(null, e.toString()))
+            } else {
+                val error = response.errorBody()?.toString()
+                Log.d("Error", response.body()?.message!!)
+                if (error != null) {
+                    val jsonObject = JSONObject(error)
+                    val message = jsonObject.getString("message")
+                    emit(Event.Error(null, message))
+                }
             }
+        } catch (e: Exception) {
+            Log.d("Exception", e.toString())
+            emit(Event.Error(null, e.toString()))
         }
+    }
 
     fun getVMDetail(token: String, id: Int): LiveData<Event<VMDetailResponse>> =
         liveData(Dispatchers.IO) {
@@ -114,30 +113,29 @@ class CloudRepository(
             }
         }
 
-    fun getToken(request: JsonObject): LiveData<Event<TokenResponse>> =
-        liveData(Dispatchers.IO) {
-            emit(Event.Loading)
-            try {
-                val response = apiService.getToken("application/json", request)
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    if (data?.data != null) {
-                        emit(Event.Success(data))
-                    } else {
-                        emit(Event.Error(null, data?.message ?: "Data anda salah"))
-                    }
+    fun getToken(request: JsonObject): LiveData<Event<TokenResponse>> = liveData(Dispatchers.IO) {
+        emit(Event.Loading)
+        try {
+            val response = apiService.getToken("application/json", request)
+            if (response.isSuccessful) {
+                val data = response.body()
+                if (data?.data != null) {
+                    emit(Event.Success(data))
                 } else {
-                    val error = response.errorBody()?.toString()
-                    if (error != null) {
-                        val jsonObject = JSONObject(error)
-                        val message = jsonObject.getString("message")
-                        emit(Event.Error(null, message))
-                    }
+                    emit(Event.Error(null, data?.message ?: "Data anda salah"))
                 }
-            } catch (e: Exception) {
-                emit(Event.Error(null, "App Key atau App Secret anda salah"))
+            } else {
+                val error = response.errorBody()?.toString()
+                if (error != null) {
+                    val jsonObject = JSONObject(error)
+                    val message = jsonObject.getString("message")
+                    emit(Event.Error(null, message))
+                }
             }
+        } catch (e: Exception) {
+            emit(Event.Error(null, "App Key atau App Secret anda salah"))
         }
+    }
 
 
     suspend fun insertSites(site: Sites) {
@@ -154,11 +152,8 @@ class CloudRepository(
 
     // Fungsi untuk SharedPreferencesEncrypted
     fun saveEncryptedValues(appKey: String, appSecret: String, token: String) {
-        sharedPreferences.edit()
-            .putString("app_key", appKey)
-            .putString("app_secret", appSecret)
-            .putString("token", token)
-            .apply()
+        sharedPreferences.edit().putString("app_key", appKey).putString("app_secret", appSecret)
+            .putString("token", token).apply()
     }
 
 
@@ -180,9 +175,7 @@ class CloudRepository(
     }
 
     fun saveOnboarding(onBoarding: Boolean) {
-        sharedPreferences.edit()
-            .putBoolean("onboarding_complete", onBoarding)
-            .apply()
+        sharedPreferences.edit().putBoolean("onboarding_complete", onBoarding).apply()
     }
 
     fun getOnboarding(): Boolean {
@@ -198,46 +191,52 @@ class CloudRepository(
         cloudDatabase.sitesDao().deleteSite(item)
     }
 
-    fun getDataGraph(vmId: String): LiveData<Event<DataGraphResponse>> =
-        liveData(Dispatchers.IO) {
-            emit(Event.Loading)
-            try {
-                val requestBody = JsonObject().apply {
-                    addProperty("vm_id", vmId)
-                }
-                val response = apiService.getDataGraph("application/json", requestBody)
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    data?.let {
-                        emit(Event.Success(it))
-                    }
-                } else {
-                    val error = response.errorBody()?.toString()
-                    if (error != null) {
-                        val jsonObject = JSONObject(error)
-                        val message = jsonObject.getString("message")
-                        emit(Event.Error(null, message))
-                    }
-                }
-            } catch (e: Exception) {
-                emit(Event.Error(null, e.toString()))
+    fun getDataGraph(vmId: String): LiveData<Event<DataGraphResponse>> = liveData(Dispatchers.IO) {
+        emit(Event.Loading)
+        try {
+            setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
+            val requestBody = JsonObject().apply {
+                addProperty("vm_id", vmId)
             }
+            val response = apiService.getDataGraph("application/json", requestBody)
+            if (response.isSuccessful) {
+                val data = response.body()
+                data?.let {
+                    emit(Event.Success(it))
+                }
+            } else {
+                val error = response.errorBody()?.toString()
+                if (error != null) {
+                    val jsonObject = JSONObject(error)
+                    val message = jsonObject.getString("message")
+                    emit(Event.Error(null, message))
+                }
+            }
+        } catch (e: Exception) {
+            emit(Event.Error(null, e.toString()))
+            Log.d("Testing", "Catch $e")
         }
+    }
+
+    fun convertCpuUsedToNumeric(cpuUsed: String): String {
+        return (cpuUsed.replace("%", "").toDoubleOrNull() ?: 0.0).toString()
+    }
+
 
     fun getDataAnomaly(vmId: String): LiveData<Event<DataAnomalyResponse>> =
         liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
-                Log.d("Testing","Repo hit")
+                setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
                 val requestBody = JsonObject().apply {
                     addProperty("vm_id", vmId)
                 }
-                Log.d("Testing","Starting Hit")
                 val response = apiService.getDataAnomaly("application/json", requestBody)
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {
                         emit(Event.Success(it))
+
                     }
                 } else {
                     val error = response.errorBody()?.toString()
@@ -249,7 +248,7 @@ class CloudRepository(
                 }
             } catch (e: Exception) {
                 emit(Event.Error(null, e.toString()))
-                Log.d("Testing","Catch $e")
+                Log.d("Testing", "Catch Repo $e")
             }
         }
 
@@ -263,7 +262,6 @@ class CloudRepository(
                     val data = response.body()
                     data?.let {
                         emit(Event.Success(it))
-                        Log.d("Testing","To database successfully")
                     }
                 } else {
                     val error = response.errorBody()?.toString()

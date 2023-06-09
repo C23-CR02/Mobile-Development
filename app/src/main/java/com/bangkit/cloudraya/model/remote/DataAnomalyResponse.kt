@@ -15,7 +15,6 @@ data class DataAnomalyResponse(
 )
 
 data class AnomalyResponse(
-
     @field:SerializedName("created_at")
     val createdAt: String,
 
@@ -23,5 +22,6 @@ data class AnomalyResponse(
     val cpuUsed: String,
 
     @field:SerializedName("is_anomaly")
-    val isAnomaly: Boolean,
+    val isAnomaly: Boolean
 )
+
