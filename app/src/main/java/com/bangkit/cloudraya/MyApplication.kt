@@ -18,7 +18,12 @@ class MyApplication : Application(), KoinComponent {
         GlobalContext.startKoin {
             androidContext(this@MyApplication)
             modules(
-                networkModule, viewModule, repositoryModule, localModule, encryptionModule, dataModule
+                networkModule,
+                viewModule,
+                repositoryModule,
+                localModule,
+                encryptionModule,
+                dataModule
             )
         }
         FirebaseMessaging.getInstance().token
@@ -33,7 +38,7 @@ class MyApplication : Application(), KoinComponent {
             }
     }
 
-    private fun saveFCMToken(token: String){
+    private fun saveFCMToken(token: String) {
         val editor = sharedPreferences.edit()
         editor.putString("fcm_token", token)
         editor.apply()
