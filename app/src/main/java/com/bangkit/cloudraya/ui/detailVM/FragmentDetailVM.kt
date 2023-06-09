@@ -13,7 +13,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.model.remote.DataGraphResponseItem
+import com.bangkit.cloudraya.model.remote.DataGraphResponse
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
 import com.github.mikephil.charting.components.Description
@@ -254,36 +254,16 @@ class FragmentDetailVM : Fragment() {
 
     }
 
-    private fun setGraph(data: Any) {
-        val trimmedData = data.toString().substring(1, data.toString().length - 1)
-        val pairs = trimmedData.split("\\}, \\{".toRegex())
-        val dataList = mutableListOf<DataGraphResponseItem>()
-        for (pair in pairs) {
-            val trimmedPair = pair.trim('{', '}')
-            val keyValuePairs = trimmedPair.split(", ")
-            val dataMap = mutableMapOf<String, String>()
-            for (keyValuePair in keyValuePairs) {
-                val (key, value) = keyValuePair.split("=")
-
-                dataMap[key] = value
-            }
-            val dataItem = DataGraphResponseItem(
-                timestamp = dataMap["Timestamp"] ?: "",
-                forecasts = dataMap["Forecasts"] ?: "",
-                cost = dataMap["Cost"] ?: "",
-                core = dataMap["Core"] ?: ""
-            )
-            dataList.add(dataItem)
-        }
+    private fun setGraph(dataList: DataGraphResponse) {
         costProjection(dataList)
         additionalResources(dataList)
     }
 
-    private fun costProjection(dataList: List<DataGraphResponseItem>) {
+    private fun costProjection(dataList: DataGraphResponse) {
         val lineChart = binding.costProjection
         val entries = ArrayList<Entry>()
 
-        for (i in dataList) {
+        for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.timestamp)
             val forecast = i.forecasts.toFloat()
             val cost = i.cost.toFloat()
@@ -300,20 +280,20 @@ class FragmentDetailVM : Fragment() {
         lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         lineChart.legend.isEnabled = true
         lineChart.data = lineData
-        val dataCount = dataList.size
+        val dataCount = dataList.data.size
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
         lineChart.invalidate()
     }
 
-    private fun additionalResources(dataList: List<DataGraphResponseItem>) {
+    private fun additionalResources(dataList: DataGraphResponse) {
 
         val lineChart = binding.additionalResources
 
         val entries = ArrayList<Entry>()
         val highlightEntries = ArrayList<Entry>()
 
-        for (i in dataList) {
+        for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.timestamp)
             val forecast = i.forecasts.toFloat()
             val cost = i.cost.toFloat()
@@ -353,7 +333,7 @@ class FragmentDetailVM : Fragment() {
         legend.setCustom(listOf(dataForecast, highlightEntry))
 
         lineChart.data = lineData
-        val dataCount = dataList.size
+        val dataCount = dataList.data.size
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
         lineChart.invalidate()
