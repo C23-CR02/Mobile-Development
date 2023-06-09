@@ -13,6 +13,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.model.remote.DataAnomalyResponse
 import com.bangkit.cloudraya.model.remote.DataGraphResponse
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
@@ -221,12 +222,29 @@ class FragmentDetailVM : Fragment() {
 
     private fun getGraph() {
         viewModel.setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
-        viewModel.getDataGraph(5601.toString())
+        viewModel.getDataGraph(vmData.localId.toString())
         viewModel.dataGraph.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {
                     binding.pbLoading.visibility = View.GONE
                     setGraph(result.data)
+                }
+                is Event.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+                is Event.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+            }
+        }
+        viewModel.getDataAnomaly(vmData.localId.toString())
+        viewModel.dataAnomaly.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    getAnomaly(result.data)
                 }
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
@@ -337,6 +355,57 @@ class FragmentDetailVM : Fragment() {
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
         lineChart.invalidate()
+
+    }
+
+    private fun getAnomaly(dataList: DataAnomalyResponse) {
+        val lineChart = binding.anomalyDetection
+        val entries = ArrayList<Entry>()
+        val anomalyEntries = ArrayList<Entry>()
+
+        for (i in dataList.data) {
+            val timestamp = getTimeFromTimestamp(i.createdAt)
+            val cpuUsed = i.cpuUsed.toFloat()
+            val isAnomaly = i.isAnomaly
+
+            entries.add(Entry(timestamp, cpuUsed))
+            if (isAnomaly) {
+                anomalyEntries.add(Entry(timestamp, cpuUsed))
+            }
+        }
+        val dataSet = LineDataSet(entries, "Value")
+        dataSet.color = Color.BLUE
+
+        val highlightDataSet = LineDataSet(anomalyEntries, "Anomaly")
+        highlightDataSet.setDrawIcons(false)
+        highlightDataSet.setDrawValues(false)
+        highlightDataSet.circleRadius = 6f
+        highlightDataSet.setCircleColor(Color.RED)
+
+        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+
+        val lineData = LineData(dataSet, highlightDataSet)
+
+        lineChart.description = Description().apply { text = "" }
+        lineChart.axisRight.isEnabled = false
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        val legend = lineChart.legend
+        legend.isEnabled = true
+        val highlightEntry = LegendEntry()
+        highlightEntry.label = "Anomaly"
+        highlightEntry.formColor = Color.RED
+        val dataForecast = LegendEntry()
+        dataForecast.label = "Value"
+        dataForecast.formColor = Color.BLUE
+
+        legend.setCustom(listOf(dataForecast, highlightEntry))
+
+        lineChart.data = lineData
+        val dataCount = dataList.data.size
+        val visibleRange = if (dataCount < 10) dataCount else 10
+        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+        lineChart.invalidate()
+
     }
 
     private fun getTimeFromTimestamp(timestamp: String): Float {
