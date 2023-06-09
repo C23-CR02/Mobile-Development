@@ -22,16 +22,14 @@
         tools:layout="@layout/fragment_site_list" >
         <action
             android:id="@+id/action_fragmentSiteList_to_fragmentSiteAdd"
-            app:destination="@id/fragmentSiteAdd" />
-        <action
-            android:id="@+id/action_fragmentSiteList_to_fragmentSiteEdit"
-            app:destination="@id/fragmentSiteEdit" />
-        <action
-            android:id="@+id/action_fragmentSiteList_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/fragmentSiteAdd"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_fragmentSiteList_to_fragmentResources"
-            app:destination="@id/fragmentResources" />
+            app:destination="@id/fragmentResources"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteAdd"
@@ -45,21 +43,15 @@
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentSiteEdit"
-        android:name="com.bangkit.cloudraya.ui.siteEdit.FragmentSiteEdit"
-        android:label="fragment_site_edit"
-        tools:layout="@layout/fragment_site_edit" />
-    <fragment
         android:id="@+id/fragmentResources"
         android:name="com.bangkit.cloudraya.ui.resources.FragmentResources"
         android:label="FragmentResources"
         tools:layout="@layout/fragment_resources">
         <action
             android:id="@+id/action_fragmentResources_to_fragmentDetailVM"
-            app:destination="@id/fragmentDetailVM" />
-        <action
-            android:id="@+id/action_fragmentResources_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/fragmentDetailVM"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <argument
             android:name="data"
             app:argType="string" />
@@ -85,27 +77,12 @@
             app:argType="string" />
         <action
             android:id="@+id/action_fragmentDetailVM_to_fragmentResources"
-            app:destination="@id/fragmentResources" />
+            app:destination="@id/fragmentResources"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <argument
             android:name="siteUrl"
             app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.bangkit.cloudraya.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_fragmentResources"
-            app:destination="@id/fragmentResources" />
-        <argument
-            android:name="data"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_homeFragment_to_fragmentSiteList"
-            app:destination="@id/fragmentSiteList"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
