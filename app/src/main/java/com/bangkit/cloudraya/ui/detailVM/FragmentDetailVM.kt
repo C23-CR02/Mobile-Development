@@ -105,10 +105,7 @@ class FragmentDetailVM : Fragment() {
                             .setTitleText("Successful!")
                             .setContentText(result.data.message)
                             .show()
-                        runBlocking {
-                            delay(Toast.LENGTH_LONG.toLong())
-                        }
-                        observeData(vmData)
+                        updateStatus("Running")
                     }
                     is Event.Error -> {
                         pDialog.dismiss()
@@ -138,10 +135,7 @@ class FragmentDetailVM : Fragment() {
                             .setTitleText("Successful!")
                             .setContentText(result.data.message)
                             .show()
-                        runBlocking {
-                            delay(Toast.LENGTH_LONG.toLong())
-                        }
-                        observeData(vmData)
+                        updateStatus("Stopped")
                     }
                     is Event.Error -> {
                         pDialog.dismiss()
@@ -171,10 +165,7 @@ class FragmentDetailVM : Fragment() {
                             .setTitleText("Successful!")
                             .setContentText(result.data.message)
                             .show()
-                        runBlocking {
-                            delay(Toast.LENGTH_LONG.toLong())
-                        }
-                        observeData(vmData)
+                        updateStatus("Running")
                     }
                     is Event.Error -> {
                         pDialog.dismiss()
@@ -366,5 +357,24 @@ class FragmentDetailVM : Fragment() {
         calendar.time = date!!
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         return hour.toFloat()
+    }
+
+    private fun updateStatus(status: String){
+        binding.tvStatus.text = status
+        if (status.contains("stop", ignoreCase = true)) {
+            binding.apply {
+                btnStop.isEnabled = false
+                btnStart.isEnabled = true
+                btnRestart.isEnabled = false
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_inactive, 0, 0, 0)
+            }
+        } else {
+            binding.apply {
+                btnStop.isEnabled = true
+                btnStart.isEnabled = false
+                btnRestart.isEnabled = true
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_active, 0, 0, 0)
+            }
+        }
     }
 }
