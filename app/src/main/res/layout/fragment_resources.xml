@@ -15,7 +15,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/vm_list"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rvVM"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
