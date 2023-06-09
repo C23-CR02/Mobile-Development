@@ -16,6 +16,7 @@ import com.bangkit.cloudraya.model.local.Event
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.JsonObject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.net.MalformedURLException
@@ -26,6 +27,8 @@ class FragmentSiteAdd : Fragment() {
     private var token: String = "Bearer "
     private val viewModel: SiteAddViewModel by viewModel()
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var appKey: String
+    private lateinit var appSecret: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,8 +83,8 @@ class FragmentSiteAdd : Fragment() {
     private fun addSite() {
         val siteName = binding.siteNameLayout.text.toString()
         val siteUrl = binding.siteUrlLayout.text.toString()
-        val appKey = binding.appKeyLayout.text.toString()
-        val appSecret = binding.appSecretLayout.text.toString()
+        appKey = binding.appKeyLayout.text.toString()
+        appSecret = binding.appSecretLayout.text.toString()
 
         val request = JsonObject().apply {
             addProperty("app_key", appKey)
@@ -104,7 +107,8 @@ class FragmentSiteAdd : Fragment() {
                         viewModel.saveListEncrypted(siteName, list)
                         viewModel.getListEncrypted(siteName)
                         sendFCMToken(appKey, appSecret, fcmToken)
-                        val dialog = SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
+                        val dialog =
+                            SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
                         dialog.apply {
                             titleText = "Successful!"
                             contentText = getString(R.string.toast_successful)
@@ -112,7 +116,7 @@ class FragmentSiteAdd : Fragment() {
                                 it.dismiss()
                                 toList()
                             }
-                            .show()
+                                .show()
                         }
                     }
                 }
@@ -128,11 +132,32 @@ class FragmentSiteAdd : Fragment() {
                 }
             }
         }
+        lifecycleScope.launch {
+            delay(1000)
+            viewModel.insertToDatabase(request).observe(viewLifecycleOwner) { data ->
+                when (data) {
+                    is Event.Success -> {
+                        // Do Nothing
+                    }
+                    is Event.Error -> {
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Failed to insert database")
+                            .setContentText(data.error)
+                            .show()
+                    }
+                    else -> {
+                        Log.d("Event ", data.toString())
+                    }
+                }
+            }
+        }
     }
 
-    private fun sendFCMToken(appKey: String, appSecret: String, fcmToken: String){
-        databaseReference = FirebaseDatabase.getInstance("https://mobile-notification-90a3a-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users").child(appKey)
-        val hashMap:HashMap<String, String?> = HashMap()
+    private fun sendFCMToken(appKey: String, appSecret: String, fcmToken: String) {
+        databaseReference =
+            FirebaseDatabase.getInstance("https://mobile-notification-90a3a-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users").child(appKey)
+        val hashMap: HashMap<String, String?> = HashMap()
         hashMap["app_key"] = appKey
         hashMap["app_secret"] = appSecret
         hashMap["fcm_token"] = fcmToken
@@ -149,7 +174,7 @@ class FragmentSiteAdd : Fragment() {
         Log.d("FCM Hash", hashMap.toString())
     }
 
-    private fun isURLValid():Boolean{
+    private fun isURLValid(): Boolean {
         val baseUrl = binding.siteUrlLayout.text.toString().trim()
         return try {
             val url = URL(baseUrl)

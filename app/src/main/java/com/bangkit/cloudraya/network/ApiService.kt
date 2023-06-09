@@ -33,8 +33,20 @@ interface ApiService {
 
     @POST("/convert")
     suspend fun getDataGraph(
-        @Header("Content-Type") contentType : String,
+        @Header("Content-Type") contentType: String,
         @Body requestBody: JsonObject
-    )
-    : Response<Any>
+    ): Response<DataGraphResponse>
+
+    @POST("/convertAnomaly")
+    suspend fun getDataAnomaly(
+        @Header("Content-Type") contentType: String,
+        @Body requestBody: JsonObject
+    ): Response<DataAnomalyResponse>
+
+    @POST("/insertDataUser")
+    suspend fun insertToDatabase(
+        @Header("Content-Type") contentType: String,
+        @Body requestBody: JsonObject
+
+    ): Response<InsertResponse>
 }

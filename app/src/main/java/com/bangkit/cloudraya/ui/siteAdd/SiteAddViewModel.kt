@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.model.remote.InsertResponse
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.repository.CloudRepository
 import com.google.gson.JsonObject
@@ -23,18 +24,23 @@ class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel
     fun saveEncrypted(appKey: String, appSecret: String, token: String) {
         cloudRepository.saveEncryptedValues(appKey, appSecret, token)
     }
-    fun saveListEncrypted(key : String, list : List<String>){
+
+    fun saveListEncrypted(key: String, list: List<String>) {
         cloudRepository.saveList(key, list)
     }
 
-    fun getListEncrypted(key : String){
+    fun getListEncrypted(key: String) {
         cloudRepository.getList(key)
     }
 
-    fun setBaseUrl(url : String){
+    fun setBaseUrl(url: String) {
         cloudRepository.setBaseUrl(url)
     }
 
     fun getFCMToken() = cloudRepository.getFCMToken()
+
+    fun insertToDatabase(request: JsonObject): LiveData<Event<InsertResponse>> =
+        cloudRepository.insertToDatabase(request)
+
 
 }

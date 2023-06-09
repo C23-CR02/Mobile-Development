@@ -198,14 +198,14 @@ class CloudRepository(
         cloudDatabase.sitesDao().deleteSite(item)
     }
 
-    fun getDataGraph(vmId : String): LiveData<Event<Any>> =
+    fun getDataGraph(vmId: String): LiveData<Event<DataGraphResponse>> =
         liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
                 val requestBody = JsonObject().apply {
                     addProperty("vm_id", vmId)
                 }
-                val response = apiService.getDataGraph("application/json",requestBody)
+                val response = apiService.getDataGraph("application/json", requestBody)
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {
@@ -223,4 +223,59 @@ class CloudRepository(
                 emit(Event.Error(null, e.toString()))
             }
         }
+
+    fun getDataAnomaly(vmId: String): LiveData<Event<DataAnomalyResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                Log.d("Testing","Repo hit")
+                val requestBody = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                }
+                Log.d("Testing","Starting Hit")
+                val response = apiService.getDataAnomaly("application/json", requestBody)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+                Log.d("Testing","Catch $e")
+            }
+        }
+
+    fun insertToDatabase(request: JsonObject): LiveData<Event<InsertResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
+                val response = apiService.insertToDatabase("application/json", request)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                        Log.d("Testing","To database successfully")
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
 }

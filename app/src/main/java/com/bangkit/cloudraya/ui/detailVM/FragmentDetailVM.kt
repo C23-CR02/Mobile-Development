@@ -2,6 +2,7 @@ package com.bangkit.cloudraya.ui.detailVM
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.model.remote.DataGraphResponseItem
+import com.bangkit.cloudraya.model.remote.DataAnomalyResponse
+import com.bangkit.cloudraya.model.remote.DataGraphResponse
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
 import com.github.mikephil.charting.components.Description
@@ -238,6 +240,26 @@ class FragmentDetailVM : Fragment() {
                 }
             }
         }
+        viewModel.setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
+        viewModel.getDataAnomaly(vmData.localId.toString())
+        viewModel.dataAnomaly.observe(viewLifecycleOwner){result ->
+            when (result) {
+                is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Log.d("Testing",result.data.toString())
+
+                    graphAnomaly(result.data)
+                }
+                is Event.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+                is Event.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun backPressed() {
@@ -254,40 +276,20 @@ class FragmentDetailVM : Fragment() {
 
     }
 
-    private fun setGraph(data: Any) {
-        val trimmedData = data.toString().substring(1, data.toString().length - 1)
-        val pairs = trimmedData.split("\\}, \\{".toRegex())
-        val dataList = mutableListOf<DataGraphResponseItem>()
-        for (pair in pairs) {
-            val trimmedPair = pair.trim('{', '}')
-            val keyValuePairs = trimmedPair.split(", ")
-            val dataMap = mutableMapOf<String, String>()
-            for (keyValuePair in keyValuePairs) {
-                val (key, value) = keyValuePair.split("=")
+    private fun setGraph(data: DataGraphResponse) {
+        costProjection(data)
+        additionalResources(data)
 
-                dataMap[key] = value
-            }
-            val dataItem = DataGraphResponseItem(
-                timestamp = dataMap["Timestamp"] ?: "",
-                forecasts = dataMap["Forecasts"] ?: "",
-                cost = dataMap["Cost"] ?: "",
-                core = dataMap["Core"] ?: ""
-            )
-            dataList.add(dataItem)
-        }
-        costProjection(dataList)
-        additionalResources(dataList)
     }
 
-    private fun costProjection(dataList: List<DataGraphResponseItem>) {
+    private fun costProjection(dataList: DataGraphResponse) {
         val lineChart = binding.costProjection
         val entries = ArrayList<Entry>()
 
-        for (i in dataList) {
+        for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.timestamp)
             val forecast = i.forecasts.toFloat()
             val cost = i.cost.toFloat()
-
             entries.add(Entry(timestamp, cost))
         }
         val dataSet = LineDataSet(entries, "Forecast")
@@ -295,25 +297,27 @@ class FragmentDetailVM : Fragment() {
 
         val lineData = LineData(dataSet)
 
+
         lineChart.description = Description().apply { text = "" }
         lineChart.axisRight.isEnabled = false
         lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         lineChart.legend.isEnabled = true
         lineChart.data = lineData
-        val dataCount = dataList.size
+        val dataCount = dataList.data.size
+
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
         lineChart.invalidate()
     }
 
-    private fun additionalResources(dataList: List<DataGraphResponseItem>) {
+    private fun additionalResources(dataList: DataGraphResponse) {
 
         val lineChart = binding.additionalResources
 
         val entries = ArrayList<Entry>()
         val highlightEntries = ArrayList<Entry>()
 
-        for (i in dataList) {
+        for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.timestamp)
             val forecast = i.forecasts.toFloat()
             val cost = i.cost.toFloat()
@@ -353,7 +357,57 @@ class FragmentDetailVM : Fragment() {
         legend.setCustom(listOf(dataForecast, highlightEntry))
 
         lineChart.data = lineData
-        val dataCount = dataList.size
+        val dataCount = dataList.data.size
+        val visibleRange = if (dataCount < 10) dataCount else 10
+        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+        lineChart.invalidate()
+    }
+
+    private fun graphAnomaly(dataList : DataAnomalyResponse) {
+        val lineChart = binding.anomalyDetection
+        Log.d("Testing",dataList.toString())
+        val entries = ArrayList<Entry>()
+        val anomalyEntry = ArrayList<Entry>()
+
+        for(i in dataList.data){
+            val timestamp = getTimeFromTimestamp(i.createdAt)
+            val cpuUsed = i.cpuUsed.toFloat()
+            val result = i.isAnomaly
+
+            entries.add(Entry(timestamp, cpuUsed))
+            if (result) {
+                anomalyEntry.add(Entry(timestamp, cpuUsed))
+            }
+        }
+        val dataSet = LineDataSet(entries, "Value")
+        dataSet.color = Color.BLUE
+
+        val highlightDataSet = LineDataSet(anomalyEntry, "Anomaly")
+        highlightDataSet.setDrawIcons(false)
+        highlightDataSet.setDrawValues(false)
+        highlightDataSet.circleRadius = 6f
+        highlightDataSet.setCircleColor(Color.RED)
+
+        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+
+        val lineData = LineData(dataSet, highlightDataSet)
+
+        lineChart.description = Description().apply { text = "" }
+        lineChart.axisRight.isEnabled = false
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        val legend = lineChart.legend
+        legend.isEnabled = true
+        val highlightEntry = LegendEntry()
+        highlightEntry.label = "Anomaly"
+        highlightEntry.formColor = Color.RED
+        val dataForecast = LegendEntry()
+        dataForecast.label = "Value"
+        dataForecast.formColor = Color.BLUE
+
+        legend.setCustom(listOf(dataForecast, highlightEntry))
+
+        lineChart.data = lineData
+        val dataCount = dataList.data.size
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
         lineChart.invalidate()
@@ -367,4 +421,5 @@ class FragmentDetailVM : Fragment() {
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         return hour.toFloat()
     }
+
 }
