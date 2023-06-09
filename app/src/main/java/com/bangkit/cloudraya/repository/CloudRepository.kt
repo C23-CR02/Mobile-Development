@@ -1,7 +1,6 @@
 package com.bangkit.cloudraya.repository
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.database.CloudDatabase
@@ -25,28 +24,20 @@ class CloudRepository(
 
 ) {
     fun setBaseUrl(url: String) {
-        Log.d("Cloud Repository", url)
         baseUrlInterceptor.setBaseUrl(url)
-        Log.d("Cloud Repository", "Sukses ?")
     }
 
     fun getVMList(token: String): LiveData<Event<VMListResponse>> = liveData(Dispatchers.IO) {
         emit(Event.Loading)
         try {
             val response = apiService.getVMList(token)
-            Log.d("Repository", "Token : $token")
-
-            Log.d("Repository", "response : $response.toString()")
-            Log.d("Repository ", response.body().toString())
             if (response.isSuccessful) {
                 val data = response.body()
-                Log.d("Success", data.toString())
                 data?.let {
                     emit(Event.Success(it))
                 }
             } else {
                 val error = response.errorBody()?.toString()
-                Log.d("Error", response.body()?.message!!)
                 if (error != null) {
                     val jsonObject = JSONObject(error)
                     val message = jsonObject.getString("message")
@@ -54,7 +45,6 @@ class CloudRepository(
                 }
             }
         } catch (e: Exception) {
-            Log.d("Exception", e.toString())
             emit(Event.Error(null, e.toString()))
         }
     }
@@ -66,13 +56,11 @@ class CloudRepository(
                 val response = apiService.getVMDetail(token, id)
                 if (response.isSuccessful) {
                     val data = response.body()
-                    Log.d("Success", data.toString())
                     data?.let {
                         emit(Event.Success(it))
                     }
                 } else {
                     val error = response.errorBody()?.toString()
-                    Log.d("Error", response.body()?.message!!)
                     if (error != null) {
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
@@ -80,7 +68,6 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
-                Log.d("Exception", e.toString())
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -214,14 +201,8 @@ class CloudRepository(
             }
         } catch (e: Exception) {
             emit(Event.Error(null, e.toString()))
-            Log.d("Testing", "Catch $e")
         }
     }
-
-    fun convertCpuUsedToNumeric(cpuUsed: String): String {
-        return (cpuUsed.replace("%", "").toDoubleOrNull() ?: 0.0).toString()
-    }
-
 
     fun getDataAnomaly(vmId: String): LiveData<Event<DataAnomalyResponse>> =
         liveData(Dispatchers.IO) {
@@ -248,7 +229,6 @@ class CloudRepository(
                 }
             } catch (e: Exception) {
                 emit(Event.Error(null, e.toString()))
-                Log.d("Testing", "Catch Repo $e")
             }
         }
 

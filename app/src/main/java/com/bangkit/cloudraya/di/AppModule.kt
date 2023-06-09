@@ -24,26 +24,6 @@ val localModule = module {
             .build()
     }
 }
-
-//val networkModule = module {
-//    single {
-//        OkHttpClient.Builder().addInterceptor { chain ->
-//            val req = chain.request()
-//            val requestHeaders = req.newBuilder()
-//                .build()
-//            chain.proceed(requestHeaders)
-//        }
-//            .build()
-//    }
-//    single {
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://api.cloudraya.com/v1/api/gateway/")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .client(get())
-//            .build()
-//        retrofit.create(ApiService::class.java)
-//    }
-//}
 val networkModule = module {
     single { provideBaseUrlInterceptor() }
     single { provideOkHttpClient(get()) }
