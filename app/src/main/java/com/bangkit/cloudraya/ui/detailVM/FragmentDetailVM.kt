@@ -131,7 +131,7 @@ class FragmentDetailVM : Fragment() {
     }
 
     private fun stopVM() {
-        viewModel.setBaseUrl(site)
+        viewModel.setBaseUrl(siteUrl)
         viewModel.vmAction(token, vmData.localId!!, "stop")
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
@@ -164,7 +164,7 @@ class FragmentDetailVM : Fragment() {
     }
 
     private fun restartVM() {
-        viewModel.setBaseUrl(site)
+        viewModel.setBaseUrl(siteUrl)
         viewModel.vmAction(token, vmData.localId!!, "reboot")
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
@@ -263,6 +263,8 @@ class FragmentDetailVM : Fragment() {
         val lineChart = binding.chartCostProjection
 
         val entries = ArrayList<Entry>()
+        val highlightEntries = ArrayList<Entry>()
+
         val trimmedData = data.toString().substring(1, data.toString().length - 1)
         Log.d("Testing", "Trimmed data $trimmedData")
         val pairs = trimmedData.split("\\}, \\{".toRegex())
@@ -292,17 +294,33 @@ class FragmentDetailVM : Fragment() {
             val cost = i.cost.toFloat()
 
             entries.add(Entry(timestamp, forecast))
+            if (forecast > 80) {
+                highlightEntries.add(Entry(timestamp, forecast))
+            }
         }
+
+
 
         val dataSet = LineDataSet(entries, "Forecast")
         dataSet.color = Color.BLUE
-        val lineData = LineData(dataSet)
+
+        val highlightDataSet = LineDataSet(highlightEntries, "Highlight")
+        highlightDataSet.setDrawIcons(false)
+        highlightDataSet.setDrawValues(false)
+        highlightDataSet.circleRadius = 6f
+        highlightDataSet.setCircleColor(Color.RED)
+        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+
+        val lineData = LineData(dataSet, highlightDataSet)
 
         lineChart.description = Description().apply { text = "" }
         lineChart.axisRight.isEnabled = false
         lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         lineChart.legend.isEnabled = false
         lineChart.data = lineData
+        val dataCount = dataList.size
+        val visibleRange = if (dataCount < 10) dataCount else 10
+        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
         lineChart.invalidate()
     }
 
