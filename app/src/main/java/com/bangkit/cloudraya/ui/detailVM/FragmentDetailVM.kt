@@ -226,7 +226,7 @@ class FragmentDetailVM : Fragment() {
 
     private fun getGraph() {
         viewModel.setBaseUrl("https://backend-dot-mobile-notification-90a3a.et.r.appspot.com")
-        viewModel.getDataGraph()
+        viewModel.getDataGraph(5601.toString())
         viewModel.dataGraph.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {

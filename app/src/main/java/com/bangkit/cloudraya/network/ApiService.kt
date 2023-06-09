@@ -9,14 +9,14 @@ interface ApiService {
 
     @POST("/v1/api/gateway/user/auth")
     suspend fun getToken(
-        @Header("Content-Type") contentType : String,
-        @Body body : JsonObject
+        @Header("Content-Type") contentType: String,
+        @Body body: JsonObject
     ): Response<TokenResponse>
 
     @GET("/v1/api/gateway/user/virtualmachines")
     suspend fun getVMList(
-        @Header("Authorization") token : String
-    ):Response<VMListResponse>
+        @Header("Authorization") token: String
+    ): Response<VMListResponse>
 
     @GET("/v1/api/gateway/user/virtualmachines/{id}")
     suspend fun getVMDetail(
@@ -26,11 +26,15 @@ interface ApiService {
 
     @POST("/v1/api/gateway/user/virtualmachines/action")
     suspend fun vmAction(
-        @Header("Content-Type") contentType : String,
-        @Header("Authorization") token : String,
+        @Header("Content-Type") contentType: String,
+        @Header("Authorization") token: String,
         @Body requestBody: JsonObject
-    ) : Response<VMActionResponse>
+    ): Response<VMActionResponse>
 
-    @GET("/convert")
-    suspend fun getDataGraph() : Response<Any>
+    @POST("/convert")
+    suspend fun getDataGraph(
+        @Header("Content-Type") contentType : String,
+        @Body requestBody: JsonObject
+    )
+    : Response<Any>
 }

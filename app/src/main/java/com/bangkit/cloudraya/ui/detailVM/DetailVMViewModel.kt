@@ -31,8 +31,8 @@ class DetailVMViewModel(private val cloudRepository: CloudRepository) : ViewMode
 
     private val _dataGraph = MutableLiveData<Event<Any>>()
     val dataGraph: LiveData<Event<Any>> = _dataGraph
-    fun getDataGraph() {
-        cloudRepository.getDataGraph().observeForever {
+    fun getDataGraph(vmId : String) {
+        cloudRepository.getDataGraph(vmId).observeForever {
             _dataGraph.value = it
         }
     }
