@@ -2,11 +2,6 @@ package com.bangkit.cloudraya.model.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class DataGraphResponse(
-
-	val dataGraphResponse: List<DataGraphResponseItem>
-)
-
 data class DataGraphResponseItem(
 
 	@field:SerializedName("Forecasts")

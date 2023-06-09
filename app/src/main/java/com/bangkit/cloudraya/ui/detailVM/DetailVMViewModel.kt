@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.model.remote.DataGraphResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
 import com.bangkit.cloudraya.repository.CloudRepository
 
