@@ -58,7 +58,7 @@ class FragmentDetailVM : Fragment() {
 
         observeData(vmData)
         binding.btnBack.setOnClickListener {
-            backPressed()
+            goBack()
         }
         binding.btnStart.setOnClickListener {
             startVM()
@@ -262,15 +262,19 @@ class FragmentDetailVM : Fragment() {
     private fun backPressed() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val back = FragmentDetailVMDirections.actionFragmentDetailVMToFragmentResources(
-                    site,
-                    siteUrl
-                )
-                findNavController().navigate(back)
+                goBack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+    }
+
+    private fun goBack() {
+        val back = FragmentDetailVMDirections.actionFragmentDetailVMToFragmentResources(
+            site,
+            siteUrl
+        )
+        findNavController().navigate(back)
     }
 
     private fun setGraph(dataList: DataGraphResponse) {
