@@ -63,5 +63,6 @@
     <string name="cost_projection">Cost Projection</string>
     <string name="additional_resources">Additional Resources</string>
     <string name="anomaly_detection">Anomaly Detection</string>
+    <string name="estimated_cost">Estimated Cost: %f</string>
 
 </resources>

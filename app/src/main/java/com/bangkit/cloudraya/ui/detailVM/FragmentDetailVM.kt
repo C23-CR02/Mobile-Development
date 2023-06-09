@@ -281,14 +281,16 @@ class FragmentDetailVM : Fragment() {
     private fun costProjection(dataList: DataGraphResponse) {
         val lineChart = binding.costProjection
         val entries = ArrayList<Entry>()
+        var totalCost = 0f
 
         for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.timestamp)
             val forecast = i.forecasts.toFloat()
             val cost = i.cost.toFloat()
-
+            totalCost += cost
             entries.add(Entry(timestamp, cost))
         }
+        binding.tvEstimatedCost.text = String.format(getString(R.string.estimated_cost), totalCost)
         val dataSet = LineDataSet(entries, "Forecast")
         dataSet.color = Color.BLUE
 
