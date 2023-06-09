@@ -61,5 +61,7 @@
     <string name="toast_successful">Add Sites Successful</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="cost_projection">Cost Projection</string>
+    <string name="additional_resources">Additional Resources</string>
+    <string name="anomaly_detection">Anomaly Detection</string>
 
 </resources>

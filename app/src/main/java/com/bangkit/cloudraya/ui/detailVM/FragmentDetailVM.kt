@@ -2,7 +2,6 @@ package com.bangkit.cloudraya.ui.detailVM
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.bangkit.cloudraya.model.remote.DataGraphResponseItem
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -255,11 +255,6 @@ class FragmentDetailVM : Fragment() {
     }
 
     private fun setGraph(data: Any) {
-        val lineChart = binding.chartCostProjection
-
-        val entries = ArrayList<Entry>()
-        val highlightEntries = ArrayList<Entry>()
-
         val trimmedData = data.toString().substring(1, data.toString().length - 1)
         val pairs = trimmedData.split("\\}, \\{".toRegex())
         val dataList = mutableListOf<DataGraphResponseItem>()
@@ -280,6 +275,43 @@ class FragmentDetailVM : Fragment() {
             )
             dataList.add(dataItem)
         }
+        costProjection(dataList)
+        additionalResources(dataList)
+    }
+
+    private fun costProjection(dataList: List<DataGraphResponseItem>) {
+        val lineChart = binding.costProjection
+        val entries = ArrayList<Entry>()
+
+        for (i in dataList) {
+            val timestamp = getTimeFromTimestamp(i.timestamp)
+            val forecast = i.forecasts.toFloat()
+            val cost = i.cost.toFloat()
+
+            entries.add(Entry(timestamp, cost))
+        }
+        val dataSet = LineDataSet(entries, "Forecast")
+        dataSet.color = Color.BLUE
+
+        val lineData = LineData(dataSet)
+
+        lineChart.description = Description().apply { text = "" }
+        lineChart.axisRight.isEnabled = false
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        lineChart.legend.isEnabled = true
+        lineChart.data = lineData
+        val dataCount = dataList.size
+        val visibleRange = if (dataCount < 10) dataCount else 10
+        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+        lineChart.invalidate()
+    }
+
+    private fun additionalResources(dataList: List<DataGraphResponseItem>) {
+
+        val lineChart = binding.additionalResources
+
+        val entries = ArrayList<Entry>()
+        val highlightEntries = ArrayList<Entry>()
 
         for (i in dataList) {
             val timestamp = getTimeFromTimestamp(i.timestamp)
@@ -287,11 +319,10 @@ class FragmentDetailVM : Fragment() {
             val cost = i.cost.toFloat()
 
             entries.add(Entry(timestamp, forecast))
-            if (forecast > 80) {
+            if (forecast > 0.8) {
                 highlightEntries.add(Entry(timestamp, forecast))
             }
         }
-
 
 
         val dataSet = LineDataSet(entries, "Forecast")
@@ -302,6 +333,7 @@ class FragmentDetailVM : Fragment() {
         highlightDataSet.setDrawValues(false)
         highlightDataSet.circleRadius = 6f
         highlightDataSet.setCircleColor(Color.RED)
+
         highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
 
         val lineData = LineData(dataSet, highlightDataSet)
@@ -309,7 +341,17 @@ class FragmentDetailVM : Fragment() {
         lineChart.description = Description().apply { text = "" }
         lineChart.axisRight.isEnabled = false
         lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        lineChart.legend.isEnabled = false
+        val legend = lineChart.legend
+        legend.isEnabled = true
+        val highlightEntry = LegendEntry()
+        highlightEntry.label = "Highlight"
+        highlightEntry.formColor = Color.RED
+        val dataForecast = LegendEntry()
+        dataForecast.label = "Forecast"
+        dataForecast.formColor = Color.BLUE
+
+        legend.setCustom(listOf(dataForecast, highlightEntry))
+
         lineChart.data = lineData
         val dataCount = dataList.size
         val visibleRange = if (dataCount < 10) dataCount else 10
