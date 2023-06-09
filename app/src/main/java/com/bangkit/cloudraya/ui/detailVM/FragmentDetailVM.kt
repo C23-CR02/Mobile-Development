@@ -51,7 +51,6 @@ class FragmentDetailVM : Fragment() {
         vmData = FragmentDetailVMArgs.fromBundle(arguments as Bundle).dataVM
         site = arguments?.getString("site") ?: ""
         siteUrl = arguments?.getString("siteUrl") ?: ""
-        Log.d("Testing", "Site url : $siteUrl")
 
         val data = viewModel.getListEncrypted(site)
         token = data[2].toString()
@@ -85,8 +84,6 @@ class FragmentDetailVM : Fragment() {
                 }
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
-                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
-                        .show()
                 }
                 is Event.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
@@ -181,11 +178,9 @@ class FragmentDetailVM : Fragment() {
                     }
                     is Event.Error -> {
                         pDialog.dismiss()
-                        Snackbar.make(
-                            binding.root,
-                            result.error ?: "Error",
-                            Snackbar.LENGTH_SHORT
-                        )
+                        SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText(result.error)
                             .show()
                     }
                     is Event.Loading -> {
@@ -266,7 +261,6 @@ class FragmentDetailVM : Fragment() {
         val highlightEntries = ArrayList<Entry>()
 
         val trimmedData = data.toString().substring(1, data.toString().length - 1)
-        Log.d("Testing", "Trimmed data $trimmedData")
         val pairs = trimmedData.split("\\}, \\{".toRegex())
         val dataList = mutableListOf<DataGraphResponseItem>()
         for (pair in pairs) {
@@ -286,7 +280,6 @@ class FragmentDetailVM : Fragment() {
             )
             dataList.add(dataItem)
         }
-        Log.d("Testing", "data $dataList")
 
         for (i in dataList) {
             val timestamp = getTimeFromTimestamp(i.timestamp)

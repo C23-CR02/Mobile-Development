@@ -205,7 +205,6 @@ class CloudRepository(
                 val requestBody = JsonObject().apply {
                     addProperty("vm_id", vmId)
                 }
-                Log.d("Testing","request Body $requestBody")
                 val response = apiService.getDataGraph("application/json",requestBody)
                 if (response.isSuccessful) {
                     val data = response.body()
@@ -222,8 +221,6 @@ class CloudRepository(
                 }
             } catch (e: Exception) {
                 emit(Event.Error(null, e.toString()))
-                Log.d("Testing","Catch $e")
-
             }
         }
 }

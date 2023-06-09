@@ -25,7 +25,6 @@ class DetailVMViewModel(private val cloudRepository: CloudRepository) : ViewMode
     }
 
     fun setBaseUrl(url : String){
-        Log.d("Testing","Url : $url")
         cloudRepository.setBaseUrl(url)
     }
 
