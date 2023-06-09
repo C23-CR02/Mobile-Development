@@ -86,6 +86,8 @@ class FragmentDetailVM : Fragment() {
                 }
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
+                    Snackbar.make(binding.root, "Something went wrong..", Snackbar.LENGTH_SHORT)
+                        .show()
                 }
                 is Event.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
@@ -231,7 +233,7 @@ class FragmentDetailVM : Fragment() {
                 }
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
-                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, "Something went wrong..", Snackbar.LENGTH_SHORT)
                         .show()
                 }
                 is Event.Loading -> {
@@ -248,7 +250,7 @@ class FragmentDetailVM : Fragment() {
                 }
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
-                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, "Something went wrong..", Snackbar.LENGTH_SHORT)
                         .show()
                 }
                 is Event.Loading -> {
@@ -301,6 +303,7 @@ class FragmentDetailVM : Fragment() {
         val dataCount = dataList.data.size
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+        lineChart.moveViewToX(2f)
         lineChart.invalidate()
     }
 
@@ -354,6 +357,7 @@ class FragmentDetailVM : Fragment() {
         val dataCount = dataList.data.size
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+        lineChart.moveViewToX(2f)
         lineChart.invalidate()
 
     }
@@ -362,7 +366,6 @@ class FragmentDetailVM : Fragment() {
         val lineChart = binding.anomalyDetection
         val entries = ArrayList<Entry>()
         val anomalyEntries = ArrayList<Entry>()
-        Log.d("Testing", "data list $dataList")
         for (i in dataList.data) {
             val timestamp = getTimeFromTimestamp(i.createdAt)
             val cpuUsed = i.cpuUsed.toFloat()
@@ -404,6 +407,7 @@ class FragmentDetailVM : Fragment() {
         val dataCount = dataList.data.size
         val visibleRange = if (dataCount < 10) dataCount else 10
         lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+        lineChart.moveViewToX(2f)
         lineChart.invalidate()
 
     }
