@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -17,6 +18,7 @@ import com.bangkit.cloudraya.model.remote.DataAnomalyResponse
 import com.bangkit.cloudraya.model.remote.DataGraphResponse
 import com.bangkit.cloudraya.model.remote.VMData
 import com.bangkit.cloudraya.model.remote.VMListData
+import com.bangkit.cloudraya.ui.adapter.DetailMenuAdapter
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
@@ -24,6 +26,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,6 +59,8 @@ class FragmentDetailVM : Fragment() {
         val data = viewModel.getListEncrypted(site)
         token = data[2].toString()
 
+        setPager()
+
         observeData(vmData)
         binding.btnBack.setOnClickListener {
             goBack()
@@ -80,7 +85,7 @@ class FragmentDetailVM : Fragment() {
                 is Event.Success -> {
                     binding.pbLoading.visibility = View.GONE
                     updateUI(result.data.data!!)
-                    getGraph()
+//                    getGraph()
 
                 }
                 is Event.Error -> {
@@ -215,37 +220,45 @@ class FragmentDetailVM : Fragment() {
         }
     }
 
-    private fun getGraph() {
-        viewModel.getDataGraph(vmData.localId.toString())
-        viewModel.dataGraph.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Event.Success -> {
-                    binding.pbLoading.visibility = View.GONE
-                    setGraph(result.data)
-                }
-                is Event.Error -> {
-                    binding.pbLoading.visibility = View.GONE
-                }
-                is Event.Loading -> {
-                    binding.pbLoading.visibility = View.VISIBLE
-                }
-            }
-        }
-        viewModel.getDataAnomaly(vmData.localId.toString())
-        viewModel.dataAnomaly.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Event.Success -> {
-                    binding.pbLoading.visibility = View.GONE
-                    getAnomaly(result.data)
-                }
-                is Event.Error -> {
-                    binding.pbLoading.visibility = View.GONE
-                }
-                is Event.Loading -> {
-                    binding.pbLoading.visibility = View.VISIBLE
-                }
-            }
-        }
+//    private fun getGraph() {
+//        viewModel.getDataGraph(vmData.localId.toString())
+//        viewModel.dataGraph.observe(viewLifecycleOwner) { result ->
+//            when (result) {
+//                is Event.Success -> {
+//                    binding.pbLoading.visibility = View.GONE
+//                    setGraph(result.data)
+//                }
+//                is Event.Error -> {
+//                    binding.pbLoading.visibility = View.GONE
+//                }
+//                is Event.Loading -> {
+//                    binding.pbLoading.visibility = View.VISIBLE
+//                }
+//            }
+//        }
+//        viewModel.getDataAnomaly(vmData.localId.toString())
+//        viewModel.dataAnomaly.observe(viewLifecycleOwner) { result ->
+//            when (result) {
+//                is Event.Success -> {
+//                    binding.pbLoading.visibility = View.GONE
+//                    getAnomaly(result.data)
+//                }
+//                is Event.Error -> {
+//                    binding.pbLoading.visibility = View.GONE
+//                }
+//                is Event.Loading -> {
+//                    binding.pbLoading.visibility = View.VISIBLE
+//                }
+//            }
+//        }
+//    }
+    private fun setPager(){
+        val pagerAdapter = DetailMenuAdapter(activity as AppCompatActivity)
+        pagerAdapter.setValue(token, vmData.localId!!)
+        binding.viewPager.adapter = pagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = TAB_TITLES[position]
+        }.attach()
     }
 
     private fun backPressed() {
@@ -266,154 +279,154 @@ class FragmentDetailVM : Fragment() {
         findNavController().navigate(back)
     }
 
-    private fun setGraph(dataList: DataGraphResponse) {
-        costProjection(dataList)
-        additionalResources(dataList)
-    }
-
-    private fun costProjection(dataList: DataGraphResponse) {
-        val lineChart = binding.costProjection
-        val entries = ArrayList<Entry>()
-        var totalCost = 0f
-
-        for (i in dataList.data) {
-            val timestamp = getTimeFromTimestamp(i.timestamp)
-            val forecast = i.forecasts.toFloat()
-            val cost = i.cost.toFloat()
-            totalCost += cost
-            entries.add(Entry(timestamp, cost))
-        }
-        binding.tvEstimatedCost.text = String.format(getString(R.string.estimated_cost), totalCost)
-        val dataSet = LineDataSet(entries, "Forecast")
-        dataSet.color = Color.BLUE
-
-        val lineData = LineData(dataSet)
-
-        lineChart.description = Description().apply { text = "" }
-        lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        lineChart.legend.isEnabled = true
-        lineChart.data = lineData
-        val dataCount = dataList.data.size
-        val visibleRange = if (dataCount < 10) dataCount else 10
-        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
-        lineChart.moveViewToX(2f)
-        lineChart.invalidate()
-    }
-
-    private fun additionalResources(dataList: DataGraphResponse) {
-
-        val lineChart = binding.additionalResources
-
-        val entries = ArrayList<Entry>()
-        val highlightEntries = ArrayList<Entry>()
-
-        for (i in dataList.data) {
-            val timestamp = getTimeFromTimestamp(i.timestamp)
-            val forecast = i.forecasts.toFloat()
-            val cost = i.cost.toFloat()
-
-            entries.add(Entry(timestamp, forecast))
-            if (forecast > 0.8) {
-                highlightEntries.add(Entry(timestamp, forecast))
-            }
-        }
-
-
-        val dataSet = LineDataSet(entries, "Forecast")
-        dataSet.color = Color.BLUE
-
-        val highlightDataSet = LineDataSet(highlightEntries, "Highlight")
-        highlightDataSet.setDrawIcons(false)
-        highlightDataSet.setDrawValues(false)
-        highlightDataSet.circleRadius = 6f
-        highlightDataSet.setCircleColor(Color.RED)
-
-        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-
-        val lineData = LineData(dataSet, highlightDataSet)
-
-        lineChart.description = Description().apply { text = "" }
-        lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        val legend = lineChart.legend
-        legend.isEnabled = true
-        val highlightEntry = LegendEntry()
-        highlightEntry.label = "Highlight"
-        highlightEntry.formColor = Color.RED
-        val dataForecast = LegendEntry()
-        dataForecast.label = "Forecast"
-        dataForecast.formColor = Color.BLUE
-
-        legend.setCustom(listOf(dataForecast, highlightEntry))
-
-        lineChart.data = lineData
-        val dataCount = dataList.data.size
-        val visibleRange = if (dataCount < 10) dataCount else 10
-        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
-        lineChart.moveViewToX(2f)
-        lineChart.invalidate()
-
-    }
-
-    private fun getAnomaly(dataList: DataAnomalyResponse) {
-        val lineChart = binding.anomalyDetection
-        val entries = ArrayList<Entry>()
-        val anomalyEntries = ArrayList<Entry>()
-        for (i in dataList.data) {
-            val timestamp = getTimeFromTimestamp(i.createdAt)
-            val cpuUsed = i.cpuUsed.toFloat()
-            val isAnomaly = i.isAnomaly
-
-            entries.add(Entry(timestamp, cpuUsed))
-            if (isAnomaly) {
-                anomalyEntries.add(Entry(timestamp, cpuUsed))
-            }
-        }
-        val dataSet = LineDataSet(entries, "Value")
-        dataSet.color = Color.BLUE
-
-        val highlightDataSet = LineDataSet(anomalyEntries, "Anomaly")
-        highlightDataSet.setDrawIcons(false)
-        highlightDataSet.setDrawValues(false)
-        highlightDataSet.circleRadius = 6f
-        highlightDataSet.setCircleColor(Color.RED)
-
-        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-
-        val lineData = LineData(dataSet, highlightDataSet)
-
-        lineChart.description = Description().apply { text = "" }
-        lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        val legend = lineChart.legend
-        legend.isEnabled = true
-        val highlightEntry = LegendEntry()
-        highlightEntry.label = "Anomaly"
-        highlightEntry.formColor = Color.RED
-        val dataForecast = LegendEntry()
-        dataForecast.label = "Value"
-        dataForecast.formColor = Color.BLUE
-
-        legend.setCustom(listOf(dataForecast, highlightEntry))
-
-        lineChart.data = lineData
-        val dataCount = dataList.data.size
-        val visibleRange = if (dataCount < 10) dataCount else 10
-        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
-        lineChart.moveViewToX(2f)
-        lineChart.invalidate()
-
-    }
-
-    private fun getTimeFromTimestamp(timestamp: String): Float {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        val date = dateFormat.parse(timestamp)
-        val calendar = Calendar.getInstance()
-        calendar.time = date!!
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        return hour.toFloat()
-    }
+//    private fun setGraph(dataList: DataGraphResponse) {
+//        costProjection(dataList)
+//        additionalResources(dataList)
+//    }
+//
+//    private fun costProjection(dataList: DataGraphResponse) {
+//        val lineChart = binding.costProjection
+//        val entries = ArrayList<Entry>()
+//        var totalCost = 0f
+//
+//        for (i in dataList.data) {
+//            val timestamp = getTimeFromTimestamp(i.timestamp)
+//            val forecast = i.forecasts.toFloat()
+//            val cost = i.cost.toFloat()
+//            totalCost += cost
+//            entries.add(Entry(timestamp, cost))
+//        }
+//        binding.tvEstimatedCost.text = String.format(getString(R.string.estimated_cost), totalCost)
+//        val dataSet = LineDataSet(entries, "Forecast")
+//        dataSet.color = Color.BLUE
+//
+//        val lineData = LineData(dataSet)
+//
+//        lineChart.description = Description().apply { text = "" }
+//        lineChart.axisRight.isEnabled = false
+//        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+//        lineChart.legend.isEnabled = true
+//        lineChart.data = lineData
+//        val dataCount = dataList.data.size
+//        val visibleRange = if (dataCount < 10) dataCount else 10
+//        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+//        lineChart.moveViewToX(2f)
+//        lineChart.invalidate()
+//    }
+//
+//    private fun additionalResources(dataList: DataGraphResponse) {
+//
+//        val lineChart = binding.additionalResources
+//
+//        val entries = ArrayList<Entry>()
+//        val highlightEntries = ArrayList<Entry>()
+//
+//        for (i in dataList.data) {
+//            val timestamp = getTimeFromTimestamp(i.timestamp)
+//            val forecast = i.forecasts.toFloat()
+//            val cost = i.cost.toFloat()
+//
+//            entries.add(Entry(timestamp, forecast))
+//            if (forecast > 0.8) {
+//                highlightEntries.add(Entry(timestamp, forecast))
+//            }
+//        }
+//
+//
+//        val dataSet = LineDataSet(entries, "Forecast")
+//        dataSet.color = Color.BLUE
+//
+//        val highlightDataSet = LineDataSet(highlightEntries, "Highlight")
+//        highlightDataSet.setDrawIcons(false)
+//        highlightDataSet.setDrawValues(false)
+//        highlightDataSet.circleRadius = 6f
+//        highlightDataSet.setCircleColor(Color.RED)
+//
+//        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+//
+//        val lineData = LineData(dataSet, highlightDataSet)
+//
+//        lineChart.description = Description().apply { text = "" }
+//        lineChart.axisRight.isEnabled = false
+//        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+//        val legend = lineChart.legend
+//        legend.isEnabled = true
+//        val highlightEntry = LegendEntry()
+//        highlightEntry.label = "Highlight"
+//        highlightEntry.formColor = Color.RED
+//        val dataForecast = LegendEntry()
+//        dataForecast.label = "Forecast"
+//        dataForecast.formColor = Color.BLUE
+//
+//        legend.setCustom(listOf(dataForecast, highlightEntry))
+//
+//        lineChart.data = lineData
+//        val dataCount = dataList.data.size
+//        val visibleRange = if (dataCount < 10) dataCount else 10
+//        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+//        lineChart.moveViewToX(2f)
+//        lineChart.invalidate()
+//
+//    }
+//
+//    private fun getAnomaly(dataList: DataAnomalyResponse) {
+//        val lineChart = binding.anomalyDetection
+//        val entries = ArrayList<Entry>()
+//        val anomalyEntries = ArrayList<Entry>()
+//        for (i in dataList.data) {
+//            val timestamp = getTimeFromTimestamp(i.createdAt)
+//            val cpuUsed = i.cpuUsed.toFloat()
+//            val isAnomaly = i.isAnomaly
+//
+//            entries.add(Entry(timestamp, cpuUsed))
+//            if (isAnomaly) {
+//                anomalyEntries.add(Entry(timestamp, cpuUsed))
+//            }
+//        }
+//        val dataSet = LineDataSet(entries, "Value")
+//        dataSet.color = Color.BLUE
+//
+//        val highlightDataSet = LineDataSet(anomalyEntries, "Anomaly")
+//        highlightDataSet.setDrawIcons(false)
+//        highlightDataSet.setDrawValues(false)
+//        highlightDataSet.circleRadius = 6f
+//        highlightDataSet.setCircleColor(Color.RED)
+//
+//        highlightDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+//
+//        val lineData = LineData(dataSet, highlightDataSet)
+//
+//        lineChart.description = Description().apply { text = "" }
+//        lineChart.axisRight.isEnabled = false
+//        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+//        val legend = lineChart.legend
+//        legend.isEnabled = true
+//        val highlightEntry = LegendEntry()
+//        highlightEntry.label = "Anomaly"
+//        highlightEntry.formColor = Color.RED
+//        val dataForecast = LegendEntry()
+//        dataForecast.label = "Value"
+//        dataForecast.formColor = Color.BLUE
+//
+//        legend.setCustom(listOf(dataForecast, highlightEntry))
+//
+//        lineChart.data = lineData
+//        val dataCount = dataList.data.size
+//        val visibleRange = if (dataCount < 10) dataCount else 10
+//        lineChart.setVisibleXRange(0f, visibleRange.toFloat())
+//        lineChart.moveViewToX(2f)
+//        lineChart.invalidate()
+//
+//    }
+//
+//    private fun getTimeFromTimestamp(timestamp: String): Float {
+//        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+//        val date = dateFormat.parse(timestamp)
+//        val calendar = Calendar.getInstance()
+//        calendar.time = date!!
+//        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+//        return hour.toFloat()
+//    }
 
     private fun updateStatus(status: String){
         binding.tvStatus.text = status
@@ -432,5 +445,11 @@ class FragmentDetailVM : Fragment() {
                 tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_active, 0, 0, 0)
             }
         }
+    }
+
+    companion object {
+        val TAB_TITLES = listOf("Monitoring", "Backup")
+        const val ARG_TOKEN = "token"
+        const val ARG_VM_ID = "vm_id"
     }
 }

@@ -5,6 +5,7 @@ import com.bangkit.cloudraya.ConfirmationActivityViewModel
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.repository.CloudRepository
 import com.bangkit.cloudraya.ui.detailVM.DetailVMViewModel
+import com.bangkit.cloudraya.ui.detailVM.monitoring.MonitoringVMViewModel
 import com.bangkit.cloudraya.ui.onboarding.OnBoardingViewModel
 import com.bangkit.cloudraya.ui.resources.ResourcesViewModel
 import com.bangkit.cloudraya.ui.siteAdd.SiteAddViewModel
@@ -29,4 +30,5 @@ val viewModule = module {
     single { OnBoardingViewModel(get()) }
     single { SplashScreenViewModel(get()) }
     single { ConfirmationActivityViewModel(get()) }
+    single { MonitoringVMViewModel(get()) }
 }
