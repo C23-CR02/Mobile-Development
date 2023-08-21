@@ -21,6 +21,10 @@
     <string name="ip_address">Alamat IP</string>
     <string name="status">Status</string>
     <string name="vm_list">Daftar VM</string>
+    <string name="cpu">CPU</string>
+    <string name="type_disc">Tipe Penyimpanan</string>
+    <string name="memory">Memori</string>
+    <string name="text_package">Paket</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_secret">App Secret</string>
@@ -61,5 +65,9 @@
     <string name="exit_confirmation_message">Apakah kamu yakin ingin keluar ?</string>
     <string name="toast_successful">Berhasil menambah situs</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="cost_projection">Perkiraan Biaya</string>
+    <string name="additional_resources">Sumberdaya Tambahan</string>
+    <string name="anomaly_detection">Deteksi Anomali</string>
+    <string name="estimated_cost">Estimasi Biaya: %f</string>
 
 </resources>

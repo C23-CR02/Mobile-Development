@@ -191,6 +191,10 @@ class FragmentDetailVM : Fragment() {
             tvLocation.text = data.location
             tvImage.text = data.os
             tvIPAddress.text = data.publicIp
+            tvCPU.text = data.cpu
+            tvTypeDisc.text = data.disk
+            tvMemory.text = data.memory.toString()
+            tvPackage.text = data.vmPackage
             tvLaunchDate.text = data.launchDate
             tvStatus.text = data.state
         }

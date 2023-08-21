@@ -111,6 +111,58 @@
                     card_view:layout_constraintTop_toBottomOf="@id/tvImage" />
 
                 <TextView
+                    android:id="@+id/tvCPU"
+                    style="@style/Theme.CloudRaya.Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/cpu"
+                    card_view:drawableStartCompat="@drawable/ic_cpu"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@id/tvIPAddress" />
+
+                <TextView
+                    android:id="@+id/tvTypeDisc"
+                    style="@style/Theme.CloudRaya.Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/type_disc"
+                    card_view:drawableStartCompat="@drawable/ic_type_disc"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@id/tvCPU" />
+
+                <TextView
+                    android:id="@+id/tvMemory"
+                    style="@style/Theme.CloudRaya.Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/memory"
+                    card_view:drawableStartCompat="@drawable/ic_memory"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@id/tvTypeDisc" />
+
+                <TextView
+                    android:id="@+id/tvPackage"
+                    style="@style/Theme.CloudRaya.Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/text_package"
+                    card_view:drawableStartCompat="@drawable/ic_package"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@id/tvMemory" />
+
+                <TextView
                     android:id="@+id/textLaunchDate"
                     style="@style/Theme.CloudRaya.Text"
                     android:layout_width="0dp"
@@ -122,7 +174,7 @@
                     android:textColor="@color/secondary"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/tvIPAddress" />
+                    card_view:layout_constraintTop_toBottomOf="@id/tvPackage" />
 
                 <TextView
                     android:id="@+id/tvLaunchDate"

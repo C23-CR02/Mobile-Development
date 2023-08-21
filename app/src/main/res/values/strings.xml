@@ -20,6 +20,10 @@
     <string name="ip_address">IP Address</string>
     <string name="status">Status</string>
     <string name="vm_list">VM List</string>
+    <string name="cpu">CPU</string>
+    <string name="type_disc">Disc Type</string>
+    <string name="memory">Memory</string>
+    <string name="text_package">Package</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_secret">App Secret</string>
