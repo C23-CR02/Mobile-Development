@@ -47,6 +47,10 @@ interface ApiService {
     suspend fun insertToDatabase(
         @Header("Content-Type") contentType: String,
         @Body requestBody: JsonObject
-
     ): Response<InsertResponse>
+
+    @GET("/snapshot/v1/api/gateway/user/backup")
+    suspend fun getBackupList(
+        @Header("Authorization") token : String,
+    ) : Response<BackupListResponse>
 }

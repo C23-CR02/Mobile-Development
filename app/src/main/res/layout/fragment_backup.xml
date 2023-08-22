@@ -1,14 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backupLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detailVM.FragmentBackup">
+    tools:context=".ui.detailVM.backup.FragmentBackup">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tv_backup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_configuration"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_enable_backup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/en_backup"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup"
+        app:layout_constraintStart_toStartOf="parent"
+    />
+    <Switch
+        android:id="@+id/sw_backup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/sw_days"
+        app:layout_constraintTop_toTopOf="@id/tv_enable_backup"
+        app:layout_constraintBottom_toBottomOf="@id/tv_enable_backup"
+        />
+
+    <TextView
+        android:id="@+id/tv_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/backup_day"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/tv_enable_backup"
+        app:layout_constraintTop_toBottomOf="@id/tv_enable_backup"
+        />
+
+    <Spinner
+        android:id="@+id/sw_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:entries="@array/backup_days_options"
+        app:layout_constraintStart_toEndOf="@id/tv_retentions"
+        app:layout_constraintTop_toTopOf="@id/tv_days"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tv_days"/>
+
+
+    <TextView
+        android:id="@+id/tv_retentions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/backup_retention"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/tv_days"
+        app:layout_constraintTop_toBottomOf="@id/tv_days"
+        />
+
+    <Spinner
+        android:id="@+id/sw_retentions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/backup_retentions_options"
+        app:layout_constraintStart_toStartOf="@id/sw_days"
+        app:layout_constraintEnd_toEndOf="@id/sw_days"
+        app:layout_constraintTop_toTopOf="@id/tv_retentions"
+        app:layout_constraintBottom_toBottomOf="@id/tv_retentions"/>
+
+    <Button
+        android:id="@+id/btn_save_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_save"
+
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/tv_enable_backup"
+        app:layout_constraintTop_toBottomOf="@id/tv_retentions"/>
+
+    <TextView
+        android:id="@+id/tv_backup_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_backup"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/tv_enable_backup"
+        app:layout_constraintTop_toBottomOf="@id/btn_save_config"
+    />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_backup_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_list"
+        tools:listitem="@layout/item_backup"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

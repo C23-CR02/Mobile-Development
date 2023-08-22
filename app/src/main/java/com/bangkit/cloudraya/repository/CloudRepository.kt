@@ -1,6 +1,7 @@
 package com.bangkit.cloudraya.repository
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.database.CloudDatabase
@@ -14,6 +15,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import org.json.JSONObject
 
 class CloudRepository(
@@ -256,4 +258,30 @@ class CloudRepository(
             }
         }
 
+    fun getBackupList(token : String, siteUrl : String) : LiveData<Event<BackupListResponse>> =
+        liveData(Dispatchers.IO){
+            emit(Event.Loading)
+            try {
+                setBaseUrl(siteUrl)
+                Log.d("Testing","token : $token")
+                Log.d("Testing","site : $siteUrl")
+                val response = apiService.getBackupList(token)
+                Log.d("Testing","response : $response")
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
 }
