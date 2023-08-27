@@ -284,4 +284,56 @@ class CloudRepository(
                 emit(Event.Error(null, e.toString()))
             }
         }
+
+    fun deleteBackup (token: String, backupId: Int, vmId: Int): LiveData<Event<ActionBackupResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val requestBody = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                }
+                val response = apiService.deleteBackup(token, backupId, requestBody)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun restoreBackup (token: String, backupId: Int, vmId: Int): LiveData<Event<ActionBackupResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val requestBody = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                }
+                val response = apiService.deleteBackup(token, backupId, requestBody)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
 }

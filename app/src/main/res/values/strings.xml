@@ -85,6 +85,9 @@
         <item>2 Day</item>
         <item>3 Day</item>
         <item>4 Day</item>
+        <item>5 Day</item>
+        <item>6 Day</item>
+        <item>7 Day</item>
     </string-array>
 
     <string-array name="backup_retentions_options">

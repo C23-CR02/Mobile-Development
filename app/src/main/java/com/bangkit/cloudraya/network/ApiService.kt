@@ -53,4 +53,18 @@ interface ApiService {
     suspend fun getBackupList(
         @Header("Authorization") token : String,
     ) : Response<BackupListResponse>
+
+    @HTTP(method = "DELETE", path = "/snapshot/v1/api/gateway/user/backup/{id}", hasBody = true)
+    suspend fun deleteBackup(
+        @Header("Authorization") token : String,
+        @Path("id") id: Int,
+        @Body requestBody: JsonObject
+    ) : Response<ActionBackupResponse>
+
+    @POST("/snapshot/v1/api/gateway/user/snapshot/restore/{id}")
+    suspend fun restoreBackup(
+        @Header("Authorization") token : String,
+        @Path("id") id: Int,
+        @Body requestBody: JsonObject
+    ) : Response<ActionBackupResponse>
 }

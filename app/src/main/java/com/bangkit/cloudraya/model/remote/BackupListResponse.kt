@@ -64,3 +64,16 @@ data class SnapshotsItem(
 	@field:SerializedName("status")
 	val status: String
 )
+
+data class ActionBackupResponse(
+
+	@field:SerializedName("code")
+	val code: Int,
+
+	@field:SerializedName("data")
+	val data: SnapshotsItem,
+
+	@field:SerializedName("message")
+	val message: String
+
+)

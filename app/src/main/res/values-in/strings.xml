@@ -69,5 +69,16 @@
     <string name="additional_resources">Sumberdaya Tambahan</string>
     <string name="anomaly_detection">Deteksi Anomali</string>
     <string name="estimated_cost">Estimasi Biaya: %f</string>
+    <string name="backup_configuration">Backup Configuration</string>
+    <string name="en_backup">Enable Backup</string>
+    <string name="backup_day">Backup Every</string>
+    <string name="backup_retention">Keep Most Recent</string>
+    <string name="backup_save">Save Config</string>
+    <string name="tv_backup">Backup List</string>
+    <string name="dummy_backup">backup-JNX5EFJL</string>
+    <string name="dummy_size">4.72 GB</string>
+    <string name="dummy_date">2023-08-21 15:20:01</string>
+    <string name="backup_restore">Restore</string>
+    <string name="backup_delete">Delete</string>
 
 </resources>
