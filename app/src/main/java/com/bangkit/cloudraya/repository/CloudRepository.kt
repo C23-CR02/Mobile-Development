@@ -318,7 +318,59 @@ class CloudRepository(
                 val requestBody = JsonObject().apply {
                     addProperty("vm_id", vmId)
                 }
-                val response = apiService.deleteBackup(token, backupId, requestBody)
+                val response = apiService.restoreBackup(token, backupId, requestBody)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun getBackupConfig(token: String, vmId: Int): LiveData<Event<BackupConfigResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val response = apiService.getBackupConfig(token, vmId)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun saveBackupConfig (token: String, vmId: Int, status: Int, days: Int, retentions: Int): LiveData<Event<BackupConfigResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val requestBody = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                    addProperty("status", status)
+                    addProperty("days", days)
+                    addProperty("retentions", retentions)
+                }
+                val response = apiService.saveBackupConfig(token, requestBody)
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {

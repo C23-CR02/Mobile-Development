@@ -75,5 +75,39 @@ data class ActionBackupResponse(
 
 	@field:SerializedName("message")
 	val message: String
+)
 
+data class BackupConfigResponse(
+
+	@field:SerializedName("code")
+	val code: Int,
+
+	@field:SerializedName("data")
+	val data: BackupConfig,
+
+	@field:SerializedName("message")
+	val message: String
+)
+
+data class BackupConfig(
+	@field:SerializedName("config_id")
+	val configId: Int,
+
+	@field:SerializedName("days")
+	val days: Int,
+
+	@field:SerializedName("retentions")
+	val retentions: Int,
+
+	@field:SerializedName("status")
+	val status: String,
+
+	@field:SerializedName("user_email")
+	val userEmail: String,
+
+	@field:SerializedName("created")
+	val created: String,
+
+	@field:SerializedName("updated")
+	val updated: String
 )

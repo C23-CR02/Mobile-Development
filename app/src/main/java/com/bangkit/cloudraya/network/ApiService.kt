@@ -61,10 +61,22 @@ interface ApiService {
         @Body requestBody: JsonObject
     ) : Response<ActionBackupResponse>
 
-    @POST("/snapshot/v1/api/gateway/user/snapshot/restore/{id}")
+    @POST("/snapshot/v1/api/gateway/user/backup/restore/{id}")
     suspend fun restoreBackup(
         @Header("Authorization") token : String,
         @Path("id") id: Int,
         @Body requestBody: JsonObject
     ) : Response<ActionBackupResponse>
+
+    @GET("/snapshot/v1/api/gateway/user/backup/config/{id}")
+    suspend fun getBackupConfig(
+        @Header("Authorization") token : String,
+        @Path("id") id: Int
+    ) : Response<BackupConfigResponse>
+
+    @POST("https://api.cloudraya.com/snapshot/v1/api/gateway/user/backup/config")
+    suspend fun saveBackupConfig(
+        @Header("Authorization") token : String,
+        @Body requestBody: JsonObject
+    ) : Response<BackupConfigResponse>
 }

@@ -14,5 +14,11 @@ class BackupViewModel(private val repository: CloudRepository) : ViewModel() {
         repository.deleteBackup(token, backupId, vmId)
 
     fun restoreBackup(token: String, backupId: Int, vmId: Int) =
-        repository.deleteBackup(token, backupId, vmId)
+        repository.restoreBackup(token, backupId, vmId)
+
+    fun getBackupConfig(token: String, vmId: Int) =
+        repository.getBackupConfig(token, vmId)
+
+    fun saveBackupConfig(token: String, vmId: Int, status: Int, days: Int, retentions: Int) =
+        repository.saveBackupConfig(token, vmId, status, days, retentions)
 }

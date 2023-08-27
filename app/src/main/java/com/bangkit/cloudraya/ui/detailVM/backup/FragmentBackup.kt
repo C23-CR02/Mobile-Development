@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.databinding.FragmentBackupBinding
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.model.remote.BackupConfig
 import com.bangkit.cloudraya.ui.adapter.BackupAdapter
 import com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +40,55 @@ class FragmentBackup : Fragment() {
         siteUrl = arguments?.getString(FragmentDetailVM.ARG_SITEURL).toString()
         vmId = arguments?.getInt(FragmentDetailVM.ARG_VM_ID) ?: 0
 
+        setRecyclerView()
+        observeData()
+
+        binding.btnSaveConfig.setOnClickListener {
+            val status = if (binding.swBackup.isChecked) 1 else 0
+            val days = binding.swDays.selectedItemPosition + 1
+            val retentions = binding.swRetentions.selectedItemPosition + 1
+            saveBackupConfig(status, days, retentions)
+        }
+    }
+
+    private fun observeData(){
+        viewModel.getBackupConfig(token, vmId).observe(viewLifecycleOwner) { result ->
+            when(result) {
+                is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    updateConfig(result.data.data)
+                    Log.d("Testing","config : ${result.data.data}")
+                }
+                is Event.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+                is Event.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+        viewModel.getBackupList(token,siteUrl).observe(viewLifecycleOwner) { result ->
+            when(result) {
+                is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    backupAdapter.submitData(result.data.data.snapshots)
+                    Log.d("Testing","response : ${result.data.data}")
+                }
+                is Event.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+                is Event.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun setRecyclerView(){
         backupAdapter = BackupAdapter(
             { backupData ->
                 viewModel.deleteBackup(token, backupData.backupId, vmId)
@@ -101,28 +151,38 @@ class FragmentBackup : Fragment() {
             adapter = backupAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-
-        observeData()
     }
 
-    private fun observeData(){
-
-        viewModel.getBackupList(token,siteUrl).observe(viewLifecycleOwner) { result ->
-            when(result) {
+    private fun saveBackupConfig(status: Int, days: Int, retentions: Int){
+        viewModel.saveBackupConfig(token, vmId, status, days, retentions).observe(viewLifecycleOwner){ result ->
+            when (result) {
                 is Event.Success -> {
-                    binding.pbLoading.visibility = View.GONE
-                    backupAdapter.submitData(result.data.data.snapshots)
-                    Log.d("Testing","response : ${result.data.data}")
-                }
-                is Event.Loading -> {
-                    binding.pbLoading.visibility = View.VISIBLE
+                    pDialog.dismiss()
+                    SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Successful!")
+                        .setContentText(result.data.message)
+                        .show()
                 }
                 is Event.Error -> {
-                    binding.pbLoading.visibility = View.GONE
-                    Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
+                    pDialog.dismiss()
+                    SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText(result.error)
                         .show()
+                }
+                is Event.Loading -> {
+                    pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
+                    pDialog.titleText = "Loading"
+                    pDialog.setCancelable(false)
+                    pDialog.show()
                 }
             }
         }
+    }
+
+    private fun updateConfig(backupConfig: BackupConfig){
+        binding.swBackup.isChecked = backupConfig.status == "Enabled"
+        binding.swDays.setSelection(backupConfig.days - 1)
+        binding.swRetentions.setSelection(backupConfig.retentions - 1)
     }
 }
