@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya
+package com.bangkit.cloudraya.ui.confirmation
 
 import androidx.lifecycle.ViewModel
 import com.bangkit.cloudraya.repository.CloudRepository

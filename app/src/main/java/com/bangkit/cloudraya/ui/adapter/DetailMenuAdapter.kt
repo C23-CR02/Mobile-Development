@@ -39,15 +39,12 @@ class DetailMenuAdapter(activity: AppCompatActivity): FragmentStateAdapter(activ
                     putString(FragmentDetailVM.ARG_SITEURL, siteUrl)
                 }
             }
-            2 -> {
-                fragment = FragmentIP()
-                fragment.arguments = Bundle().apply {
-                }
-            }
             else -> {
-                fragment = FragmentMonitoringVM()
+                fragment = FragmentIP()
                     fragment.arguments = Bundle().apply {
-                    putInt(FragmentDetailVM.ARG_VM_ID, vm_id!!)
+                        putString(FragmentDetailVM.ARG_TOKEN, token)
+                        putString(FragmentDetailVM.ARG_SITEURL, siteUrl)
+                        putInt(FragmentDetailVM.ARG_VM_ID, vm_id!!)
                 }
             }
         }

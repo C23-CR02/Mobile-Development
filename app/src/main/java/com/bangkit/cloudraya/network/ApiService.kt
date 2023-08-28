@@ -74,9 +74,49 @@ interface ApiService {
         @Path("id") id: Int
     ) : Response<BackupConfigResponse>
 
-    @POST("https://api.cloudraya.com/snapshot/v1/api/gateway/user/backup/config")
+    @POST("/snapshot/v1/api/gateway/user/backup/config")
     suspend fun saveBackupConfig(
         @Header("Authorization") token : String,
         @Body requestBody: JsonObject
-    ) : Response<BackupConfigResponse>
+    ) : Response<BackupListResponse>
+
+    @GET("v1/api/gateway/user/ip/public")
+    suspend fun getIpPublic(
+        @Header("Authorization") token : String,
+    ): Response<IpPublicResponse>
+
+    @POST("/v1/api/gateway/user/ip/private")
+    suspend fun getIpPrivate(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ) : Response<IpPrivateResponse>
+
+    @POST("/v1/api/gateway/user/ip/public/detach")
+    suspend fun detachPublicIP(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ) : Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/public/attach")
+    suspend fun attachPublicIp(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ) : Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/private/acquire")
+    suspend fun acquireIpPrivate(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ) : Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/public/acquire")
+    suspend fun acquireIpPublic(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ) : Response<IpBasicResponse>
 }

@@ -14,7 +14,6 @@ import com.bangkit.cloudraya.databinding.FragmentResourcesBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.ui.adapter.VMAdapter
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,11 +65,13 @@ class FragmentResources : Fragment() {
                         binding.ivEmpty.visibility = View.GONE
                     }
                 }
+
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
                     Snackbar.make(binding.root, result.error ?: "Error", Snackbar.LENGTH_SHORT)
                         .show()
                 }
+
                 is Event.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
@@ -81,7 +82,11 @@ class FragmentResources : Fragment() {
     private fun showRecycleView() {
         vmAdapter = VMAdapter { vmData ->
             val toDetailVM =
-                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(vmData, site,siteUrl)
+                FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(
+                    vmData,
+                    site,
+                    siteUrl
+                )
             findNavController().navigate(toDetailVM)
         }
         binding.rvVM.apply {
@@ -94,11 +99,7 @@ class FragmentResources : Fragment() {
         val data = viewModel.getListEncrypted(site)
         val appKey = data[0].toString()
         val appSecret = data[1].toString()
-        val request = JsonObject().apply {
-            addProperty("app_key", appKey)
-            addProperty("secret_key", appSecret)
-        }
-        viewModel.getToken(request).observe(viewLifecycleOwner) { item ->
+        viewModel.getToken(appKey, appSecret).observe(viewLifecycleOwner) { item ->
             when (item) {
                 is Event.Success -> {
                     val token = "Bearer ${item.data.data?.bearerToken.toString()}"
@@ -106,12 +107,12 @@ class FragmentResources : Fragment() {
                         val list = listOf(appKey, appSecret, token)
                         viewModel.saveListEncrypted(site, list)
                     }
-
-
                 }
+
                 is Event.Error -> {
                     Log.d("Calling error : ", item.error.toString())
                 }
+
                 else -> {
                     Log.d("Event ", item.toString())
                 }

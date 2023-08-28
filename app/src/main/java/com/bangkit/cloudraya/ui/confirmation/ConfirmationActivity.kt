@@ -1,4 +1,4 @@
-package com.bangkit.cloudraya
+package com.bangkit.cloudraya.ui.confirmation
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.bangkit.cloudraya.MainActivity
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.ActivityConfirmationBinding
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.model.local.Event

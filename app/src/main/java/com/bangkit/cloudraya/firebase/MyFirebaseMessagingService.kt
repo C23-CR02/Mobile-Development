@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.bangkit.cloudraya.ConfirmationActivity
+import com.bangkit.cloudraya.ui.confirmation.ConfirmationActivity
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.google.firebase.messaging.FirebaseMessagingService

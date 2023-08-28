@@ -12,8 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel() {
-    fun getToken(request: JsonObject): LiveData<Event<TokenResponse>> =
-        cloudRepository.getToken(request)
+    fun getToken(appKey: String, appSecret: String): LiveData<Event<TokenResponse>> =
+        cloudRepository.getToken(appKey,appSecret)
 
     suspend fun insertSites(site: Sites) {
         withContext(Dispatchers.IO) {
@@ -39,8 +39,8 @@ class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel
 
     fun getFCMToken() = cloudRepository.getFCMToken()
 
-    fun insertToDatabase(request: JsonObject): LiveData<Event<InsertResponse>> =
-        cloudRepository.insertToDatabase(request)
+    fun insertToDatabase(appKey: String, appSecret: String): LiveData<Event<InsertResponse>> =
+        cloudRepository.insertToDatabase(appKey,appSecret)
 
 
 }

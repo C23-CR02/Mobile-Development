@@ -6,16 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.cloudraya.databinding.ItemBackupBinding
 import com.bangkit.cloudraya.model.remote.SnapshotsItem
-import com.bangkit.cloudraya.model.remote.VMListData
 
-class BackupAdapter(private val onDeleteClick: (SnapshotsItem) -> Unit, private val onRestoreClick: (SnapshotsItem) -> Unit): RecyclerView.Adapter<BackupAdapter.MyViewHolder>() {
+class BackupAdapter(
+    private val onDeleteClick: (SnapshotsItem) -> Unit,
+    private val onRestoreClick: (SnapshotsItem) -> Unit
+) : RecyclerView.Adapter<BackupAdapter.MyViewHolder>() {
     private var data: List<SnapshotsItem> = listOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemBackupBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount() : Int = data.size
+    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = data[position]
@@ -23,7 +25,7 @@ class BackupAdapter(private val onDeleteClick: (SnapshotsItem) -> Unit, private 
 
     }
 
-    fun submitData(newData: List<SnapshotsItem>){
+    fun submitData(newData: List<SnapshotsItem>) {
         val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize() = data.size
 
@@ -41,8 +43,9 @@ class BackupAdapter(private val onDeleteClick: (SnapshotsItem) -> Unit, private 
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inner class MyViewHolder(private val binding : ItemBackupBinding) : RecyclerView.ViewHolder(binding.root)  {
-        fun bind(data : SnapshotsItem) {
+    inner class MyViewHolder(private val binding: ItemBackupBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: SnapshotsItem) {
             binding.tvName.text = data.backupName
             binding.tvSize.text = data.size
             binding.tvDate.text = data.created

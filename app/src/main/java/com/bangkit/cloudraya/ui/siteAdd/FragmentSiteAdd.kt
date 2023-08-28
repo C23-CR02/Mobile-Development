@@ -15,7 +15,6 @@ import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
 import com.bangkit.cloudraya.model.local.Event
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.gson.JsonObject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -85,13 +84,8 @@ class FragmentSiteAdd : Fragment() {
         val siteUrl = binding.siteUrlLayout.text.toString()
         appKey = binding.appKeyLayout.text.toString()
         appSecret = binding.appSecretLayout.text.toString()
-
-        val request = JsonObject().apply {
-            addProperty("app_key", appKey)
-            addProperty("secret_key", appSecret)
-        }
         viewModel.setBaseUrl(siteUrl)
-        viewModel.getToken(request).observe(viewLifecycleOwner) { data ->
+        viewModel.getToken(appKey, appSecret).observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Event.Success -> {
                     token += data.data.data?.bearerToken.toString()
@@ -120,6 +114,7 @@ class FragmentSiteAdd : Fragment() {
                         }
                     }
                 }
+
                 is Event.Error -> {
                     SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Oops...")
@@ -127,6 +122,7 @@ class FragmentSiteAdd : Fragment() {
                         .show()
                     Log.d("Calling error : ", data.error.toString())
                 }
+
                 else -> {
                     Log.d("Event ", data.toString())
                 }
@@ -134,17 +130,19 @@ class FragmentSiteAdd : Fragment() {
         }
         lifecycleScope.launch {
             delay(1000)
-            viewModel.insertToDatabase(request).observe(viewLifecycleOwner) { data ->
+            viewModel.insertToDatabase(appKey, appSecret).observe(viewLifecycleOwner) { data ->
                 when (data) {
                     is Event.Success -> {
                         // Do Nothing
                     }
+
                     is Event.Error -> {
                         SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Failed to insert database")
                             .setContentText(data.error)
                             .show()
                     }
+
                     else -> {
                         Log.d("Event ", data.toString())
                     }

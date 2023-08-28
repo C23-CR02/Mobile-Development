@@ -14,13 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CloudRaya"
         tools:targetApi="31">
-
         <activity
-            android:name=".ConfirmationActivity"
+            android:name=".ui.confirmation.ConfirmationActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="ACTION_CONFIRMATION" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -29,7 +27,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,7 +34,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <service
             android:name=".firebase.MyFirebaseMessagingService"
             android:exported="false">

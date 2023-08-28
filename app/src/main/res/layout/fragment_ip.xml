@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ipLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.detailVM.ip.FragmentIP">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_privateIP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/private_ip"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_addPrivate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/add_IpPrivate"
+            app:layout_constraintBottom_toBottomOf="@id/tv_privateIP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_privateIP" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ipPublic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_addPrivate" />
+
+        <TextView
+            android:id="@+id/tv_publicIP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/public_ip"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_privateIP"
+            app:layout_constraintTop_toBottomOf="@id/rv_ipPublic" />
+
+        <Button
+            android:id="@+id/btn_addPublic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_ip"
+            android:layout_marginEnd="16dp"
+            app:strokeColor="@color/primary"
+            android:textColor="@color/primary"
+            android:backgroundTint="@color/white"
+            app:strokeWidth="1dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_publicIP"
+            app:layout_constraintEnd_toStartOf="@+id/btn_attachPublic"
+            app:layout_constraintTop_toTopOf="@id/tv_publicIP"
+      />
+        <Button
+            android:id="@+id/btn_attachPublic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/attach_ip"
+
+            app:layout_constraintBottom_toBottomOf="@id/tv_publicIP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_publicIP" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ipPrivate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_publicIP" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

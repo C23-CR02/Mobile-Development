@@ -79,6 +79,16 @@
     <string name="dummy_date">2023-08-21 15:20:01</string>
     <string name="backup_restore">Restore</string>
     <string name="backup_delete">Delete</string>
+    <string name="private_ip">Private IP</string>
+    <string name="public_ip">Public IP</string>
+    <string name="add_IpPrivate">Add IP Private</string>
+    <string name="detach">Detach</string>
+    <string name="dummy_ip_private">10.10.23.117</string>
+    <string name="dummy_ip_public">202.43.249.210</string>
+    <string name="dummy_cost">140</string>
+    <string name="tv_default">Default</string>
+    <string name="attach_ip">Attach IP</string>
+    <string name="add_ip">Add Ip</string>
 
     <string-array name="backup_days_options">
         <item>1 Day</item>

@@ -1,54 +1,85 @@
 package com.bangkit.cloudraya.ui.detailVM.ip
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bangkit.cloudraya.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.cloudraya.databinding.FragmentIpBinding
+import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.ui.adapter.IpPrivateAdapter
+import com.bangkit.cloudraya.ui.adapter.IpPublicAdapter
+import com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentIP : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding: FragmentIpBinding
+    private val viewModel: IpViewModel by viewModel()
+    private lateinit var token: String
+    private lateinit var siteUrl: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_ip, container, false)
+    ): View {
+        binding = FragmentIpBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentIP.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentIP().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
+    }
+
+    private fun observeData() {
+        token = arguments?.getString(FragmentDetailVM.ARG_TOKEN).toString()
+        siteUrl = arguments?.getString(FragmentDetailVM.ARG_SITEURL).toString()
+        val vmId = arguments?.getInt(FragmentDetailVM.ARG_VM_ID)
+
+        viewModel.getIpPrivate(token, siteUrl, vmId!!).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    val adapter = IpPrivateAdapter(result.data.data!!)
+                    binding.rvIpPrivate.adapter = adapter
+                    binding.rvIpPrivate.layoutManager = LinearLayoutManager(requireContext())
+                }
+
+                is Event.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+        viewModel.getIpPublic(token, siteUrl).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Event.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    val adapter = IpPublicAdapter(result.data.data)
+                    binding.rvIpPublic.adapter = adapter
+                    binding.rvIpPublic.layoutManager = LinearLayoutManager(requireContext())
+
+                }
+
+                is Event.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        }
     }
+
+
 }
