@@ -5,28 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class BackupListResponse(
 
 	@field:SerializedName("code")
-	val code: Int,
+	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: Data,
+	val data: Data? = null,
 
 	@field:SerializedName("message")
-	val message: String
-)
-
-data class Data(
-
-	@field:SerializedName("snapshots")
-	val snapshots: List<SnapshotsItem>,
-
-	@field:SerializedName("total")
-	val total: Int,
-
-	@field:SerializedName("total_page")
-	val totalPage: Int,
-
-	@field:SerializedName("page")
-	val page: Int
+	val message: String? = null
 )
 
 data class SnapshotsItem(
@@ -65,49 +50,90 @@ data class SnapshotsItem(
 	val status: String
 )
 
+data class Data(
+
+	@field:SerializedName("snapshots")
+	val snapshots: List<SnapshotsItem>,
+
+	@field:SerializedName("total")
+	val total: Int? = null,
+
+	@field:SerializedName("total_page")
+	val totalPage: Int? = null,
+
+	@field:SerializedName("page")
+	val page: Int? = null
+)
+
 data class ActionBackupResponse(
 
 	@field:SerializedName("code")
-	val code: Int,
+	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: SnapshotsItem,
+	val data: ActionData? = null,
 
 	@field:SerializedName("message")
-	val message: String
+	val message: String? = null
 )
+
+data class ActionData(
+
+	@field:SerializedName("user_email")
+	val userEmail: String? = null,
+
+	@field:SerializedName("config_id")
+	val configId: Int? = null,
+
+	@field:SerializedName("created")
+	val created: String? = null,
+
+	@field:SerializedName("days")
+	val days: Int? = null,
+
+	@field:SerializedName("updated")
+	val updated: String? = null,
+
+	@field:SerializedName("retentions")
+	val retentions: Int? = null,
+
+	@field:SerializedName("status")
+	val status: String? = null
+)
+
 
 data class BackupConfigResponse(
 
 	@field:SerializedName("code")
-	val code: Int,
+	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: BackupConfig,
+	val data: BackupConfigData ,
 
 	@field:SerializedName("message")
-	val message: String
+	val message: String? = null
 )
 
-data class BackupConfig(
+data class BackupConfigData(
+
+	@field:SerializedName("user_email")
+	val userEmail: String ,
+
 	@field:SerializedName("config_id")
-	val configId: Int,
+	val configId: Int ,
+
+	@field:SerializedName("created")
+	val created: String  ,
 
 	@field:SerializedName("days")
 	val days: Int,
+
+	@field:SerializedName("updated")
+	val updated: String,
 
 	@field:SerializedName("retentions")
 	val retentions: Int,
 
 	@field:SerializedName("status")
-	val status: String,
-
-	@field:SerializedName("user_email")
-	val userEmail: String,
-
-	@field:SerializedName("created")
-	val created: String,
-
-	@field:SerializedName("updated")
-	val updated: String
+	val status: String
 )

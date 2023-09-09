@@ -7,14 +7,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.cloudraya.databinding.ItemIpPrivateBinding
 import com.bangkit.cloudraya.model.remote.IpPrivateItem
 
-class IpPrivateAdapter(private val listIp: List<IpPrivateItem>) :
+class IpPrivateAdapter(
+    private var listIp: List<IpPrivateItem>,
+) :
     RecyclerView.Adapter<IpPrivateAdapter.MyViewHolder>() {
-    class MyViewHolder(private val binding: ItemIpPrivateBinding) :
+    inner class MyViewHolder(private val binding: ItemIpPrivateBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: IpPrivateItem) {
             binding.tvIp.text = data.ipAddress
-            if(data.isDefault == false){
+            if (data.isDefault == false) {
                 binding.tvDefault.visibility = View.GONE
+                binding.btnDelete.setOnClickListener {
+                    onDeleteClickListener?.invoke(data.id.toString())
+                }
+
             } else {
                 binding.btnDelete.isEnabled = false
                 binding.btnDelete.alpha = 0.7F
@@ -32,17 +38,11 @@ class IpPrivateAdapter(private val listIp: List<IpPrivateItem>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = listIp[position]
         holder.bind(data)
-
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listIp[holder.adapterPosition]) }
     }
 
-    private lateinit var onItemClickCallback: OnItemClickCallback
+    private var onDeleteClickListener: ((dataId: String) -> Unit)? = null
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(data: IpPrivateItem)
+    fun setOnDeleteClickListener(listener: (dataId: String) -> Unit) {
+        onDeleteClickListener = listener
     }
 }

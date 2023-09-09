@@ -71,7 +71,7 @@
         tools:layout="@layout/fragment_detail_vm">
         <argument
             android:name="dataVM"
-            app:argType="com.bangkit.cloudraya.model.remote.VMListData" />
+            app:argType="com.bangkit.cloudraya.model.remote.ServersItem" />
         <argument
             android:name="site"
             app:argType="string" />

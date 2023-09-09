@@ -5,12 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.cloudraya.databinding.ItemIpPublicBinding
 import com.bangkit.cloudraya.model.remote.DataItem
+import com.bangkit.cloudraya.model.remote.IpPrivateItem
 
 class IpPublicAdapter(private val listIp : List<DataItem>) :
     RecyclerView.Adapter<IpPublicAdapter.MyViewHolder>() {
     class MyViewHolder(private val binding: ItemIpPublicBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DataItem) {
+            if(data.isPrimary == 1) {
+                binding.btnRestore.alpha = 0.7F
+                binding.btnRestore.isEnabled = false
+            }
             binding.tvIp.text = data.publicIp
             binding.tvIpPublic.text = data.publicIp
             binding.tvLocation.text = data.location
@@ -27,4 +32,5 @@ class IpPublicAdapter(private val listIp : List<DataItem>) :
         val data = listIp[position]
         holder.bind(data)
     }
+
 }

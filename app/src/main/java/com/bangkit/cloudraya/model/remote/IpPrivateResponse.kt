@@ -8,7 +8,7 @@ data class IpPrivateResponse(
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: List<IpPrivateItem>? = null,
+	val data: List<IpPrivateItem>,
 
 	@field:SerializedName("message")
 	val message: String? = null
@@ -22,7 +22,7 @@ data class IpPrivateItem(
 	@field:SerializedName("is_default")
 	val isDefault: Boolean? = null,
 
-	@field:SerializedName("id")
+	@field:SerializedName("private_ip_id")
 	val id: String? = null,
 
 	@field:SerializedName("is_used")

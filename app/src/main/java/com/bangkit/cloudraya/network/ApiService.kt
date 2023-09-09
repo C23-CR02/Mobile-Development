@@ -113,6 +113,13 @@ interface ApiService {
         @Body requestBody: JsonObject
     ) : Response<IpBasicResponse>
 
+    @POST("/v1/api/gateway/user/ip/private/release")
+    suspend fun releaseIpPrivate(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ): Response<IpBasicResponse>
+
     @POST("/v1/api/gateway/user/ip/public/acquire")
     suspend fun acquireIpPublic(
         @Header("Authorization") token : String,

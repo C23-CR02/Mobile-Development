@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.databinding.FragmentBackupBinding
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.model.remote.BackupConfig
+import com.bangkit.cloudraya.model.remote.BackupConfigData
 import com.bangkit.cloudraya.ui.adapter.BackupAdapter
 import com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +39,7 @@ class FragmentBackup : Fragment() {
         token = arguments?.getString(FragmentDetailVM.ARG_TOKEN).toString()
         siteUrl = arguments?.getString(FragmentDetailVM.ARG_SITEURL).toString()
         vmId = arguments?.getInt(FragmentDetailVM.ARG_VM_ID) ?: 0
+
 
         setRecyclerView()
         observeData()
@@ -73,7 +74,7 @@ class FragmentBackup : Fragment() {
             when(result) {
                 is Event.Success -> {
                     binding.pbLoading.visibility = View.GONE
-                    backupAdapter.submitData(result.data.data.snapshots)
+                    backupAdapter.submitData(result.data.data!!.snapshots)
                     Log.d("Testing","response : ${result.data.data}")
                 }
                 is Event.Loading -> {
@@ -180,7 +181,7 @@ class FragmentBackup : Fragment() {
         }
     }
 
-    private fun updateConfig(backupConfig: BackupConfig){
+    private fun updateConfig(backupConfig: BackupConfigData){
         binding.swBackup.isChecked = backupConfig.status == "Enabled"
         binding.swDays.setSelection(backupConfig.days - 1)
         binding.swRetentions.setSelection(backupConfig.retentions - 1)

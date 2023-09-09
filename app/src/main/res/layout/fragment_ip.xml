@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_privateIP" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_ipPublic"
+            android:id="@+id/rv_ipPrivate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -63,7 +63,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/tv_privateIP"
-            app:layout_constraintTop_toBottomOf="@id/rv_ipPublic" />
+            app:layout_constraintTop_toBottomOf="@id/rv_ipPrivate" />
 
         <Button
             android:id="@+id/btn_addPublic"
@@ -76,8 +76,8 @@
             android:backgroundTint="@color/white"
             app:strokeWidth="1dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_publicIP"
-            app:layout_constraintEnd_toStartOf="@+id/btn_attachPublic"
             app:layout_constraintTop_toTopOf="@id/tv_publicIP"
+            app:layout_constraintEnd_toStartOf="@+id/btn_attachPublic"
       />
         <Button
             android:id="@+id/btn_attachPublic"
@@ -91,14 +91,16 @@
             app:layout_constraintTop_toTopOf="@id/tv_publicIP" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_ipPrivate"
+            android:id="@+id/rv_ipPublic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_publicIP" />
+            app:layout_constraintTop_toBottomOf="@id/tv_publicIP"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentMonitoringVmBinding
 import com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM
@@ -37,7 +38,6 @@ class FragmentMonitoringVM : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         vm_id = arguments?.getInt(FragmentDetailVM.ARG_VM_ID).toString()
         getGraph()
     }

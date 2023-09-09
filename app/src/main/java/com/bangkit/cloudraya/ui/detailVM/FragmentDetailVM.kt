@@ -1,6 +1,7 @@
 package com.bangkit.cloudraya.ui.detailVM
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentDetailVmBinding
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.model.remote.ServersItem
 import com.bangkit.cloudraya.model.remote.VMData
-import com.bangkit.cloudraya.model.remote.VMListData
 import com.bangkit.cloudraya.ui.adapter.DetailMenuAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,10 +23,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FragmentDetailVM : Fragment() {
     private lateinit var binding: FragmentDetailVmBinding
     private val viewModel: DetailVMViewModel by viewModel()
-    private lateinit var vmData: VMListData
+    private lateinit var vmData: ServersItem
     private lateinit var site: String
     private lateinit var siteUrl: String
-
+    private var loc = ""
     private var token = ""
     private lateinit var pDialog: SweetAlertDialog
     override fun onCreateView(
@@ -41,11 +42,9 @@ class FragmentDetailVM : Fragment() {
         vmData = FragmentDetailVMArgs.fromBundle(arguments as Bundle).dataVM
         site = arguments?.getString("site") ?: ""
         siteUrl = arguments?.getString("siteUrl") ?: ""
-
         val data = viewModel.getListEncrypted(site)
         token = data[2].toString()
 
-        setPager()
 
         observeData(vmData)
         binding.btnBack.setOnClickListener {
@@ -63,7 +62,7 @@ class FragmentDetailVM : Fragment() {
         backPressed()
     }
 
-    private fun observeData(vmData: VMListData) {
+    private fun observeData(vmData: ServersItem) {
         viewModel.setBaseUrl(siteUrl)
         viewModel.getVMDetail(token, vmData.localId!!)
         viewModel.vmDetail.observe(viewLifecycleOwner) { result ->
@@ -71,13 +70,16 @@ class FragmentDetailVM : Fragment() {
                 is Event.Success -> {
                     binding.pbLoading.visibility = View.GONE
                     updateUI(result.data.data!!)
-//                    getGraph()
+                    loc = result.data.data.location.toString()
+                    setPager()
                 }
+
                 is Event.Error -> {
                     binding.pbLoading.visibility = View.GONE
-                    Toast.makeText(requireContext(),"Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
 
                 }
+
                 is Event.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
@@ -100,6 +102,7 @@ class FragmentDetailVM : Fragment() {
                             .show()
                         updateStatus("Running")
                     }
+
                     is Event.Error -> {
                         pDialog.dismiss()
                         SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
@@ -107,6 +110,7 @@ class FragmentDetailVM : Fragment() {
                             .setContentText(result.error)
                             .show()
                     }
+
                     is Event.Loading -> {
                         pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
                         pDialog.titleText = "Loading"
@@ -130,6 +134,7 @@ class FragmentDetailVM : Fragment() {
                             .show()
                         updateStatus("Stopped")
                     }
+
                     is Event.Error -> {
                         pDialog.dismiss()
                         SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
@@ -137,6 +142,7 @@ class FragmentDetailVM : Fragment() {
                             .setContentText(result.error)
                             .show()
                     }
+
                     is Event.Loading -> {
                         pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
                         pDialog.titleText = "Loading"
@@ -160,6 +166,7 @@ class FragmentDetailVM : Fragment() {
                             .show()
                         updateStatus("Running")
                     }
+
                     is Event.Error -> {
                         pDialog.dismiss()
                         SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
@@ -167,6 +174,7 @@ class FragmentDetailVM : Fragment() {
                             .setContentText(result.error)
                             .show()
                     }
+
                     is Event.Loading -> {
                         pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
                         pDialog.titleText = "Loading"
@@ -207,9 +215,12 @@ class FragmentDetailVM : Fragment() {
         }
     }
 
-    private fun setPager(){
+    private fun setPager() {
         val pagerAdapter = DetailMenuAdapter(activity as AppCompatActivity)
-        pagerAdapter.setValue(token, vmData.localId!!,siteUrl)
+        Log.d("Testing", "loc : $loc")
+        Log.d("Testing", "vmData : $vmData")
+
+        pagerAdapter.setValue(token, vmData.localId!!, siteUrl, loc)
         binding.viewPager.adapter = pagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = TAB_TITLES[position]
@@ -234,7 +245,7 @@ class FragmentDetailVM : Fragment() {
         findNavController().navigate(back)
     }
 
-    private fun updateStatus(status: String){
+    private fun updateStatus(status: String) {
         binding.tvStatus.text = status
         if (status.contains("stop", ignoreCase = true)) {
             binding.apply {
@@ -254,9 +265,10 @@ class FragmentDetailVM : Fragment() {
     }
 
     companion object {
-        val TAB_TITLES = listOf("Monitoring", "Backup","IP")
+        val TAB_TITLES = listOf("Monitoring", "Backup", "IP")
         const val ARG_TOKEN = "token"
         const val ARG_VM_ID = "vm_id"
         const val ARG_SITEURL = "siteUrl"
+        const val ARG_LOC = "loc"
     }
 }

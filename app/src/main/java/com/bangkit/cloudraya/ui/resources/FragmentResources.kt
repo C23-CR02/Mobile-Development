@@ -56,8 +56,8 @@ class FragmentResources : Fragment() {
             when (result) {
                 is Event.Success -> {
                     binding.pbLoading.visibility = View.GONE
-                    vmAdapter.submitData(result.data.data!!)
-                    if (result.data.data.isEmpty()) {
+                    vmAdapter.submitData(result.data.data!!.servers)
+                    if (result.data.data.servers.isEmpty()) {
                         binding.rvVM.visibility = View.GONE
                         binding.ivEmpty.visibility = View.VISIBLE
                     } else {

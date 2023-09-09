@@ -13,11 +13,15 @@ class DetailMenuAdapter(activity: AppCompatActivity): FragmentStateAdapter(activ
     private var token: String? = null
     private var vm_id: Int? = null
     private var siteUrl : String? = null
+    private var loc : String? = null
 
-    fun setValue(token: String, vm_id: Int, siteUrl : String){
+
+
+    fun setValue(token: String, vm_id: Int, siteUrl : String, loc : String){
         this.token = token
         this.vm_id = vm_id
         this.siteUrl = siteUrl
+        this.loc = loc
     }
 
     override fun getItemCount() = FragmentDetailVM.TAB_TITLES.size
@@ -45,6 +49,7 @@ class DetailMenuAdapter(activity: AppCompatActivity): FragmentStateAdapter(activ
                         putString(FragmentDetailVM.ARG_TOKEN, token)
                         putString(FragmentDetailVM.ARG_SITEURL, siteUrl)
                         putInt(FragmentDetailVM.ARG_VM_ID, vm_id!!)
+                        putString(FragmentDetailVM.ARG_LOC, loc)
                 }
             }
         }

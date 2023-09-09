@@ -11,8 +11,8 @@ import com.bangkit.cloudraya.model.remote.BackupConfigResponse
 import com.bangkit.cloudraya.model.remote.BackupListResponse
 import com.bangkit.cloudraya.model.remote.DataAnomalyResponse
 import com.bangkit.cloudraya.model.remote.DataGraphResponse
-import com.bangkit.cloudraya.model.remote.IpBasicResponse
 import com.bangkit.cloudraya.model.remote.InsertResponse
+import com.bangkit.cloudraya.model.remote.IpBasicResponse
 import com.bangkit.cloudraya.model.remote.IpPrivateResponse
 import com.bangkit.cloudraya.model.remote.IpPublicResponse
 import com.bangkit.cloudraya.model.remote.TokenResponse
@@ -57,6 +57,7 @@ class CloudRepository(
                 }
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             emit(Event.Error(null, e.toString()))
         }
     }
@@ -80,6 +81,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -108,6 +110,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -137,6 +140,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, "App Key atau App Secret anda salah"))
             }
         }
@@ -217,6 +221,7 @@ class CloudRepository(
                 }
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             emit(Event.Error(null, e.toString()))
         }
     }
@@ -245,6 +250,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -273,6 +279,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -297,6 +304,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -352,6 +360,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -382,6 +391,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -405,6 +415,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -440,6 +451,7 @@ class CloudRepository(
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(Event.Error(null, e.toString()))
             }
         }
@@ -475,11 +487,12 @@ class CloudRepository(
                 emit(Event.Error(null, e.toString()))
             }
         }
-    fun attachIp(
+
+    fun attachIpPublic(
         token: String,
         siteUrl: String,
-        publicId : Int,
-        privateIp : String,
+        publicId: Int,
+        privateIp: String,
         vmId: Int
     ): LiveData<Event<IpBasicResponse>> =
         liveData(Dispatchers.IO) {
@@ -492,6 +505,100 @@ class CloudRepository(
                     addProperty("vm_id", vmId)
                 }
                 val response = apiService.attachPublicIp(token, "application/json", request)
+
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun releaseIp(
+        token: String,
+        ipId: String,
+        loc: String,
+        vmId: String
+    ): LiveData<Event<IpBasicResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val request = JsonObject().apply {
+                    addProperty("private_ip_id", ipId)
+                    addProperty("location", loc)
+                    addProperty("vm_id", vmId)
+                }
+                val response = apiService.releaseIpPrivate(token, "application/json", request)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+    fun acquireIpPrivate(
+        token: String,
+        vmId: String
+    ): LiveData<Event<IpBasicResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val request = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                }
+                val response = apiService.acquireIpPrivate(token, "application/json", request)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun acquireIpPublic(
+        token: String,
+        vmId: String
+    ): LiveData<Event<IpBasicResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val request = JsonObject().apply {
+                    addProperty("vm_id", vmId)
+                }
+                val response = apiService.acquireIpPublic(token, "application/json", request)
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {
