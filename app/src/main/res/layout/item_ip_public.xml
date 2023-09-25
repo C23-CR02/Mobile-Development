@@ -21,7 +21,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_ip"
+                android:id="@+id/tv_ip_public"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_ipPublic"
+                android:id="@+id/tv_ip_private"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -42,11 +42,11 @@
                 android:textSize="16sp"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/tv_ip"
-                app:layout_constraintTop_toBottomOf="@id/tv_ip" />
+                app:layout_constraintStart_toStartOf="@id/tv_ip_public"
+                app:layout_constraintTop_toBottomOf="@id/tv_ip_public" />
 
             <TextView
-                android:id="@+id/tv_location"
+                android:id="@+id/tv_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -54,11 +54,11 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/grey"
-                app:layout_constraintStart_toStartOf="@id/tv_ip"
-                app:layout_constraintTop_toBottomOf="@id/tv_ipPublic" />
+                app:layout_constraintStart_toStartOf="@id/tv_ip_public"
+                app:layout_constraintTop_toBottomOf="@id/tv_ip_private" />
 
             <Button
-                android:id="@+id/btn_restore"
+                android:id="@+id/btn_detach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -67,7 +67,7 @@
                 android:text="@string/detach"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_location" />
+                app:layout_constraintTop_toBottomOf="@id/tv_cost" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

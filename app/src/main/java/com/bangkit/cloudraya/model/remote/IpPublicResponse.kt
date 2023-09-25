@@ -31,13 +31,13 @@ data class DataItem(
 	@field:SerializedName("id")
 	val id: Int,
 
-	@field:SerializedName("objecttype")
+	@field:SerializedName("object_type")
 	val objecttype: String,
 
 	@field:SerializedName("array_lb")
 	val arrayLb: String,
 
-	@field:SerializedName("objectid")
+	@field:SerializedName("object_id")
 	val objectid: String,
 
 	@field:SerializedName("status")

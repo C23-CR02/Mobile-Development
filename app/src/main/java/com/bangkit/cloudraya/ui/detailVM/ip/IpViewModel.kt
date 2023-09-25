@@ -33,4 +33,13 @@ class IpViewModel(private val repository: CloudRepository) : ViewModel() {
         token: String,
         vmId: String
     ) : LiveData<Event<IpBasicResponse>> = repository.acquireIpPrivate(token,vmId)
+
+    fun getIpVMOwn(token: String, vmId: Int) =
+        repository.getIpVMOwn(token, vmId)
+
+    fun detachIpPublic(token: String, ipId: Int, vmId: Int) =
+        repository.detachIPPublic(token, ipId, vmId)
+
+    fun attachIpPublic(token: String, ipPublicId: Int, ipPrivate: String, vmId: Int) =
+        repository.attachIpPublic(token, ipPublicId, ipPrivate, vmId)
 }

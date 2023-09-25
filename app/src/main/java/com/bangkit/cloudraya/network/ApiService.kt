@@ -126,4 +126,11 @@ interface ApiService {
         @Header("Content-Type") content : String,
         @Body requestBody: JsonObject
     ) : Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/vm-own")
+    suspend fun getIpVM(
+        @Header("Authorization") token : String,
+        @Header("Content-Type") content : String,
+        @Body requestBody: JsonObject
+    ) : Response<IpVMOwn>
 }

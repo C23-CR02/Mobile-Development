@@ -1,6 +1,7 @@
 package com.bangkit.cloudraya.repository
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.cloudraya.database.CloudDatabase
@@ -15,6 +16,7 @@ import com.bangkit.cloudraya.model.remote.InsertResponse
 import com.bangkit.cloudraya.model.remote.IpBasicResponse
 import com.bangkit.cloudraya.model.remote.IpPrivateResponse
 import com.bangkit.cloudraya.model.remote.IpPublicResponse
+import com.bangkit.cloudraya.model.remote.IpVMOwn
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.model.remote.VMActionResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
@@ -490,7 +492,6 @@ class CloudRepository(
 
     fun attachIpPublic(
         token: String,
-        siteUrl: String,
         publicId: Int,
         privateIp: String,
         vmId: Int
@@ -498,10 +499,9 @@ class CloudRepository(
         liveData(Dispatchers.IO) {
             emit(Event.Loading)
             try {
-                setBaseUrl(siteUrl)
                 val request = JsonObject().apply {
                     addProperty("public_ip_id", publicId)
-                    addProperty("privateip", privateIp)
+                    addProperty("private_ip", privateIp)
                     addProperty("vm_id", vmId)
                 }
                 val response = apiService.attachPublicIp(token, "application/json", request)
@@ -510,9 +510,11 @@ class CloudRepository(
                     val data = response.body()
                     data?.let {
                         emit(Event.Success(it))
+                        Log.d("Attach","success : $it")
                     }
                 } else {
                     val error = response.errorBody()?.toString()
+                    Log.d("Attach","error : $error")
                     if (error != null) {
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
@@ -599,6 +601,65 @@ class CloudRepository(
                     addProperty("vm_id", vmId)
                 }
                 val response = apiService.acquireIpPublic(token, "application/json", request)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun getIpVMOwn(token: String, vmId: Int): LiveData<Event<IpVMOwn>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val request = JsonObject().apply {
+                    addProperty("id", vmId)
+                }
+                val response = apiService.getIpVM(token,"application/json", request)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun detachIPPublic(
+        token: String,
+        ipId: Int,
+        vmId: Int
+    ): LiveData<Event<IpBasicResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val request = JsonObject().apply {
+                    addProperty("public_ip_id", ipId)
+                    addProperty("vm_id", vmId)
+                }
+                val response = apiService.detachPublicIP(token, "application/json", request)
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {

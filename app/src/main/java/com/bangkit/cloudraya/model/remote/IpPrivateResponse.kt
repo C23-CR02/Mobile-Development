@@ -17,7 +17,7 @@ data class IpPrivateResponse(
 data class IpPrivateItem(
 
 	@field:SerializedName("ip_address")
-	val ipAddress: String? = null,
+	val ipAddress: String,
 
 	@field:SerializedName("is_default")
 	val isDefault: Boolean? = null,

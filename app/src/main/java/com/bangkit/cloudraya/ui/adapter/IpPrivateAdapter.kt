@@ -5,23 +5,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.cloudraya.databinding.ItemIpPrivateBinding
-import com.bangkit.cloudraya.model.remote.IpPrivateItem
+import com.bangkit.cloudraya.model.remote.PrivateIpsItem
 
 class IpPrivateAdapter(
-    private var listIp: List<IpPrivateItem>,
+    private var listIp: List<PrivateIpsItem>,
 ) :
     RecyclerView.Adapter<IpPrivateAdapter.MyViewHolder>() {
     inner class MyViewHolder(private val binding: ItemIpPrivateBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: IpPrivateItem) {
-            binding.tvIp.text = data.ipAddress
-            if (data.isDefault == false) {
+        fun bind(data: PrivateIpsItem) {
+            binding.tvIp.text = data.ipaddress
+            if (data.isUsed == 0) {
                 binding.tvDefault.visibility = View.GONE
                 binding.btnDelete.setOnClickListener {
-                    onDeleteClickListener?.invoke(data.id.toString())
+                    onDeleteClickListener?.invoke(data.id)
                 }
 
             } else {
+                if (data.isdefault == 1){
+                    binding.tvDefault.visibility = View.VISIBLE
+                }else{
+                    binding.tvDefault.visibility = View.GONE
+                }
                 binding.btnDelete.isEnabled = false
                 binding.btnDelete.alpha = 0.7F
             }
