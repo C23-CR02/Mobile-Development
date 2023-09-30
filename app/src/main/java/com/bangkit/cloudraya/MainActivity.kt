@@ -15,7 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.bangkit.cloudraya.databinding.ActivityMainBinding
-import com.bangkit.cloudraya.firebase.WebSocketService
+import com.bangkit.cloudraya.websocket.WebSocketService
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.ui.confirmation.ConfirmationFragment
 import org.koin.android.ext.android.inject

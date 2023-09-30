@@ -39,7 +39,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
         <service
-            android:name=".firebase.WebSocketService"/>
+            android:name=".websocket.WebSocketService"/>
     </application>
 
 </manifest>

@@ -18,7 +18,7 @@ import com.bangkit.cloudraya.MainActivity
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
-import com.bangkit.cloudraya.firebase.WebSocketService
+import com.bangkit.cloudraya.websocket.WebSocketService
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.model.local.Event
 import kotlinx.coroutines.launch
