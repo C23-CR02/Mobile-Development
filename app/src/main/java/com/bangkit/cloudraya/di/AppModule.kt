@@ -59,7 +59,7 @@ val encryptionModule = module {
 
         EncryptedSharedPreferences.create(
             context,
-            "encrypted_prefs",
+            "encrypted_pref",
             masterKeyAlias,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

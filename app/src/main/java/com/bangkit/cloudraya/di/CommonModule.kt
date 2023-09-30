@@ -1,9 +1,9 @@
 package com.bangkit.cloudraya.di
 
 
-import com.bangkit.cloudraya.ui.confirmation.ConfirmationActivityViewModel
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.repository.CloudRepository
+import com.bangkit.cloudraya.ui.confirmation.ConfirmationActivityViewModel
 import com.bangkit.cloudraya.ui.detailVM.DetailVMViewModel
 import com.bangkit.cloudraya.ui.detailVM.backup.BackupViewModel
 import com.bangkit.cloudraya.ui.detailVM.ip.IpViewModel

@@ -37,26 +37,19 @@ class FragmentResources : Fragment() {
         showRecycleView()
         site = arguments?.getString("data") ?: ""
         siteUrl = arguments?.getString("siteUrl") ?: ""
-        Log.d("Testing", "Site url : $siteUrl")
-
-        val data = viewModel.getListEncrypted(site)
-        val token = data[2].toString()
-
-        lifecycleScope.launch {
-            getVmlist(token)
-        }
-
         getToken()
         backPressed()
     }
 
-    private fun getVmlist(token: String) {
+    private fun getVmlist() {
+        val data = viewModel.getListEncrypted(site)
+        val token = data[2].toString()
         viewModel.setBaseUrl(siteUrl)
         viewModel.getVMList(token).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Event.Success -> {
                     binding.pbLoading.visibility = View.GONE
-                    vmAdapter.submitData(result.data.data!!.servers)
+                    vmAdapter.submitData(result.data.data.servers)
                     if (result.data.data.servers.isEmpty()) {
                         binding.rvVM.visibility = View.GONE
                         binding.ivEmpty.visibility = View.VISIBLE
@@ -83,9 +76,9 @@ class FragmentResources : Fragment() {
         vmAdapter = VMAdapter { vmData ->
             val toDetailVM =
                 FragmentResourcesDirections.actionFragmentResourcesToFragmentDetailVM(
-                    vmData,
                     site,
-                    siteUrl
+                    siteUrl,
+                    vmData.localId,
                 )
             findNavController().navigate(toDetailVM)
         }
@@ -99,16 +92,17 @@ class FragmentResources : Fragment() {
         val data = viewModel.getListEncrypted(site)
         val appKey = data[0].toString()
         val appSecret = data[1].toString()
+
         viewModel.getToken(appKey, appSecret).observe(viewLifecycleOwner) { item ->
             when (item) {
                 is Event.Success -> {
-                    val token = "Bearer ${item.data.data?.bearerToken.toString()}"
+                    val bearerToken = "Bearer ${item.data.data?.bearerToken.toString()}"
                     lifecycleScope.launch {
-                        val list = listOf(appKey, appSecret, token)
+                        val list = listOf(appKey, appSecret, bearerToken)
                         viewModel.saveListEncrypted(site, list)
+                        getVmlist()
                     }
                 }
-
                 is Event.Error -> {
                     Log.d("Calling error : ", item.error.toString())
                 }

@@ -1,6 +1,11 @@
 package com.bangkit.cloudraya.ui.siteAdd
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +14,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.bangkit.cloudraya.MainActivity
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
+import com.bangkit.cloudraya.firebase.WebSocketService
+import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.model.local.Event
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.net.MalformedURLException
 import java.net.URL
@@ -25,9 +31,10 @@ class FragmentSiteAdd : Fragment() {
     private lateinit var binding: FragmentSiteAddBinding
     private var token: String = "Bearer "
     private val viewModel: SiteAddViewModel by viewModel()
-    private lateinit var databaseReference: DatabaseReference
     private lateinit var appKey: String
     private lateinit var appSecret: String
+    private lateinit var webSocketService: WebSocketService
+    private var isServiceBound = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +42,7 @@ class FragmentSiteAdd : Fragment() {
         binding = FragmentSiteAddBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,6 +69,8 @@ class FragmentSiteAdd : Fragment() {
                 }
             }
         }
+        val serviceIntent = Intent(requireContext(), WebSocketService::class.java)
+        requireContext().bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 
     }
 
@@ -93,14 +103,13 @@ class FragmentSiteAdd : Fragment() {
                         siteName,
                         siteUrl,
                     )
-                    val fcmToken = viewModel.getFCMToken() ?: ""
                     lifecycleScope.launch {
                         viewModel.insertSites(site)
                         viewModel.saveEncrypted(appKey, appSecret, token)
                         val list = listOf(appKey, appSecret, token)
                         viewModel.saveListEncrypted(siteName, list)
                         viewModel.getListEncrypted(siteName)
-                        sendFCMToken(appKey, appSecret, fcmToken)
+                        broadcast(appKey) // ambil data
                         val dialog =
                             SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
                         dialog.apply {
@@ -128,49 +137,32 @@ class FragmentSiteAdd : Fragment() {
                 }
             }
         }
-        lifecycleScope.launch {
-            delay(1000)
-            viewModel.insertToDatabase(appKey, appSecret).observe(viewLifecycleOwner) { data ->
-                when (data) {
-                    is Event.Success -> {
-                        // Do Nothing
-                    }
+    }
 
-                    is Event.Error -> {
-                        SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
-                            .setTitleText("Failed to insert database")
-                            .setContentText(data.error)
-                            .show()
-                    }
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as WebSocketService.LocalBinder
+            webSocketService = binder.getService()
+            isServiceBound = true
+            Log.d("Testing", "Service terikat")
+        }
 
-                    else -> {
-                        Log.d("Event ", data.toString())
-                    }
-                }
-            }
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isServiceBound = false
+            Log.d("Testing", "Service terputus")
         }
     }
 
-    private fun sendFCMToken(appKey: String, appSecret: String, fcmToken: String) {
-        databaseReference =
-            FirebaseDatabase.getInstance("https://mobile-notification-90a3a-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                .getReference("users").child(appKey)
-        val hashMap: HashMap<String, String?> = HashMap()
-        hashMap["app_key"] = appKey
-        hashMap["app_secret"] = appSecret
-        hashMap["fcm_token"] = fcmToken
-        databaseReference.setValue(hashMap)
-            .addOnFailureListener {
-                Log.d("RTDB Failure", "${it.message}  ${it.cause}")
-            }
-            .addOnSuccessListener {
-                Log.d("RTDB Success", hashMap.toString())
-            }
-            .addOnCanceledListener {
-                Log.d("RTDB Cancelled", "true")
-            }
-        Log.d("FCM Hash", hashMap.toString())
+    private fun broadcast(channelKey: String) {
+        Log.d("Testing","Hallo")
+        val intent = Intent(context, MainActivity::class.java)
+        intent.action = "ACTION_ADD_CHANNEL"
+        requireContext().sendBroadcast(intent)
+        val dataHolder : DataHolder by inject()
+        dataHolder.channelKey = channelKey
+        webSocketService.joinChannel()
     }
+
 
     private fun isURLValid(): Boolean {
         val baseUrl = binding.siteUrlLayout.text.toString().trim()

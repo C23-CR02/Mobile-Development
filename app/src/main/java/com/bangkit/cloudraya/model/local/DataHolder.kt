@@ -9,4 +9,17 @@ class DataHolder : Serializable {
     var request: String = ""
     var vmId: String = ""
     var siteUrl: String = ""
+    var action: String = ""
+    var channelKey : String = ""
+    var isPressed : Boolean = false
+
+    fun clearData() {
+        title = ""
+        msgBody = ""
+        token = ""
+        request = ""
+        vmId = ""
+        siteUrl = ""
+        action = ""
+    }
 }
