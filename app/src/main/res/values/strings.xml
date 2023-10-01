@@ -111,6 +111,26 @@
     <string name="default_value">0</string>
     <string name="running_vms">Running VMs</string>
     <string name="stopped_vms">Stopped VMs</string>
+    <string name="vpc_setting">VPC Setting</string>
+    <string name="hint_vpc_setting">Select VPC Setting</string>
+    <string name="vpc">VPC</string>
+    <string name="hint_vpc">Select VPC</string>
+    <string name="vpc_subnet">VPC Subnet</string>
+    <string name="select_vpc_subnet">Select VPC Subnet</string>
+    <string name="vpc_name">VPC Name</string>
+    <string name="subnet_name">Subnet Name</string>
+    <string name="vpc_ip_address">VPC IP Address</string>
+    <string name="hint_ip">0.0</string>
+    <string name="ip_10">10.10</string>
+    <string name="cidr_ip"><![CDATA[CIDR & IP Range]]></string>
+    <string name="cidr">CIDR : -</string>
+    <string name="ip_range">IP Range : -</string>
+    <string name="network_size">Network Size</string>
+    <string name="_20">/20</string>
+    <string name="subnet_ip_address">Subnet IP Address</string>
+    <string name="ssh">SSH</string>
+    <string name="instant_activation">Instant Activation</string>
+    <string name="bandwidth">Bandwidth</string>
 
     <string-array name="backup_days_options">
         <item>1 Day</item>
