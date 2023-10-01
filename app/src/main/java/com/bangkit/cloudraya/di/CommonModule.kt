@@ -2,6 +2,7 @@ package com.bangkit.cloudraya.di
 
 
 import com.bangkit.cloudraya.model.local.DataHolder
+import com.bangkit.cloudraya.model.local.VMHolder
 import com.bangkit.cloudraya.repository.CloudRepository
 import com.bangkit.cloudraya.ui.confirmation.ConfirmationActivityViewModel
 import com.bangkit.cloudraya.ui.createVM.overview.CreateVm4ViewModel
@@ -26,7 +27,9 @@ val repositoryModule = module {
 
 val dataModule = module {
     single { DataHolder() }
+    single { VMHolder()}
 }
+
 
 val viewModule = module {
     single { DetailVMViewModel(get()) }
