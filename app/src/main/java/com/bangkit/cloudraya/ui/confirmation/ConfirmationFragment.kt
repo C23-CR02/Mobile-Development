@@ -56,7 +56,7 @@ class ConfirmationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hasBiometric()
-        dataHolder.isPressed = false
+        dataHolder.isPressed = true
     }
 
     private fun vmAction() {

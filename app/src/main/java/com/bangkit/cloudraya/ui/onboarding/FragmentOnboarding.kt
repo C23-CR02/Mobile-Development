@@ -45,8 +45,8 @@ class FragmentOnboarding : Fragment() {
         }
         binding.btnContinue4.setOnClickListener {
             viewModel.setOnBoarding(true)
-            val toDashboard = FragmentOnboardingDirections.actionFragmentOnboardingToDashboardFragment()
-            findNavController().navigate(toDashboard)
+            val toList = FragmentOnboardingDirections.actionFragmentOnboardingToFragmentSiteList()
+            findNavController().navigate(toList)
         }
     }
 }

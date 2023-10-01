@@ -123,6 +123,10 @@
     <string name="dummy_news_date">2023-07-31 16:49</string>
     <string name="networking">Networking</string>
     <string name="virtual_machines">Virtual Machines</string>
+    <string name="vpc">VPC</string>
+    <string name="instant_activation">Instant Activation</string>
+    <string name="vpc_name">VPC Name</string>
+    <string name="subnet_name">Subnet Name</string>
 
     <string-array name="backup_days_options">
         <item>1 Day</item>
