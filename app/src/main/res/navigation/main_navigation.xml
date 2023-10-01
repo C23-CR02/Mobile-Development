@@ -14,6 +14,11 @@
             app:destination="@id/fragmentSiteList"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragmentOnboarding_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteList"
@@ -30,6 +35,11 @@
             app:destination="@id/fragmentResources"
             app:enterAnim="@android:anim/fade_in"
             app:popEnterAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragmentSiteList_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteAdd"
@@ -37,8 +47,8 @@
         android:label="fragment_site_add"
         tools:layout="@layout/fragment_site_add" >
         <action
-            android:id="@+id/action_fragmentSiteAdd_to_fragmentSiteList"
-            app:destination="@id/fragmentSiteList"
+            android:id="@+id/action_fragmentSiteAdd_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
@@ -110,6 +120,11 @@
             app:destination="@id/fragmentSiteList"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_splashFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -124,6 +139,79 @@
         <action
             android:id="@+id/action_confirmationFragment_to_fragmentSiteList"
             app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_billingFragment"
+            app:destination="@id/billingFragment"
+            app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_networkingFragment"
+            app:destination="@id/networkingFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billingFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.billing.BillingFragment"
+        android:label="fragment_billing"
+        tools:layout="@layout/fragment_billing" >
+        <action
+            android:id="@+id/action_billingFragment_to_networkingFragment"
+            app:destination="@id/networkingFragment" />
+        <action
+            android:id="@+id/action_billingFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_billingFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/networkingFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.networking.NetworkingFragment"
+        android:label="fragment_networking"
+        tools:layout="@layout/fragment_networking" >
+        <action
+            android:id="@+id/action_networkingFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_networkingFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
+        <action
+            android:id="@+id/action_networkingFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resourcesFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.resources.ResourcesFragment"
+        android:label="fragment_resources2"
+        tools:layout="@layout/fragment_resources2" >
+        <action
+            android:id="@+id/action_resourcesFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_resourcesFragment_to_networkingFragment"
+            app:destination="@id/networkingFragment" />
+        <action
+            android:id="@+id/action_resourcesFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
+        <action
+            android:id="@+id/action_resourcesFragment_to_fragmentResources"
+            app:destination="@id/fragmentResources"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>

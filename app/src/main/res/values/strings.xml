@@ -111,6 +111,18 @@
     <string name="default_value">0</string>
     <string name="running_vms">Running VMs</string>
     <string name="stopped_vms">Stopped VMs</string>
+    <string name="ip">IP</string>
+    <string name="total_public_ip">Total Public IP</string>
+    <string name="total_disks">Total Disks</string>
+    <string name="gb">GB</string>
+    <string name="total_cpus">Total CPUs</string>
+    <string name="billing">Billing</string>
+    <string name="news_update">News Update</string>
+    <string name="dummy_news_head">Quest Raya: Here\'s Where Your Cloud Adventure Begins</string>
+    <string name="dummy_news_content">Calling all Cloud Adventurers! You are challenged to join and complete all quests on Quest Raya ....</string>
+    <string name="dummy_news_date">2023-07-31 16:49</string>
+    <string name="networking">Networking</string>
+    <string name="virtual_machines">Virtual Machines</string>
 
     <string-array name="backup_days_options">
         <item>1 Day</item>

@@ -175,6 +175,14 @@ class CloudRepository(
         sharedPreferences.edit().putString(key, json).apply()
     }
 
+    fun setProject(key : String){
+        sharedPreferences.edit().putString("is_Active",key).apply()
+    }
+
+    fun getProject(): String? {
+        return sharedPreferences.getString("is_Active", "")
+    }
+
     fun getList(key: String): List<Any> {
         val gson = Gson()
         val json = sharedPreferences.getString(key, null)
@@ -185,7 +193,6 @@ class CloudRepository(
             emptyList()
         }
     }
-
     fun saveOnboarding(onBoarding: Boolean) {
         sharedPreferences.edit().putBoolean("onboarding_complete", onBoarding).apply()
     }

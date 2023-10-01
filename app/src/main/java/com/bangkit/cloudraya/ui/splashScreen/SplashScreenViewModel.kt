@@ -7,4 +7,8 @@ class SplashScreenViewModel(private val cloudRepository: CloudRepository): ViewM
     fun getOnboarding():Boolean{
         return cloudRepository.getOnboarding()
     }
+
+    fun getProject() : String? {
+        return cloudRepository.getProject()
+    }
 }

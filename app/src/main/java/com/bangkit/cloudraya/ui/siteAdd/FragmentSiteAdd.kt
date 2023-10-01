@@ -18,9 +18,9 @@ import com.bangkit.cloudraya.MainActivity
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteAddBinding
-import com.bangkit.cloudraya.websocket.WebSocketService
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.model.local.Event
+import com.bangkit.cloudraya.websocket.WebSocketService
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,7 +42,6 @@ class FragmentSiteAdd : Fragment() {
         binding = FragmentSiteAddBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,9 +73,10 @@ class FragmentSiteAdd : Fragment() {
 
     }
 
-    private fun toList() {
-        val toList = FragmentSiteAddDirections.actionFragmentSiteAddToFragmentSiteList()
-        findNavController().navigate(toList)
+
+    private fun toDashboard() {
+        val toDashboard = FragmentSiteAddDirections.actionFragmentSiteAddToDashboardFragment()
+        findNavController().navigate(toDashboard)
     }
 
     private fun isFilled(): Boolean {
@@ -98,6 +98,7 @@ class FragmentSiteAdd : Fragment() {
         viewModel.getToken(appKey, appSecret).observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Event.Success -> {
+                    binding.progressBar.visibility = View.GONE
                     token += data.data.data?.bearerToken.toString()
                     val site = Sites(
                         siteName,
@@ -106,9 +107,10 @@ class FragmentSiteAdd : Fragment() {
                     lifecycleScope.launch {
                         viewModel.insertSites(site)
                         viewModel.saveEncrypted(appKey, appSecret, token)
-                        val list = listOf(appKey, appSecret, token)
+                        val list = listOf(appKey, appSecret, token,siteUrl)
                         viewModel.saveListEncrypted(siteName, list)
                         viewModel.getListEncrypted(siteName)
+                        setProject(siteName)
                         broadcast(appKey) // ambil data
                         val dialog =
                             SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
@@ -117,14 +119,20 @@ class FragmentSiteAdd : Fragment() {
                             contentText = getString(R.string.toast_successful)
                             setConfirmClickListener {
                                 it.dismiss()
-                                toList()
+                                toDashboard()
+
                             }
                                 .show()
                         }
                     }
                 }
 
+                is Event.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
                 is Event.Error -> {
+                    binding.progressBar.visibility = View.GONE
                     SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Oops...")
                         .setContentText(data.error)
@@ -144,25 +152,21 @@ class FragmentSiteAdd : Fragment() {
             val binder = service as WebSocketService.LocalBinder
             webSocketService = binder.getService()
             isServiceBound = true
-            Log.d("Testing", "Service terikat")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isServiceBound = false
-            Log.d("Testing", "Service terputus")
         }
     }
 
     private fun broadcast(channelKey: String) {
-        Log.d("Testing","Hallo")
         val intent = Intent(context, MainActivity::class.java)
         intent.action = "ACTION_ADD_CHANNEL"
         requireContext().sendBroadcast(intent)
-        val dataHolder : DataHolder by inject()
+        val dataHolder: DataHolder by inject()
         dataHolder.channelKey = channelKey
         webSocketService.joinChannel()
     }
-
 
     private fun isURLValid(): Boolean {
         val baseUrl = binding.siteUrlLayout.text.toString().trim()
@@ -172,5 +176,9 @@ class FragmentSiteAdd : Fragment() {
         } catch (e: MalformedURLException) {
             false
         }
+    }
+
+    private fun setProject(key: String) {
+        viewModel.setProject(key)
     }
 }

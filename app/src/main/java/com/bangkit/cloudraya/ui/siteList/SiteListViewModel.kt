@@ -22,4 +22,10 @@ class SiteListViewModel(private val cloudRepository: CloudRepository) : ViewMode
             cloudRepository.deleteItemWithConfirmation(site)
         }
     }
+
+    fun setProject(key : String){
+        cloudRepository.setProject(key)
+    }
+    fun getProject() : String? = cloudRepository.getProject()
+    fun getList(key : String) : List<Any> = cloudRepository.getList(key)
 }
