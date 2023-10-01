@@ -1,23 +1,22 @@
 package com.bangkit.cloudraya.ui.menu.billing
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentBillingBinding
-import com.bangkit.cloudraya.databinding.FragmentResources2Binding
 import com.bangkit.cloudraya.ui.menu.dashboard.SharedViewModel
-import com.bangkit.cloudraya.ui.menu.resources.ResourcesFragmentDirections
-import com.bangkit.cloudraya.ui.menu.resources.ResourcesViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class BillingFragment : Fragment() {
     private lateinit var binding: FragmentBillingBinding
+    private val viewModel: BillingViewModel by viewModel()
+    private lateinit var siteName : String
     private val sharedViewModel: SharedViewModel by inject()
     private var lastSelectedFragmentId = sharedViewModel.lastSelectedFragmentId.value
 
@@ -25,12 +24,15 @@ class BillingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBillingBinding.inflate(layoutInflater,container,false)
+        binding = FragmentBillingBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        siteName = viewModel.getProject().toString()
+        binding.projectInput.text = siteName
+
         bottomNavigationBar()
     }
 

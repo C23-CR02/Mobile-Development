@@ -13,8 +13,10 @@ import com.bangkit.cloudraya.ui.detailVM.DetailVMViewModel
 import com.bangkit.cloudraya.ui.detailVM.backup.BackupViewModel
 import com.bangkit.cloudraya.ui.detailVM.ip.IpViewModel
 import com.bangkit.cloudraya.ui.detailVM.monitoring.MonitoringVMViewModel
+import com.bangkit.cloudraya.ui.menu.billing.BillingViewModel
 import com.bangkit.cloudraya.ui.menu.dashboard.DashboardViewModel
 import com.bangkit.cloudraya.ui.menu.dashboard.SharedViewModel
+import com.bangkit.cloudraya.ui.menu.networking.NetworkingViewModel
 import com.bangkit.cloudraya.ui.menu.resources.ResourcesViewModel
 import com.bangkit.cloudraya.ui.onboarding.OnBoardingViewModel
 import com.bangkit.cloudraya.ui.resources.VMListViewModel
@@ -46,6 +48,8 @@ val viewModule = module {
     single { MonitoringVMViewModel(get()) }
     single { BackupViewModel(get()) }
     single { IpViewModel(get()) }
+    single { BillingViewModel(get())}
+    single { NetworkingViewModel(get())}
     single  { ResourcesViewModel(get())}
     single { DashboardViewModel(get())}
     single { CreateVm1ViewModel(get()) }

@@ -17,7 +17,7 @@ class ResourcesFragment : Fragment() {
     private val viewModel: ResourcesViewModel by viewModel()
     private val sharedViewModel: SharedViewModel by inject()
     private var lastSelectedFragmentId = sharedViewModel.lastSelectedFragmentId.value
-    private var siteName: String? = ""
+    private lateinit var siteName: String
     private var siteUrl = ""
 
     override fun onCreateView(
@@ -31,10 +31,12 @@ class ResourcesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationBar()
-        navigation()
-        siteName = viewModel.getProject()
-        val data = viewModel.getList(siteName.toString())
+        siteName = viewModel.getProject().toString()
+        binding.projectInput.text = siteName
+        val data = viewModel.getList(siteName)
         siteUrl = data[3].toString()
+        navigation()
+
     }
 
     private fun navigation() {
@@ -45,7 +47,7 @@ class ResourcesFragment : Fragment() {
 
     private fun toVM() {
         val toVM = ResourcesFragmentDirections.actionResourcesFragmentToFragmentResources(
-            siteName.toString(),
+            siteName,
             siteUrl
         )
         findNavController().navigate(toVM)

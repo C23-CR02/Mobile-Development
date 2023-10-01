@@ -10,11 +10,14 @@ import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentNetworkingBinding
 import com.bangkit.cloudraya.ui.menu.dashboard.SharedViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class NetworkingFragment : Fragment() {
     private lateinit var binding: FragmentNetworkingBinding
+    private val viewModel: NetworkingViewModel by viewModel()
     private val sharedViewModel: SharedViewModel by inject()
+    private lateinit var siteName : String
     private var lastSelectedFragmentId = sharedViewModel.lastSelectedFragmentId.value
 
     override fun onCreateView(
@@ -27,6 +30,8 @@ class NetworkingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        siteName = viewModel.getProject().toString()
+        binding.projectInput.text = siteName
         bottomNavigationBar()
     }
 
