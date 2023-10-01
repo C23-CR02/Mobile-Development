@@ -28,7 +28,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_secret">App Secret</string>
     <string name="app_key">App Key</string>
-    <string name="site_list">Site List</string>
+    <string name="site_list">Project List</string>
     <string name="site_url">Site URL</string>
     <string name="site_name">Site Name</string>
     <string name="submit">Submit</string>
@@ -89,6 +89,10 @@
     <string name="tv_default">Default</string>
     <string name="attach_ip">Attach IP</string>
     <string name="add_ip">Add Ip</string>
+    <string name="create_vm">Create VM</string>
+    <string name="hostname">Hostname</string>
+    <string name="server_configuration">Server Configuration</string>
+    <string name="hint_hostname">Enter Hostname</string>
 
     <string-array name="backup_days_options">
         <item>1 Day</item>

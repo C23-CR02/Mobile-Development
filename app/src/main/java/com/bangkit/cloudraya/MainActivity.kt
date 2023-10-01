@@ -64,9 +64,7 @@ class MainActivity : AppCompatActivity(), ConfirmationFragment.ConfirmationFragm
         handleNotificationAction(intent)
     }
 
-
     private fun handleNotificationAction(intent: Intent?) {
-        Log.d("Testing", "${intent?.action.toString()}")
         if (intent?.action == "ACTION_CONFIRMATION_FRAGMENT") {
             val dataHolder: DataHolder by inject()
             dataHolder.isPressed = true

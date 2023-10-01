@@ -17,6 +17,8 @@ import com.bangkit.cloudraya.model.remote.IpBasicResponse
 import com.bangkit.cloudraya.model.remote.IpPrivateResponse
 import com.bangkit.cloudraya.model.remote.IpPublicResponse
 import com.bangkit.cloudraya.model.remote.IpVMOwn
+import com.bangkit.cloudraya.model.remote.LocationResponse
+import com.bangkit.cloudraya.model.remote.PackagesResponse
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.model.remote.VMActionResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
@@ -510,11 +512,11 @@ class CloudRepository(
                     val data = response.body()
                     data?.let {
                         emit(Event.Success(it))
-                        Log.d("Attach","success : $it")
+                        Log.d("Attach", "success : $it")
                     }
                 } else {
                     val error = response.errorBody()?.toString()
-                    Log.d("Attach","error : $error")
+                    Log.d("Attach", "error : $error")
                     if (error != null) {
                         val jsonObject = JSONObject(error)
                         val message = jsonObject.getString("message")
@@ -560,6 +562,7 @@ class CloudRepository(
                 emit(Event.Error(null, e.toString()))
             }
         }
+
     fun acquireIpPrivate(
         token: String,
         vmId: String
@@ -627,7 +630,7 @@ class CloudRepository(
                 val request = JsonObject().apply {
                     addProperty("id", vmId)
                 }
-                val response = apiService.getIpVM(token,"application/json", request)
+                val response = apiService.getIpVM(token, "application/json", request)
                 if (response.isSuccessful) {
                     val data = response.body()
                     data?.let {
@@ -678,4 +681,53 @@ class CloudRepository(
                 emit(Event.Error(null, e.toString()))
             }
         }
+
+    fun getLocation(token: String): LiveData<Event<LocationResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val response = apiService.getLocation(token)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun getPackages(token: String): LiveData<Event<PackagesResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val response = apiService.getPackages(token)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
 }

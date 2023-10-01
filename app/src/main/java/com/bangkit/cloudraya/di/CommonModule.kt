@@ -4,6 +4,10 @@ package com.bangkit.cloudraya.di
 import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.repository.CloudRepository
 import com.bangkit.cloudraya.ui.confirmation.ConfirmationActivityViewModel
+import com.bangkit.cloudraya.ui.createVM.overview.CreateVm4ViewModel
+import com.bangkit.cloudraya.ui.createVM.packages.CreateVm2ViewModel
+import com.bangkit.cloudraya.ui.createVM.server.CreateVm1ViewModel
+import com.bangkit.cloudraya.ui.createVM.vpc.CreateVm3ViewModel
 import com.bangkit.cloudraya.ui.detailVM.DetailVMViewModel
 import com.bangkit.cloudraya.ui.detailVM.backup.BackupViewModel
 import com.bangkit.cloudraya.ui.detailVM.ip.IpViewModel
@@ -33,6 +37,11 @@ val viewModule = module {
     single { SplashScreenViewModel(get()) }
     single { ConfirmationActivityViewModel(get()) }
     single { MonitoringVMViewModel(get()) }
-    single { BackupViewModel(get())}
+    single { BackupViewModel(get()) }
     single { IpViewModel(get()) }
+    single { CreateVm1ViewModel(get()) }
+    single { CreateVm2ViewModel(get()) }
+    single { CreateVm3ViewModel(get()) }
+    single { CreateVm4ViewModel(get()) }
+
 }
