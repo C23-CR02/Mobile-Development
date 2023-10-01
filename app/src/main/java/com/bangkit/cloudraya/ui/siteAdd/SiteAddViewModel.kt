@@ -29,6 +29,10 @@ class SiteAddViewModel(private val cloudRepository: CloudRepository) : ViewModel
         cloudRepository.saveList(key, list)
     }
 
+    fun setProject(key : String){
+        cloudRepository.setProject(key)
+    }
+
     fun getListEncrypted(key: String) {
         cloudRepository.getList(key)
     }

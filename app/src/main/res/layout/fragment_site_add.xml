@@ -8,16 +8,27 @@
     tools:context=".ui.siteAdd.FragmentSiteAdd">
 
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_siteList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/site"
+        android:text="@string/project"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/siteName_layout"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +43,8 @@
         android:layout_weight="1"
         android:text="@string/site_name"
         android:textSize="18sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/siteName_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +63,10 @@
         android:padding="10dp"
         android:textSize="18sp"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/siteUrl_layout"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_siteList" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_site_name" />
 
 
     <TextView
@@ -65,9 +77,9 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:text="@string/site_url"
-
+        android:fontFamily="@font/poppins_regular"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/siteUrl_layout"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/siteName_layout" />
@@ -84,10 +96,10 @@
         android:padding="10dp"
         android:textSize="18sp"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/appKey_layout"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/siteName_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_site_url" />
 
 
     <TextView
@@ -98,9 +110,9 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:text="@string/app_key"
-
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/appKey_layout"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/siteUrl_layout" />
@@ -119,10 +131,10 @@
         android:padding="10dp"
         android:textSize="18sp"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/appSecret_layout"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/siteUrl_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_key" />
 
 
     <TextView
@@ -133,7 +145,8 @@
         android:layout_weight="1"
         android:text="@string/app_secret"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/appSecret_layout"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appKey_layout" />
@@ -151,24 +164,21 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:textSize="18sp"
-
         app:isPassword="true"
-        app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/appKey_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_secret" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_submit"
         style="@style/Theme.CloudRaya.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
         android:text="@string/submit"
+        android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appSecret_layout" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

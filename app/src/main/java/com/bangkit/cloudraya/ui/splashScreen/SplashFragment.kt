@@ -1,6 +1,7 @@
 package com.bangkit.cloudraya.ui.splashScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,20 @@ class SplashFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(DURATION)
             if (onBoarding && (dataHolder.action != "ACTION_CONFIRMATION_FRAGMENT") && !dataHolder.isPressed) {
-                toList()
+                if (!viewModel.getProject().isNullOrEmpty()) {
+                    toDashboard()
+                } else {
+                    toList()
+                }
             } else if (!onBoarding) {
                 toOnBoarding()
             }
         }
+    }
+
+    private fun toDashboard() {
+        val toDashboard = SplashFragmentDirections.actionSplashFragmentToDashboardFragment()
+        findNavController().navigate(toDashboard)
     }
 
     private fun toList() {

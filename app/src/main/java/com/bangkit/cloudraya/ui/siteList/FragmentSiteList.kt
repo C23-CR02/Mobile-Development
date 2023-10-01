@@ -1,7 +1,12 @@
 package com.bangkit.cloudraya.ui.siteList
 
 import android.app.AlertDialog
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +15,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.cloudraya.MainActivity
 import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.database.Sites
 import com.bangkit.cloudraya.databinding.FragmentSiteListBinding
+import com.bangkit.cloudraya.model.local.DataHolder
 import com.bangkit.cloudraya.ui.adapter.SiteListAdapter
+import com.bangkit.cloudraya.websocket.WebSocketService
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentSiteList : Fragment() {
     private lateinit var binding: FragmentSiteListBinding
     private val viewModel: SiteListViewModel by viewModel()
     private lateinit var adapter: SiteListAdapter
+    private lateinit var webSocketService: WebSocketService
+    private var isServiceBound = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +49,13 @@ class FragmentSiteList : Fragment() {
         }
         toDetailVM()
         backPressed()
+//        val serviceIntent = Intent(requireContext(), WebSocketService::class.java)
+//        requireContext().bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+//        val siteName = viewModel.getProject()
+//        val data = viewModel.getList(siteName.toString())
+//        val appKey = data[0]
+//        broadcast(appKey.toString())
+
     }
 
 
@@ -44,7 +63,6 @@ class FragmentSiteList : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Konfirmasi Penghapusan")
         builder.setMessage("Apakah Anda yakin ingin menghapus data?")
-
         builder.setPositiveButton("Ya") { dialog, _ ->
             lifecycleScope.launch {
                 viewModel.removeSite(site)
@@ -92,10 +110,11 @@ class FragmentSiteList : Fragment() {
     private fun backPressed() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showExitConfirmationDialog()
+//                showExitConfirmationDialog()
+                findNavController().navigateUp()
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
 
@@ -112,16 +131,46 @@ class FragmentSiteList : Fragment() {
 
     private fun showSelectedSite(data: Sites) {
         viewModel.setBaseUrl(data.site_url)
-        val toResource =
-            FragmentSiteListDirections.actionFragmentSiteListToFragmentResources(
-                data.site_name,
-                data.site_url
-            )
-        findNavController().navigate(toResource)
+        setProject(data.site_name)
+        toDashboard()
+    }
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as WebSocketService.LocalBinder
+            Log.d("Testing", "sedang mencoba service")
+            webSocketService = binder.getService()
+            Log.d("Testing", "Berhasil masuk service")
+            isServiceBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isServiceBound = false
+            Log.d("Testing", "Gagal masuk service")
+        }
+    }
+
+    private fun broadcast(channelKey: String) {
+        val intent = Intent(context, MainActivity::class.java)
+        intent.action = "ACTION_ADD_CHANNEL"
+        requireContext().sendBroadcast(intent)
+        val dataHolder: DataHolder by inject()
+        dataHolder.channelKey = channelKey
+        webSocketService.joinChannel()
+    }
+
+
+    private fun toDashboard() {
+        val toDashboard = FragmentSiteListDirections.actionFragmentSiteListToDashboardFragment()
+        findNavController().navigate(toDashboard)
     }
 
     private fun toSiteAdd() {
         val toSiteEdit = FragmentSiteListDirections.actionFragmentSiteListToFragmentSiteAdd()
         findNavController().navigate(toSiteEdit)
+    }
+
+    private fun setProject(key: String) {
+        viewModel.setProject(key)
     }
 }

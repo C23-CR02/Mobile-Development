@@ -1,60 +1,90 @@
 package com.bangkit.cloudraya.ui.menu.billing
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bangkit.cloudraya.R
+import com.bangkit.cloudraya.databinding.FragmentBillingBinding
+import com.bangkit.cloudraya.ui.menu.dashboard.SharedViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BillingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BillingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentBillingBinding
+    private val viewModel: BillingViewModel by viewModel()
+    private lateinit var siteName : String
+    private val sharedViewModel: SharedViewModel by inject()
+    private var lastSelectedFragmentId = sharedViewModel.lastSelectedFragmentId.value
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_billing, container, false)
+    ): View {
+        binding = FragmentBillingBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BillingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BillingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        siteName = viewModel.getProject().toString()
+        binding.projectInput.text = siteName
+
+        bottomNavigationBar()
+    }
+
+    private fun bottomNavigationBar() {
+        val navController = findNavController()
+        val bottomNavigationView = binding.bottomNavigationView
+        bottomNavigationView.menu.findItem(R.id.navigation_billing).isChecked = true
+        when (lastSelectedFragmentId) {
+            R.id.navigation_dashboard -> {
+                bottomNavigationView.menu.findItem(R.id.navigation_dashboard).isChecked = true
+            }
+
+            R.id.navigation_resources -> {
+                bottomNavigationView.menu.findItem(R.id.navigation_resources).isChecked = true
+            }
+
+            R.id.navigation_networking -> {
+                bottomNavigationView.menu.findItem(R.id.navigation_networking).isChecked = true
+            }
+
+            R.id.navigation_billing -> {
+                bottomNavigationView.menu.findItem(R.id.navigation_billing).isChecked = true
+            }
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            if (item.itemId != lastSelectedFragmentId) {
+                when (item.itemId) {
+                    R.id.navigation_dashboard -> {
+                        val toDashboard =
+                            BillingFragmentDirections.actionBillingFragmentToDashboardFragment()
+                        navController.navigate(toDashboard)
+                    }
+
+                    R.id.navigation_resources -> {
+                        val toResources =
+                            BillingFragmentDirections.actionBillingFragmentToResourcesFragment()
+                        navController.navigate(toResources)
+                    }
+
+                    R.id.navigation_networking -> {
+                        val toNetwork =
+                            BillingFragmentDirections.actionBillingFragmentToNetworkingFragment()
+                        navController.navigate(toNetwork)
+                    }
+
+                    R.id.navigation_billing -> {
+
+                    }
                 }
             }
+            true
+        }
     }
 }

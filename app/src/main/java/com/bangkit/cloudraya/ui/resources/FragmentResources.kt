@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentResources : Fragment() {
     private lateinit var binding: FragmentResourcesBinding
-    private val viewModel: ResourcesViewModel by viewModel()
+    private val viewModel: VMListViewModel by viewModel()
     private lateinit var vmAdapter: VMAdapter
     private lateinit var site: String
     private lateinit var siteUrl: String
@@ -98,7 +98,7 @@ class FragmentResources : Fragment() {
                 is Event.Success -> {
                     val bearerToken = "Bearer ${item.data.data?.bearerToken.toString()}"
                     lifecycleScope.launch {
-                        val list = listOf(appKey, appSecret, bearerToken)
+                        val list = listOf(appKey, appSecret, bearerToken, siteUrl)
                         viewModel.saveListEncrypted(site, list)
                         getVmlist()
                     }

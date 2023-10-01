@@ -39,7 +39,6 @@ class WebSocketService : Service() {
         joinConnection()
     }
 
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             Actions.START.toString() -> start()
@@ -52,9 +51,8 @@ class WebSocketService : Service() {
         joinConnection()
         for (i in listChannel) {
             channelKey = i
-            joinConnection()
+            joinChannel()
         }
-
     }
 
     private fun joinConnection() {
@@ -63,7 +61,6 @@ class WebSocketService : Service() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         // Mendengarkan peristiwa 'notification'
         socket.on("notification", onNotification)
         Log.d("Testing", "Sedang Berjalan")

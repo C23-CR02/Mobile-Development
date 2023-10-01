@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/baseline_dashboard_24"
+        android:title="@string/dashboard" />
+    <item
+        android:id="@+id/navigation_resources"
+        android:icon="@drawable/baseline_cloud_24"
+        android:title="@string/resources" />
+    <item
+        android:id="@+id/navigation_networking"
+        android:icon="@drawable/baseline_connected_tv_24"
+        android:title="@string/networking" />
+    <item
+        android:id="@+id/navigation_billing"
+        android:icon="@drawable/baseline_credit_card_24"
+        android:title="@string/billing"/>
+</menu>
