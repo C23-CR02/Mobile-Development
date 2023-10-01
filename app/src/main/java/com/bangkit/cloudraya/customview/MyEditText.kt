@@ -55,7 +55,7 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
-                if(s.toString().isNotEmpty()){
+                if (s.toString().isNotEmpty()) {
                     showClearButton()
                 } else {
                     hideClearButton()
@@ -130,6 +130,7 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
                         showClearButton()
                         return true
                     }
+
                     MotionEvent.ACTION_UP -> {
                         clearButtonImage = ContextCompat.getDrawable(
                             context,
@@ -141,6 +142,7 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
                         hideClearButton()
                         return true
                     }
+
                     else -> return false
                 }
             } else return false

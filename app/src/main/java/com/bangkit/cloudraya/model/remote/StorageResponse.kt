@@ -8,7 +8,7 @@ data class StorageResponse(
 	val code: Int,
 
 	@field:SerializedName("data")
-	val data: List<DataItem>,
+	val data: List<StorageData>,
 
 	@field:SerializedName("message")
 	val message: String
@@ -41,7 +41,7 @@ data class Idr(
 	val priceOn: Any
 )
 
-data class DataItem(
+data class StorageData(
 
 	@field:SerializedName("price")
 	val price: Price,

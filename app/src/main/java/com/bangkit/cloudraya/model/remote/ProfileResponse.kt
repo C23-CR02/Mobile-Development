@@ -8,7 +8,7 @@ data class ProfileResponse(
 	val code: Int,
 
 	@field:SerializedName("data")
-	val data: Data,
+	val data: ProfileData,
 
 	@field:SerializedName("message")
 	val message: String
@@ -29,7 +29,7 @@ data class Currency(
 	val id: Int
 )
 
-data class Data(
+data class ProfileData(
 
 	@field:SerializedName("country")
 	val country: String,

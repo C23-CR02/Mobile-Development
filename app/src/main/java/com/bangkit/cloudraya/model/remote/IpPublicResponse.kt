@@ -8,13 +8,13 @@ data class IpPublicResponse(
 	val code: Int,
 
 	@field:SerializedName("data")
-	val data: List<DataItem>,
+	val data: List<IpPublicData>,
 
 	@field:SerializedName("message")
 	val message: String
 )
 
-data class DataItem(
+data class IpPublicData(
 
 	@field:SerializedName("country_code")
 	val countryCode: String,

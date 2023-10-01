@@ -3,7 +3,6 @@ package com.bangkit.cloudraya.ui.detailVM.ip
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bangkit.cloudraya.databinding.FragmentIpBinding
 import com.bangkit.cloudraya.model.local.Event
-import com.bangkit.cloudraya.model.remote.DataItem
 import com.bangkit.cloudraya.model.remote.IpBasicResponse
-import com.bangkit.cloudraya.model.remote.IpPrivateItem
-import com.bangkit.cloudraya.model.remote.IpPrivateResponse
+import com.bangkit.cloudraya.model.remote.IpPublicData
 import com.bangkit.cloudraya.model.remote.IpPublicResponse
 import com.bangkit.cloudraya.model.remote.IpVMOwn
 import com.bangkit.cloudraya.model.remote.PrivateIpsItem
@@ -31,11 +28,6 @@ import com.bangkit.cloudraya.ui.adapter.IpPrivateAdapter
 import com.bangkit.cloudraya.ui.adapter.IpPublicAdapter
 import com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentIP : Fragment() {
@@ -49,7 +41,7 @@ class FragmentIP : Fragment() {
     private lateinit var siteUrl: String
     private lateinit var pDialog: SweetAlertDialog
     private lateinit var privateIps: List<PrivateIpsItem>
-    private lateinit var publicIps: List<DataItem>
+    private lateinit var publicIps: List<IpPublicData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,7 +80,7 @@ class FragmentIP : Fragment() {
         fetchIpPublic()
     }
 
-//    private fun fetchIpPrivate() {
+    //    private fun fetchIpPrivate() {
 //        val ipPrivateObserver = Observer<Event<IpPrivateResponse>> { result ->
 //            when (result) {
 //                is Event.Success -> {
@@ -257,9 +249,9 @@ class FragmentIP : Fragment() {
         layout.orientation = LinearLayout.VERTICAL
         val titleTextView = TextView(requireContext())
 
-        if (action == "add"){
+        if (action == "add") {
             titleTextView.text = "Acquire Public IP"
-        }else{
+        } else {
             titleTextView.text = "Attach Public IP"
         }
 
@@ -279,7 +271,8 @@ class FragmentIP : Fragment() {
 
         val spinner = Spinner(requireContext())
 //        val options = arrayOf("Pilihan 1", "Pilihan 2", "Pilihan 3")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, myPublicIp)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, myPublicIp)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
@@ -288,7 +281,8 @@ class FragmentIP : Fragment() {
 
         val spinner2 = Spinner(requireContext())
 //        val options2 = arrayOf("Pilihan 1", "Pilihan 2", "Pilihan 3")
-        val adapter2 = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, myPrivateIp)
+        val adapter2 =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, myPrivateIp)
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner2.adapter = adapter2
 
@@ -331,13 +325,13 @@ class FragmentIP : Fragment() {
         dialog.show()
     }
 
-    private fun attachIpPublic(ipPublicId: Int, ipPrivate: String){
+    private fun attachIpPublic(ipPublicId: Int, ipPrivate: String) {
         viewModel.attachIpPublic(token, ipPublicId, ipPrivate, vmId.toInt())
-            .observe(viewLifecycleOwner){ result ->
+            .observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Event.Success -> {
                         pDialog.dismiss()
-                        Log.d("Testing","response : ${result.data.data}")
+                        Log.d("Testing", "response : ${result.data.data}")
                         SweetAlertDialog(requireContext(), SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Successful!")
                             .setContentText(result.data.message)
@@ -345,15 +339,17 @@ class FragmentIP : Fragment() {
                         fetchIpPublic()
                         fetchIpPrivate()
                     }
+
                     is Event.Loading -> {
                         pDialog = SweetAlertDialog(requireContext(), SweetAlertDialog.PROGRESS_TYPE)
                         pDialog.titleText = "Loading"
                         pDialog.setCancelable(false)
                         pDialog.show()
                     }
+
                     is Event.Error -> {
                         pDialog.dismiss()
-                        Log.d("Testing","response : ${result.error}")
+                        Log.d("Testing", "response : ${result.error}")
                         SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Oops...")
                             .setContentText(result.error)
@@ -361,7 +357,7 @@ class FragmentIP : Fragment() {
                     }
                 }
 
-        }
+            }
     }
 
     private fun detachIpPublic() {

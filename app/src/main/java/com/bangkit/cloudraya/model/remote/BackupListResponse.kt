@@ -8,7 +8,7 @@ data class BackupListResponse(
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val data: DataBackUp? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
@@ -50,7 +50,7 @@ data class SnapshotsItem(
 	val status: String
 )
 
-data class Data(
+data class DataBackUp(
 
 	@field:SerializedName("snapshots")
 	val snapshots: List<SnapshotsItem>,
