@@ -154,7 +154,8 @@ interface ApiService {
     suspend fun getTemplate(
         @Header("Authorization") token: String,
         @Header("Content-Type") content: String,
-    ): Response<VPCListResponse>
+        @Body requestBody: JsonObject
+    ): Response<TemplateResponse>
 
     @GET("/v1/api/gateway/user/storagetype/list")
     suspend fun getStorage(

@@ -41,6 +41,7 @@
         app:layout_constraintTop_toBottomOf="@id/ivFingerPrint" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_home"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/back_to_home"

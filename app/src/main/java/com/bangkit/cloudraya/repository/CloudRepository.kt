@@ -19,10 +19,13 @@ import com.bangkit.cloudraya.model.remote.IpPublicResponse
 import com.bangkit.cloudraya.model.remote.IpVMOwn
 import com.bangkit.cloudraya.model.remote.LocationResponse
 import com.bangkit.cloudraya.model.remote.PackagesResponse
+import com.bangkit.cloudraya.model.remote.StorageResponse
+import com.bangkit.cloudraya.model.remote.TemplateResponse
 import com.bangkit.cloudraya.model.remote.TokenResponse
 import com.bangkit.cloudraya.model.remote.VMActionResponse
 import com.bangkit.cloudraya.model.remote.VMDetailResponse
 import com.bangkit.cloudraya.model.remote.VMListResponse
+import com.bangkit.cloudraya.model.remote.VPCListResponse
 import com.bangkit.cloudraya.network.ApiService
 import com.bangkit.cloudraya.utils.BaseUrlInterceptor
 import com.google.gson.Gson
@@ -737,4 +740,78 @@ class CloudRepository(
             }
         }
 
+    fun getVPC(token: String): LiveData<Event<VPCListResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val response = apiService.getVPC(token, "application/json")
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun getTemplate(token: String, location: String): LiveData<Event<TemplateResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val request = JsonObject().apply {
+                    addProperty("location", location)
+                }
+                val response = apiService.getTemplate(token, "application/json", request)
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
+
+    fun getStorage(token: String): LiveData<Event<StorageResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Event.Loading)
+            try {
+                val response = apiService.getStorage(token, "application/json")
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        emit(Event.Success(it))
+                    }
+                } else {
+                    val error = response.errorBody()?.toString()
+                    if (error != null) {
+                        val jsonObject = JSONObject(error)
+                        val message = jsonObject.getString("message")
+                        emit(Event.Error(null, message))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Event.Error(null, e.toString()))
+            }
+        }
 }

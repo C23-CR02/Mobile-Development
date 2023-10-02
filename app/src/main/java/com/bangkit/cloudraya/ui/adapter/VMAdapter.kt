@@ -2,8 +2,10 @@ package com.bangkit.cloudraya.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.ItemVmBinding
 import com.bangkit.cloudraya.model.remote.ServersItem
 
@@ -48,7 +50,10 @@ class VMAdapter(private val onItemClick: (ServersItem) -> Unit) :
             binding.tvLocation.text = data.location
             binding.tvImage.text = data.templateLabel
             binding.tvIPAddress.text = data.publicIp
-            binding.tvStatus.text = data.status
+            binding.tvStatus.text = "${data.status} - ${data.state}"
+            if (data.state == "Stopped"){
+                binding.tvStatus.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(binding.root.context, R.drawable.ic_inactive), null, null, null)
+            }
         }
     }
 }

@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), ConfirmationFragment.ConfirmationFragm
     private fun handleNotificationAction(intent: Intent?) {
         if (intent?.action == "ACTION_CONFIRMATION_FRAGMENT") {
             val dataHolder: DataHolder by inject()
-            dataHolder.isPressed = true
+//            dataHolder.isPressed = true
             navigateToConfirmationFragment()
         } else if (intent?.action == "ACTION_ADD_CHANNEL") {
             val channelKey = intent.getStringExtra("channelKey")

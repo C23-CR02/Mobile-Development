@@ -57,6 +57,11 @@ class ConfirmationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         hasBiometric()
         dataHolder.isPressed = true
+        binding.btnHome.setOnClickListener {
+//            val toHome = ConfirmationFragmentDirections
+//            findNavController().navigate(toHome)
+
+        }
     }
 
     private fun vmAction() {

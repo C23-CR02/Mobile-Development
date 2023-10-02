@@ -17,7 +17,7 @@ data class PackagesResponse(
 data class PriceOnItem(
 
 	@field:SerializedName("price")
-	val price: Any,
+	val price: Double,
 
 	@field:SerializedName("currency")
 	val currency: String

@@ -23,6 +23,7 @@ class FragmentResources : Fragment() {
     private lateinit var vmAdapter: VMAdapter
     private lateinit var site: String
     private lateinit var siteUrl: String
+    private var token = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +40,21 @@ class FragmentResources : Fragment() {
         siteUrl = arguments?.getString("siteUrl") ?: ""
         getToken()
         backPressed()
+
+        binding.fabCreateVm.setOnClickListener {
+            val toCreateVM =
+                FragmentResourcesDirections.actionFragmentResourcesToCreateVm1Fragment(
+                    token
+                )
+            if(token.isNotEmpty()){
+                findNavController().navigate(toCreateVM)
+            }
+        }
     }
 
     private fun getVmlist() {
         val data = viewModel.getListEncrypted(site)
-        val token = data[2].toString()
+        token = data[2].toString()
         viewModel.setBaseUrl(siteUrl)
         viewModel.getVMList(token).observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -97,6 +108,7 @@ class FragmentResources : Fragment() {
             when (item) {
                 is Event.Success -> {
                     val bearerToken = "Bearer ${item.data.data?.bearerToken.toString()}"
+                    token = bearerToken
                     lifecycleScope.launch {
                         val list = listOf(appKey, appSecret, bearerToken, siteUrl)
                         viewModel.saveListEncrypted(site, list)
