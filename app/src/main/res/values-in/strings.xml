@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wowrack</string>
+    <string name="landing_header_1">Wujudkan Ide Anda dengan Mitra Cloud Terpercaya</string>
+    <string name="landing_header_2">Menghadirkan apa yang Anda benar-benar butuhkan</string>
+    <string name="landing_header_3">Berpengalaman sejak 2001</string>
+    <string name="landing_header_4">Penyedia layanan TI bersertifikasi dan terpercaya</string>
+    <string name="landing_content_1">Kami adalah mitra TI yang terpercaya dan dapat diandalkan untuk membantu Anda dengan kebutuhan cloud computing Anda.</string>
+    <string name="landing_content_2">Tidak ada bisnis yang ingin menghabiskan uang dan sumber daya mereka untuk layanan yang tidak mereka butuhkan. Wowrack hanya memberikan apa yang Anda benar-benar butuhkan. Sederhana, hemat biaya.</string>
+    <string name="landing_content_3">Selama lebih dari dua dekade, Wowrack telah dipercaya untuk menyediakan solusi TI bagi merek-merek dengan berbagai ukuran - mulai dari startup hingga perusahaan Fortune 100 - dengan kebutuhan unik mereka.</string>
+    <string name="landing_content_4">Selain layanan 24/7 yang selalu aktif yang akan membuat Anda terkesan, Wowrack didukung dengan sertifikasi ISO 27001 dan SOC II Type 2, yang menjamin keamanan kami.</string>
+    <string name="landing_content_5">Efisiensi merupakan nilai fundamental dalam layanan berorientasi pelanggan terdepan Cloud Raya. Penyediaan VM yang lebih cepat, rencana penagihan yang fleksibel, dan panel cloud yang mudah digunakan memungkinkan efisiensi yang lebih besar dalam hal upaya, waktu, dan biaya.</string>
+    <string name="mulai">Mulai</string>
+    <string name="selanjutnya">Lanjutkan</string>
+    <string name="daftar">Daftar</string>
+    <string name="masuk">Login</string>
+    <string name="banner">Banner</string>
+    <string name="name">Nama</string>
+    <string name="location">Lokasi</string>
+    <string name="image">Sistem Operasi</string>
+    <string name="ip_address">Alamat IP</string>
+    <string name="status">Status</string>
+    <string name="vm_list">Daftar VM</string>
+    <string name="cpu">CPU</string>
+    <string name="type_disc">Tipe Penyimpanan</string>
+    <string name="memory">Memori</string>
+    <string name="text_package">Paket</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_secret">App Secret</string>
+    <string name="app_key">App Key</string>
+    <string name="site_list">Daftar Situs</string>
+    <string name="site_url">URL Situs</string>
+    <string name="site_name">Nama Situs</string>
+    <string name="submit">Submit</string>
+    <string name="site">Situs</string>
+    <string name="register_new_site">Daftarkan Situs Baru</string>
+    <string name="delete">Hapus</string>
+    <string name="save">Simpan</string>
+    <string name="get_started">Memulai</string>
+    <string name="vm_detail">Detail VM</string>
+    <string name="launch_date">Tanggal Peluncuran</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="restart">Restart</string>
+    <string name="home">Home</string>
+    <string name="resources">Resources</string>
+    <string name="back">Kembali</string>
+    <string name="action_confirmation">Konfirmasi Aksi</string>
+    <string name="back_to_home">Kembali ke Home</string>
+
+    <!--    UI-->
+    <string name="site_error">Nama situs tidak boleh mengandung simbol!</string>
+
+    <!--    Hint-->
+    <string name="hint_siteName">Masukkan Nama Situs Anda Di Sini</string>
+    <string name="hint_siteUrl">Masukkan URL Situs Anda Di Sini</string>
+    <string name="hint_appKey">Masukkan App Key Anda Di Sini</string>
+    <string name="hint_appSecret">Masukkan App Secret Anda Di Sini</string>
+    <string name="exit_confirmation">Ingin keluar ?</string>
+    <string name="exit">Keluar</string>
+    <string name="cancel">Batal</string>
+    <string name="action_accepted">Aksi diterima!</string>
+    <string name="action_denied">Aksi ditolak!</string>
+    <string name="exit_confirmation_message">Apakah kamu yakin ingin keluar ?</string>
+    <string name="toast_successful">Berhasil menambah situs</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="cost_projection">Perkiraan Biaya</string>
+    <string name="additional_resources">Sumberdaya Tambahan</string>
+    <string name="anomaly_detection">Deteksi Anomali</string>
+    <string name="estimated_cost">Estimasi Biaya: %f</string>
+    <string name="backup_configuration">Backup Configuration</string>
+    <string name="en_backup">Enable Backup</string>
+    <string name="backup_day">Backup Every</string>
+    <string name="backup_retention">Keep Most Recent</string>
+    <string name="backup_save">Save Config</string>
+    <string name="tv_backup">Backup List</string>
+    <string name="dummy_backup">backup-JNX5EFJL</string>
+    <string name="dummy_size">4.72 GB</string>
+    <string name="dummy_date">2023-08-21 15:20:01</string>
+    <string name="backup_restore">Restore</string>
+    <string name="backup_delete">Delete</string>
+
+</resources>

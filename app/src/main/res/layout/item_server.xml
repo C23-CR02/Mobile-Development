@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_server"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/os"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/server_os"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/server_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/operating_system"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/iv_server"
+            app:layout_constraintTop_toTopOf="@id/iv_server"
+            app:layout_constraintBottom_toBottomOf="@id/iv_server"
+            />
+
+        <ImageView
+            android:id="@+id/iv_disk"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/harddisk"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/server_os"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_server"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/hard_disk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hard_disk"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/iv_disk"
+            app:layout_constraintTop_toTopOf="@id/iv_disk"
+            app:layout_constraintBottom_toBottomOf="@id/iv_disk"
+            />
+
+        <ImageView
+            android:id="@+id/iv_cash"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/cash"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/server_os"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_disk"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cost"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/iv_cash"
+            app:layout_constraintTop_toTopOf="@id/iv_cash"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cash"
+            />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_os_description"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="@id/iv_cash"
+            app:layout_constraintTop_toBottomOf="@id/iv_cash"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

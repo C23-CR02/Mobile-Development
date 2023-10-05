@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     app:layoutDescription="@xml/first_onboard_scene"
-    tools:context=".ui.OnBoarding.FragmentOnboarding">
+    tools:context=".ui.onboarding.FragmentOnboarding">
 
     <!--    Start -->
     <ImageView
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/landing_header_1"
-        app:layout_constraintBottom_toTopOf="@id/tv_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_start"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_banner" />
 
@@ -111,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/landing_content_3"
-        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_header3" />
 

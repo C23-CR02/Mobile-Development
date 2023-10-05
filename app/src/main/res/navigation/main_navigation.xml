@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/fragmentOnboarding">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/fragmentOnboarding"
-        android:name="com.bangkit.cloudraya.ui.OnBoarding.FragmentOnboarding"
+        android:name="com.bangkit.cloudraya.ui.onboarding.FragmentOnboarding"
         android:label="first_onboard"
         tools:layout="@layout/first_onboard" >
         <action
@@ -14,60 +14,256 @@
             app:destination="@id/fragmentSiteList"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragmentOnboarding_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteList"
-        android:name="com.bangkit.cloudraya.ui.SiteList.FragmentSiteList"
+        android:name="com.bangkit.cloudraya.ui.siteList.FragmentSiteList"
         android:label="fragment_site_list"
         tools:layout="@layout/fragment_site_list" >
         <action
-            android:id="@+id/action_fragmentSiteList_to_fragmentSiteAdd2"
-            app:destination="@id/fragmentSiteAdd" />
+            android:id="@+id/action_fragmentSiteList_to_fragmentSiteAdd"
+            app:destination="@id/fragmentSiteAdd"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/action_fragmentSiteList_to_fragmentSiteEdit"
-            app:destination="@id/fragmentSiteEdit" />
+            android:id="@+id/action_fragmentSiteList_to_fragmentResources"
+            app:destination="@id/fragmentResources"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/action_fragmentSiteList_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_fragmentSiteList_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSiteAdd"
-        android:name="com.bangkit.cloudraya.ui.SiteAdd.FragmentSiteAdd"
+        android:name="com.bangkit.cloudraya.ui.siteAdd.FragmentSiteAdd"
         android:label="fragment_site_add"
-        tools:layout="@layout/fragment_site_add" />
-    <fragment
-        android:id="@+id/fragmentSiteEdit"
-        android:name="com.bangkit.cloudraya.ui.SiteEdit.FragmentSiteEdit"
-        android:label="fragment_site_edit"
-        tools:layout="@layout/fragment_site_edit" />
+        tools:layout="@layout/fragment_site_add" >
+        <action
+            android:id="@+id/action_fragmentSiteAdd_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentResources"
-        android:name="com.bangkit.cloudraya.ui.Resources.FragmentResources"
+        android:name="com.bangkit.cloudraya.ui.resources.FragmentResources"
         android:label="FragmentResources"
         tools:layout="@layout/fragment_resources">
         <action
             android:id="@+id/action_fragmentResources_to_fragmentDetailVM"
-            app:destination="@id/fragmentDetailVM" />
+            app:destination="@id/fragmentDetailVM"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="data"
+            app:argType="string" />
         <action
-            android:id="@+id/action_fragmentResources_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_fragmentResources_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="siteUrl"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentResources_to_createVm1Fragment"
+            app:destination="@id/createVm1Fragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentDetailVM"
-        android:name="com.bangkit.cloudraya.ui.DetailVM.FragmentDetailVM"
+        android:name="com.bangkit.cloudraya.ui.detailVM.FragmentDetailVM"
         android:label="FragmentDetailVM"
         tools:layout="@layout/fragment_detail_vm">
         <argument
-            android:name="vmData"
-            app:argType="com.bangkit.cloudraya.model.remote.VMListData" />
+            android:name="site"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_fragmentDetailVM_to_fragmentResources"
+            app:destination="@id/fragmentResources"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="siteUrl"
+            app:argType="string" />
+        <argument
+            android:name="vmId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentDetailVM_to_fragmentResources2"
+            app:destination="@id/fragmentResources"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragmentDetailVM_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.bangkit.cloudraya.ui.Home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/splashFragment"
+        android:name="com.bangkit.cloudraya.ui.splashScreen.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_homeFragment_to_fragmentResources"
-            app:destination="@id/fragmentResources" />
+            android:id="@+id/action_splashFragment_to_fragmentOnboarding"
+            app:destination="@id/fragmentOnboarding"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_splashFragment_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_splashFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmationFragment"
+        android:name="com.bangkit.cloudraya.ui.confirmation.ConfirmationFragment"
+        android:label="fragment_confirmation"
+        tools:layout="@layout/fragment_confirmation" >
+        <action
+            android:id="@+id/action_confirmationFragment_to_fragmentDetailVM"
+            app:destination="@id/fragmentDetailVM"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_confirmationFragment_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_confirmationFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_fragmentSiteList"
+            app:destination="@id/fragmentSiteList"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_billingFragment"
+            app:destination="@id/billingFragment"
+            app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_networkingFragment"
+            app:destination="@id/networkingFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billingFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.billing.BillingFragment"
+        android:label="fragment_billing"
+        tools:layout="@layout/fragment_billing" >
+        <action
+            android:id="@+id/action_billingFragment_to_networkingFragment"
+            app:destination="@id/networkingFragment" />
+        <action
+            android:id="@+id/action_billingFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_billingFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/networkingFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.networking.NetworkingFragment"
+        android:label="fragment_networking"
+        tools:layout="@layout/fragment_networking" >
+        <action
+            android:id="@+id/action_networkingFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_networkingFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
+        <action
+            android:id="@+id/action_networkingFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resourcesFragment"
+        android:name="com.bangkit.cloudraya.ui.menu.resources.ResourcesFragment"
+        android:label="fragment_resources2"
+        tools:layout="@layout/fragment_resources2" >
+        <action
+            android:id="@+id/action_resourcesFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_resourcesFragment_to_networkingFragment"
+            app:destination="@id/networkingFragment" />
+        <action
+            android:id="@+id/action_resourcesFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
+        <action
+            android:id="@+id/action_resourcesFragment_to_fragmentResources"
+            app:destination="@id/fragmentResources"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/createVm1Fragment"
+        android:name="com.bangkit.cloudraya.ui.createVM.server.CreateVm1Fragment"
+        android:label="fragment_create_vm1"
+        tools:layout="@layout/fragment_create_vm1" >
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_createVm1Fragment_to_createVm2Fragment"
+            app:destination="@id/createVm2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createVm2Fragment"
+        android:name="com.bangkit.cloudraya.ui.createVM.packages.CreateVm2Fragment"
+        android:label="fragment_create_vm2"
+        tools:layout="@layout/fragment_create_vm2" >
+        <action
+            android:id="@+id/action_createVm2Fragment_to_createVm3Fragment"
+            app:destination="@id/createVm3Fragment" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createVm3Fragment"
+        android:name="com.bangkit.cloudraya.ui.createVM.vpc.CreateVm3Fragment"
+        android:label="fragment_create_vm3"
+        tools:layout="@layout/fragment_create_vm3" >
+        <action
+            android:id="@+id/action_createVm3Fragment_to_createVm4Fragment"
+            app:destination="@id/createVm4Fragment" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createVm4Fragment"
+        android:name="com.bangkit.cloudraya.ui.createVM.overview.CreateVm4Fragment"
+        android:label="fragment_create_vm4"
+        tools:layout="@layout/fragment_create_vm4" >
+        <argument
+            android:name="token"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -26,7 +26,7 @@ data class VMData(
 	val memory: Int? = null,
 
 	@field:SerializedName("package")
-	val jsonMemberPackage: String? = null,
+	val vmPackage: String? = null,
 
 	@field:SerializedName("os")
 	val os: String? = null,

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cloud Raya</string>
+    <string name="app_name">Wowrack</string>
     <string name="landing_header_1">Turn Your Ideas into a Reality with Your Trusted Cloud Partner</string>
     <string name="landing_header_2">Delivering what you actually need</string>
     <string name="landing_header_3">Experienced since 2001</string>
@@ -20,11 +20,15 @@
     <string name="ip_address">IP Address</string>
     <string name="status">Status</string>
     <string name="vm_list">VM List</string>
+    <string name="cpu">CPU</string>
+    <string name="type_disc">Disc Type</string>
+    <string name="memory">Memory</string>
+    <string name="text_package">Package</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_secret">App Secret</string>
     <string name="app_key">App Key</string>
-    <string name="site_list">Site List</string>
+    <string name="site_list">Project List</string>
     <string name="site_url">Site URL</string>
     <string name="site_name">Site Name</string>
     <string name="submit">Submit</string>
@@ -41,4 +45,104 @@
     <string name="home">Home</string>
     <string name="resources">Resources</string>
     <string name="back">Back</string>
+    <string name="action_confirmation">Action Confirmation</string>
+    <string name="back_to_home">Back To Home</string>
+
+    <!--    UI-->
+    <string name="site_error">The site name must not contain symbols.</string>
+
+    <!--    Hint-->
+    <string name="hint_siteName">Enter Your Site Name Here</string>
+    <string name="hint_siteUrl">Enter Your Site URL Here</string>
+    <string name="hint_appKey">Enter Your App Key Here</string>
+    <string name="hint_appSecret">Enter Your App Secret Here</string>
+    <string name="exit_confirmation">Want To Exit ?</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="action_accepted">Action Accepted!</string>
+    <string name="action_denied">Action Denied!</string>
+    <string name="exit_confirmation_message">Are you sure want to exit ?</string>
+    <string name="toast_successful">Add Sites Successful</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="cost_projection">Cost Projection</string>
+    <string name="additional_resources">Additional Resources</string>
+    <string name="anomaly_detection">Anomaly Detection</string>
+    <string name="estimated_cost">Estimated Cost: %f</string>
+    <string name="backup_configuration">Backup Configuration</string>
+    <string name="en_backup">Enable Backup</string>
+    <string name="backup_day">Backup Every</string>
+    <string name="backup_retention">Keep Most Recent</string>
+    <string name="backup_save">Save Config</string>
+    <string name="tv_backup">Backup List</string>
+    <string name="dummy_backup">backup-JNX5EFJL</string>
+    <string name="dummy_size">4.72 GB</string>
+    <string name="dummy_date">2023-08-21 15:20:01</string>
+    <string name="backup_restore">Restore</string>
+    <string name="backup_delete">Delete</string>
+    <string name="private_ip">Private IP</string>
+    <string name="public_ip">Public IP</string>
+    <string name="add_IpPrivate">Add IP Private</string>
+    <string name="detach">Detach</string>
+    <string name="dummy_ip_private">10.10.23.117</string>
+    <string name="dummy_ip_public">202.43.249.210</string>
+    <string name="dummy_cost">140</string>
+    <string name="tv_default">Default</string>
+    <string name="attach_ip">Attach IP</string>
+    <string name="add_ip">Add Ip</string>
+    <string name="create_vm">Create VM</string>
+    <string name="hostname">Hostname</string>
+    <string name="server_configuration">Server Configuration</string>
+    <string name="hint_hostname">Enter Hostname</string>
+    <string name="project_tag">Project Tag</string>
+    <string name="hint_location">Select Location</string>
+    <string name="hint_projectTag">Select Project Tag</string>
+    <string name="operating_system">Operating System</string>
+    <string name="server_os">Server OS</string>
+    <string name="hard_disk">Hard Disk</string>
+    <string name="cost">Cost</string>
+    <string name="server_os_description">Server OS Description</string>
+    <string name="ssh_key">SSH Key</string>
+    <string name="select_ssh_key">Select SSH Key</string>
+    <string name="project">Project</string>
+    <string name="example_project">Your Project</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="vm">VM</string>
+    <string name="total_vms">Total VMs</string>
+    <string name="default_value">0</string>
+    <string name="running_vms">Running VMs</string>
+    <string name="stopped_vms">Stopped VMs</string>
+    <string name="ip">IP</string>
+    <string name="total_public_ip">Total Public IP</string>
+    <string name="total_disks">Total Disks</string>
+    <string name="gb">GB</string>
+    <string name="total_cpus">Total CPUs</string>
+    <string name="billing">Billing</string>
+    <string name="news_update">News Update</string>
+    <string name="dummy_news_head">Quest Raya: Here\'s Where Your Cloud Adventure Begins</string>
+    <string name="dummy_news_content">Calling all Cloud Adventurers! You are challenged to join and complete all quests on Quest Raya ....</string>
+    <string name="dummy_news_date">2023-07-31 16:49</string>
+    <string name="networking">Networking</string>
+    <string name="virtual_machines">Virtual Machines</string>
+    <string name="vpc">VPC</string>
+    <string name="instant_activation">Instant Activation</string>
+    <string name="vpc_name">VPC Name</string>
+    <string name="subnet_name">Subnet Name</string>
+
+    <string-array name="backup_days_options">
+        <item>1 Day</item>
+        <item>2 Day</item>
+        <item>3 Day</item>
+        <item>4 Day</item>
+        <item>5 Day</item>
+        <item>6 Day</item>
+        <item>7 Day</item>
+    </string-array>
+
+    <string-array name="backup_retentions_options">
+        <item>1 Backup</item>
+        <item>2 Backup</item>
+        <item>3 Backup</item>
+        <item>4 Backup</item>
+    </string-array>
+
 </resources>

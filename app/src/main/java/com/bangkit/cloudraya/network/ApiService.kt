@@ -1,36 +1,170 @@
 package com.bangkit.cloudraya.network
 
-import com.bangkit.cloudraya.model.remote.TokenResponse
-import com.bangkit.cloudraya.model.remote.VMListResponse
-import com.bangkit.cloudraya.model.remote.VMActionResponse
-import com.bangkit.cloudraya.model.remote.VMDetailResponse
+import com.bangkit.cloudraya.model.remote.*
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
 
-    @POST("user/auth")
+    @POST("/v1/api/gateway/user/auth")
     suspend fun getToken(
-        @Header("Content-Type") contentType : String,
-        @Body body : JsonObject
+        @Header("Content-Type") contentType: String,
+        @Body body: JsonObject
     ): Response<TokenResponse>
 
-    @GET("user/virtualmachines")
+    @GET("/v1/api/gateway/user/virtualmachines")
     suspend fun getVMList(
-        @Header("Authorization") token : String
-    ):Response<VMListResponse>
+        @Header("Authorization") token: String
+    ): Response<VMListResponse>
 
-    @GET("user/virtualmachines/{id}")
+    @GET("/v1/api/gateway/user/virtualmachines/{id}")
     suspend fun getVMDetail(
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Response<VMDetailResponse>
 
-    @POST("user/virtualmachines/action")
+    @POST("/v1/api/gateway/user/virtualmachines/action")
     suspend fun vmAction(
-        @Header("Content-Type") contentType : String,
-        @Header("Authorization") token : String,
+        @Header("Content-Type") contentType: String,
+        @Header("Authorization") token: String,
         @Body requestBody: JsonObject
-    ) : Response<VMActionResponse>
+    ): Response<VMActionResponse>
+
+    @POST("/convert")
+    suspend fun getDataGraph(
+        @Header("Content-Type") contentType: String,
+        @Body requestBody: JsonObject
+    ): Response<DataGraphResponse>
+
+    @POST("/convertAnomaly")
+    suspend fun getDataAnomaly(
+        @Header("Content-Type") contentType: String,
+        @Body requestBody: JsonObject
+    ): Response<DataAnomalyResponse>
+
+    @POST("/insertDataUser")
+    suspend fun insertToDatabase(
+        @Header("Content-Type") contentType: String,
+        @Body requestBody: JsonObject
+    ): Response<InsertResponse>
+
+    @GET("/snapshot/v1/api/gateway/user/backup")
+    suspend fun getBackupList(
+        @Header("Authorization") token: String,
+    ): Response<BackupListResponse>
+
+    @HTTP(method = "DELETE", path = "/snapshot/v1/api/gateway/user/backup/{id}", hasBody = true)
+    suspend fun deleteBackup(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body requestBody: JsonObject
+    ): Response<ActionBackupResponse>
+
+    @POST("/snapshot/v1/api/gateway/user/backup/restore/{id}")
+    suspend fun restoreBackup(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body requestBody: JsonObject
+    ): Response<ActionBackupResponse>
+
+    @GET("/snapshot/v1/api/gateway/user/backup/config/{id}")
+    suspend fun getBackupConfig(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<BackupConfigResponse>
+
+    @POST("/snapshot/v1/api/gateway/user/backup/config")
+    suspend fun saveBackupConfig(
+        @Header("Authorization") token: String,
+        @Body requestBody: JsonObject
+    ): Response<BackupListResponse>
+
+    @GET("v1/api/gateway/user/ip/public")
+    suspend fun getIpPublic(
+        @Header("Authorization") token: String,
+    ): Response<IpPublicResponse>
+
+    @POST("/v1/api/gateway/user/ip/private")
+    suspend fun getIpPrivate(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpPrivateResponse>
+
+    @POST("/v1/api/gateway/user/ip/public/detach")
+    suspend fun detachPublicIP(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/public/attach")
+    suspend fun attachPublicIp(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/private/acquire")
+    suspend fun acquireIpPrivate(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/private/release")
+    suspend fun releaseIpPrivate(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/public/acquire")
+    suspend fun acquireIpPublic(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpBasicResponse>
+
+    @POST("/v1/api/gateway/user/ip/vm-own")
+    suspend fun getIpVM(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<IpVMOwn>
+
+    @GET("/v1/api/gateway/user/location-group-by-country")
+    suspend fun getLocation(
+        @Header("Authorization") token: String,
+    ): Response<LocationResponse>
+
+    @GET("/v1/api/gateway/user/packages/list")
+    suspend fun getPackages(
+        @Header("Authorization") token: String,
+    ): Response<PackagesResponse>
+
+    @GET("/v1/api/gateway/user/vpc")
+    suspend fun getVPC(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+    ): Response<VPCListResponse>
+
+    @GET("/v1/api/gateway/user/templates/list")
+    suspend fun getTemplate(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+        @Body requestBody: JsonObject
+    ): Response<TemplateResponse>
+
+    @GET("/v1/api/gateway/user/storagetype/list")
+    suspend fun getStorage(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content: String,
+    ): Response<StorageResponse>
+
+    @GET("/v1/api/gateway/user/detail")
+    suspend fun getProfile(
+        @Header("Authorization") token: String,
+    ): Response<ProfileResponse>
 }

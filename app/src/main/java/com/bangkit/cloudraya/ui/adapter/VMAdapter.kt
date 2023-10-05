@@ -2,13 +2,16 @@ package com.bangkit.cloudraya.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.ItemVmBinding
-import com.bangkit.cloudraya.model.remote.VMListData
+import com.bangkit.cloudraya.model.remote.ServersItem
 
-class VMAdapter(private val onItemClick: (VMListData) -> Unit): RecyclerView.Adapter<VMAdapter.HolderVM>(){
-    private var data: List<VMListData> = listOf()
+class VMAdapter(private val onItemClick: (ServersItem) -> Unit) :
+    RecyclerView.Adapter<VMAdapter.HolderVM>() {
+    private var data: List<ServersItem> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderVM {
         return HolderVM(ItemVmBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -23,7 +26,7 @@ class VMAdapter(private val onItemClick: (VMListData) -> Unit): RecyclerView.Ada
         }
     }
 
-    fun submitData(newData: List<VMListData>){
+    fun submitData(newData: List<ServersItem>) {
         val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize() = data.size
 
@@ -41,13 +44,16 @@ class VMAdapter(private val onItemClick: (VMListData) -> Unit): RecyclerView.Ada
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class HolderVM(private val binding: ItemVmBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: VMListData){
+    class HolderVM(private val binding: ItemVmBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: ServersItem) {
             binding.tvName.text = data.name
             binding.tvLocation.text = data.location
             binding.tvImage.text = data.templateLabel
             binding.tvIPAddress.text = data.publicIp
-            binding.tvStatus.text = data.status
+            binding.tvStatus.text = "${data.status} - ${data.state}"
+            if (data.state == "Stopped"){
+                binding.tvStatus.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(binding.root.context, R.drawable.ic_inactive), null, null, null)
+            }
         }
     }
 }
