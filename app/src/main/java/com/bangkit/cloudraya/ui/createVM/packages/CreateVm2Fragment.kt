@@ -5,8 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.cloudraya.R
 import com.bangkit.cloudraya.databinding.FragmentCreateVm2Binding
 import com.bangkit.cloudraya.model.local.Event
 import com.bangkit.cloudraya.ui.adapter.PackageAdapter
@@ -32,6 +35,20 @@ class CreateVm2Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         token = arguments?.getString(FragmentDetailVM.ARG_TOKEN).toString()
+
+        binding.btnNext.setOnClickListener {
+            val toCreateVM3 = CreateVm2FragmentDirections.actionCreateVm2FragmentToCreateVm3Fragment(token)
+            findNavController().navigate(toCreateVM3)
+        }
+
+        val ipPublicOption = listOf("Acquire Automatically", "No Public IP")
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown, ipPublicOption)
+        binding.acPublicIp.apply {
+            setAdapter(arrayAdapter)
+            setOnItemClickListener { _, _, position, _ ->
+
+            }
+        }
 
         setRecyclerView()
         fetchPackages()

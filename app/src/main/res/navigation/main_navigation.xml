@@ -253,10 +253,17 @@
         <action
             android:id="@+id/action_createVm3Fragment_to_createVm4Fragment"
             app:destination="@id/createVm4Fragment" />
+        <argument
+            android:name="token"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/createVm4Fragment"
         android:name="com.bangkit.cloudraya.ui.createVM.overview.CreateVm4Fragment"
         android:label="fragment_create_vm4"
-        tools:layout="@layout/fragment_create_vm4" />
+        tools:layout="@layout/fragment_create_vm4" >
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
 </navigation>

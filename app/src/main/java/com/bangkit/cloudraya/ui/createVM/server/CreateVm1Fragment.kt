@@ -46,6 +46,15 @@ class CreateVm1Fragment : Fragment() {
             val toCreateVM2 = CreateVm1FragmentDirections.actionCreateVm1FragmentToCreateVm2Fragment(token)
             findNavController().navigate(toCreateVM2)
         }
+
+        val sshOption = listOf("Not using SSH Key")
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown, sshOption)
+        binding.sshInput.apply {
+            setAdapter(arrayAdapter)
+            setOnItemClickListener { _, _, position, _ ->
+
+            }
+        }
     }
 
     private fun setRecyclerView(){

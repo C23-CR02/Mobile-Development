@@ -8,13 +8,13 @@ data class VPCListResponse(
 	val code: Int,
 
 	@field:SerializedName("data")
-	val data: List<DataItem>,
+	val data: List<VPCItem>,
 
 	@field:SerializedName("message")
 	val message: String
 )
 
-data class DataItem(
+data class VPCItem(
 
 	@field:SerializedName("update_progress")
 	val updateProgress: Int,
